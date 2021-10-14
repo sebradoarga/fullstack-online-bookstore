@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 
 import movieRouter from './routers/movie'
 import userRouter from './routers/user'
+import productRouter from './routers/product'
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
 import compression from 'compression'
@@ -23,6 +24,7 @@ app.use(lusca.xssProtection(true))
 // Use movie router
 app.use('/api/v1/movies', movieRouter)
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/products', productRouter)
 
 // Custom API error handler
 app.use(apiErrorHandler)
