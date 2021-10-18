@@ -1,26 +1,29 @@
 import { Request, Response, NextFunction } from 'express'
 
-import Product from '../models/Product'
-import ProductService from '../services/product'
+import Book from '../models/Book'
+import BookService from '../services/book'
 import { BadRequestError } from '../helpers/apiError'
 
-// POST /products
-export const createProduct = async (
+// POST /books
+export const createBook = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { name, description, price } = req.body
+    const { name, author, genres, description, price, imageUrl } = req.body
 
-    const product = new Product({
+    const book = new Book({
       name,
+      author,
+      genres,
       description,
       price,
+      imageUrl,
     })
 
-    await ProductService.createProduct(product)
-    res.json(product)
+    await BookService.createBook(book)
+    res.json(book)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
@@ -30,17 +33,17 @@ export const createProduct = async (
   }
 }
 
-// PUT /products/:productId
-export const updateProduct = async (
+// PUT /books/:bookId
+export const updateBook = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const update = req.body
-    const productId = req.params.productId
-    const updatedProduct = await ProductService.updateProduct(productId, update)
-    res.json(updatedProduct)
+    const bookId = req.params.bookId
+    const updatedBook = await BookService.updateBook(bookId, update)
+    res.json(updatedBook)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
@@ -50,14 +53,14 @@ export const updateProduct = async (
   }
 }
 
-// DELETE /products/:productId
-export const deleteProduct = async (
+// DELETE /books/:bookId
+export const deleteBook = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    await ProductService.deleteProduct(req.params.productId)
+    await BookService.deleteBook(req.params.bookId)
     res.status(204).end()
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
@@ -68,14 +71,14 @@ export const deleteProduct = async (
   }
 }
 
-// GET /products/:productId
-export const findProductById = async (
+// GET /books/:bookId
+export const findBookById = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    res.json(await ProductService.findProductById(req.params.productId))
+    res.json(await BookService.findBookById(req.params.bookId))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
@@ -85,14 +88,14 @@ export const findProductById = async (
   }
 }
 
-// GET /products
-export const findAllProducts = async (
+// GET /books
+export const findAllBooks = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    res.json(await ProductService.findAllProducts())
+    res.json(await BookService.findAllBooks())
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

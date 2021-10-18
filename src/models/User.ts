@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 import mongoose, { Document } from 'mongoose'
+import { OrderDocument } from './Order'
 
 export type UserDocument = Document & {
   firstName: string
   lastName: string
   email: string
   address: string
+  orders: OrderDocument[]
 }
 
 const userSchema = new mongoose.Schema({
@@ -24,6 +26,10 @@ const userSchema = new mongoose.Schema({
   address: {
     type: String,
     required: true,
+  },
+  orders: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Order',
   },
 })
 
