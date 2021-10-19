@@ -1,6 +1,7 @@
 import express from 'express'
 import lusca from 'lusca'
 import dotenv from 'dotenv'
+import Cors from 'cors'
 
 import movieRouter from './routers/movie'
 import userRouter from './routers/user'
@@ -21,6 +22,7 @@ app.use(compression())
 app.use(express.json())
 app.use(lusca.xframe('SAMEORIGIN'))
 app.use(lusca.xssProtection(true))
+app.use(Cors())
 
 // Use movie router
 app.use('/api/v1/movies', movieRouter)

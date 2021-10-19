@@ -1,6 +1,6 @@
 import Order, { OrderDocument } from '../models/Order'
 import { NotFoundError } from '../helpers/apiError'
-import Product from 'src/models/Product'
+import Book from 'src/models/Book'
 
 const createOrder = async (order: OrderDocument): Promise<OrderDocument> => {
   return order.save()
@@ -18,8 +18,8 @@ const findOrderById = async (orderId: string): Promise<OrderDocument> => {
 
 const findAllOrders = async (): Promise<OrderDocument[]> => {
   return Order.find().populate({
-    path: 'product',
-    select: 'name',
+    path: 'bookId',
+    select: 'name author',
   })
 }
 

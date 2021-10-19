@@ -3,17 +3,19 @@ import mongoose, { Document } from 'mongoose'
 
 export type OrderDocument = Document & {
   user: string
-  product: string
+  book: string
 }
 
 const orderSchema = new mongoose.Schema({
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+    required: true,
   },
-  product: {
+  bookId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
+    ref: 'Book',
+    required: true,
   },
 })
 
