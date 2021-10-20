@@ -1,38 +1,42 @@
+import { useEffect } from 'react'
 import { Book } from '../../../types'
 import styled from 'styled-components'
 import { Link, useParams } from 'react-router-dom'
-import uuid from 'uuid/v4'
+import { v4 as uuidv4 } from 'uuid'
 
 const BookPage = ({ books }: { books: Book[] }) => {
-  const book = useParams()
-  console.log(book)
+  const { book } = useParams<{ book: string }>()
+
+  const currentBook = books.find((foundBook) => foundBook.name === book)
+  console.log('books', books)
+  console.log('book', currentBook)
 
   const imageStyling = {
     maxWidth: '20rem',
     alignSelf: 'center',
   }
 
-  return books.length < 1 ? (
+  return !currentBook ? (
     <div>Loading</div>
   ) : (
     <Container>
       <Link to="/">
         <Button>Home</Button>
       </Link>
-      <img src={books[0].imageUrl} alt="" style={imageStyling} />
-      <Title>{books[0].name}</Title>
-      <Author>{books[0].author}</Author>
+      <img src={currentBook.imageUrl} alt="" style={imageStyling} />
+      <Title>{currentBook.name}</Title>
+      <Author>{currentBook.author}</Author>
       <Genres>
-        {books[0].genres.map((genre) => (
-          <span key={uuid()}>{`${genre} `}</span>
+        {currentBook.genres.map((genre) => (
+          <span key={uuidv4()}>{`${genre} `}</span>
         ))}
       </Genres>
       <Description>
-        {books[0].description.split('\n').map((paragraph) => (
-          <Paragraph>{paragraph}</Paragraph>
+        {currentBook.description.split('\n').map((paragraph) => (
+          <Paragraph key={uuidv4()}>{paragraph}</Paragraph>
         ))}
       </Description>
-      <Price>${books[0].price}</Price>
+      <Price>${currentBook.price}</Price>
     </Container>
   )
 }
