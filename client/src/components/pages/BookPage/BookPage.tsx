@@ -3,9 +3,14 @@ import { Book } from '../../../types'
 import styled from 'styled-components'
 import { Link, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../redux/reducers'
 
-const BookPage = ({ books }: { books: Book[] }) => {
+const BookPage = () => {
   const { book } = useParams<{ book: string }>()
+  const books: Book[] = useSelector(
+    (state: RootState) => state.booksReducer.books
+  )
 
   const currentBook = books.find((foundBook) => foundBook.name === book)
   console.log('books', books)

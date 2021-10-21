@@ -1,8 +1,14 @@
 import styled from 'styled-components'
 import DisplayedBook from './DisplayedBook'
 import { Book } from '../../../types'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../redux/reducers'
 
-const BooksContainer = ({ books }: { books: Book[] }) => {
+const BooksContainer = () => {
+  const books: Book[] = useSelector(
+    (state: RootState) => state.booksReducer.books
+  )
+
   return (
     <Container>
       {books.slice(0, 5).map((book: Book) => (
@@ -22,6 +28,6 @@ const Container = styled.div`
   border: 2px solid black;
   border-radius: 10px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 `

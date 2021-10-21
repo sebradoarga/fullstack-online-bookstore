@@ -1,11 +1,11 @@
-import React from 'react'
-import { Book } from '../../../types'
 import BooksContainer from './BooksContainer'
+import { Link } from 'react-router-dom'
 
-const Home = ({ books }: { books: Book[] }) => {
+const Home = () => {
   return (
     <div>
-      <BooksContainer books={books} />
+      <Link to="/addbook">Add book</Link>
+      <BooksContainer />
     </div>
   )
 }

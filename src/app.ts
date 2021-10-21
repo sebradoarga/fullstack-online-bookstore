@@ -7,6 +7,7 @@ import movieRouter from './routers/movie'
 import userRouter from './routers/user'
 import bookRouter from './routers/book'
 import orderRouter from './routers/order'
+import authorRouter from './routers/author'
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
 import compression from 'compression'
@@ -26,9 +27,18 @@ app.use(Cors())
 
 // Use movie router
 app.use('/api/v1/movies', movieRouter)
+
+// Use users router
 app.use('/api/v1/users', userRouter)
+
+// Use books router
 app.use('/api/v1/books', bookRouter)
+
+//Use orders router
 app.use('/api/v1/orders', orderRouter)
+
+//Use authors router
+app.use('/api/v1/authors', authorRouter)
 
 // Custom API error handler
 app.use(apiErrorHandler)

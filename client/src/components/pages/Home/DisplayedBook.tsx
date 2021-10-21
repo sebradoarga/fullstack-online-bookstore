@@ -17,7 +17,9 @@ const DisplayedBook = ({ book }: { book: Book }) => {
       <Link to={`/book/${book.name}`}>
         <Title>{book.name}</Title>
       </Link>
-      <Author>{book.author}</Author>
+      <Link to={`/author/${book.author}`}>
+        <Author>{book.author}</Author>
+      </Link>
       <Price>${book.price.toFixed(2)}</Price>
       {/*  */}
     </BookContainer>
