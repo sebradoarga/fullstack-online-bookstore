@@ -5,7 +5,7 @@ import { AuthorDocument } from './Author'
 
 export type BookDocument = Document & {
   title: string
-  author: AuthorDocument[]
+  author: string[]
   genres: string[]
   description: string
   price: number
@@ -19,7 +19,7 @@ const bookSchema = new mongoose.Schema({
     required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: [mongoose.Schema.Types.ObjectId],
     ref: 'Author',
     index: true,
     // required: true,

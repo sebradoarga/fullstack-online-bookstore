@@ -51,6 +51,11 @@ const AddBookPage = () => {
     author2: '',
     author3: '',
   })
+  const [authorIds, setAuthorIds] = useState({
+    author1: '',
+    author2: '',
+    author3: '',
+  })
   const [currentAuthorBox, setCurrentAuthorBox] = useState<number>(0)
   const [showSecondAuthor, setShowSecondAuthor] = useState(false)
   const [showThirdAuthor, setShowThirdAuthor] = useState(false)
@@ -60,6 +65,8 @@ const AddBookPage = () => {
   const [showModal, setShowModal] = useState('none')
 
   // -----------------------------------------------------
+
+  const [allAuthors, setAllAuthors] = useState(false)
 
   // AUTHOR INPUT FUNCTIONALITY
 
@@ -124,7 +131,6 @@ const AddBookPage = () => {
 
   //When the add new author button is clicked
   const openModal = (boxNumber: number) => {
-    console.log('opening modal')
     setCurrentAuthorBox(boxNumber)
     setShowModal('flex')
   }
@@ -161,82 +167,86 @@ const AddBookPage = () => {
 
   //SUBMIT FUNCTIONALITY
 
-  //When the submit button is clicked - get the given names for the author(s)
+  //Get the given names for the author(s)
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     setAuthorNames({ ...authorNames, author1: text.text1 })
-    if (text.text2 !== '') {
-      setAuthorNames({ ...authorNames, author2: text.text2 })
+
+    //Find the authors' ids
+    const findAuthors = async () => {
+      console.log('text1', text.text1)
+      if (text.text1 !== '') {
+        const firstFoundAuthor: any = await findAuthorByName(text.text1)
+        console.log('firstFoundAuthor is', firstFoundAuthor)
+
+        setAuthorIds({ ...authorIds, author1: firstFoundAuthor.data._id })
+        if (text.text2 !== '') {
+          const secondFoundAuthor: any = await findAuthorByName(text.text2)
+          console.log('secondFoundAuthor is', secondFoundAuthor)
+
+          setAuthorIds({ ...authorIds, author2: secondFoundAuthor.data._id })
+          if (text.text3 !== '') {
+            const thirdFoundAuthor: any = await findAuthorByName(text.text3)
+            console.log('thirdFoundAuthor is', thirdFoundAuthor)
+
+            setAuthorIds({ ...authorIds, author3: thirdFoundAuthor.data._id })
+          }
+        }
+      }
+      setAllAuthors(true)
     }
-    if (text.text3 !== '') {
-      setAuthorNames({ ...authorNames, author3: text.text3 })
-    }
+
+    findAuthors()
   }
 
-  //After the submit button was pressed; to find the authors' ids and add them to the data for the new book
+  //Add the ids to the data for a new book
   useEffect(() => {
-    if (authorNames.author1 !== '') {
-      console.log('author1', authorNames.author1)
-      const findAuthor = async () => {
-        const searchedAuthor: any = await findAuthorByName(authorNames.author1)
-        console.log('searchedAuthor', searchedAuthor)
-        setBookData({ ...bookData, author: [searchedAuthor.data._id] })
-      }
-      findAuthor()
+    if (authorIds.author1 !== '') {
+      setBookData({ ...bookData, author: [authorIds.author1] })
+    }
+    if (authorIds.author2 !== '') {
+      setBookData({
+        ...bookData,
+        author: [...bookData.author, authorIds.author2],
+      })
+    }
+    if (authorIds.author3 !== '') {
+      setBookData({
+        ...bookData,
+        author: [...bookData.author, authorIds.author3],
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authorNames.author1])
+  }, [authorIds])
 
   useEffect(() => {
-    if (authorNames.author2 !== '') {
-      console.log('author2', authorNames.author2)
-      const findAuthor = async () => {
-        const searchedAuthor: any = await findAuthorByName(authorNames.author2)
-        console.log('searchedAuthor', searchedAuthor)
-        setBookData({
-          ...bookData,
-          author: [...bookData.author, searchedAuthor.data._id],
-        })
-      }
-      findAuthor()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authorNames.author2])
-
-  useEffect(() => {
-    if (authorNames.author3 !== '') {
-      console.log('author3', authorNames.author3)
-      const findAuthor = async () => {
-        const searchedAuthor: any = await findAuthorByName(authorNames.author3)
-        console.log('searchedAuthor', searchedAuthor)
-        setBookData({
-          ...bookData,
-          author: [...bookData.author, searchedAuthor.data._id],
-        })
-      }
-      findAuthor()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authorNames.author3])
-
-  //Adding newly created book to the author's data
-  useEffect(() => {
+    console.log('bookData.author', bookData.author)
+    console.log(bookData.author !== [''])
     const addBookToAuthor = async () => {
-      await dispatch(createBook(bookData))
-      const createdBook: any = await findBookByTitle(bookData.title)
+      console.log('hello', bookData)
 
-      const author = await findAuthorById(bookData.author)
+      if (allAuthors) {
+        console.log('i am in')
+        console.log('final book data', bookData)
+        await dispatch(createBook(bookData))
+        const createdBook: any = await findBookByTitle(bookData.title)
 
-      const newAuthorData: Author = {
-        ...author.data,
-        authorBooks: [createdBook.data._id],
+        console.log('createdBook', createdBook)
+        const author = await findAuthorById(bookData.author)
+
+        const newAuthorData: Author = {
+          ...author.data,
+          authorBooks: [createdBook.data._id],
+        }
+
+        const updatedAuthor = await updateAuthor(author.data._id, newAuthorData)
       }
-
-      const updatedAuthor = await updateAuthor(author.data._id, newAuthorData)
-      console.log('updatedAuthor', updatedAuthor)
     }
 
-    bookData.author[0] !== '' && addBookToAuthor()
+    if (bookData.author[0] !== '') {
+      addBookToAuthor()
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookData.author])
 
