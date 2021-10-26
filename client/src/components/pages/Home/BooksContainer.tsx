@@ -9,9 +9,11 @@ const BooksContainer = () => {
     (state: RootState) => state.booksReducer.books
   )
 
+  console.log('books', books)
+
   return (
     <Container>
-      {books.slice(0, 5).map((book: Book) => (
+      {books.map((book: Book) => (
         <DisplayedBook key={book._id} book={book} />
       ))}
     </Container>
@@ -30,4 +32,5 @@ const Container = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
 `

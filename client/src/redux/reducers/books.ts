@@ -10,13 +10,24 @@ interface DefaultState {
 
 const booksReducer = (state: DefaultState = defaultState, action: any) => {
   switch (action.type) {
-    case 'FETCH_ALL':
+    case 'FETCH_ALL_BOOKS':
       return {
         ...state,
         books: action.payload,
       }
-    case 'CREATE':
-      return { ...state }
+    case 'CREATE_BOOK':
+      const newBook = action.payload
+      const newBookTitle = newBook.title
+      const existBook = state.books.find((book) => newBookTitle === book.title)
+
+      if (existBook) {
+        return state
+      } else {
+        return {
+          ...state,
+          books: [...state.books, newBook],
+        }
+      }
     default: {
       return { ...state }
     }

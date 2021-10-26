@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Book } from '../../../types'
 import styled from 'styled-components'
 import { Link, useParams } from 'react-router-dom'
@@ -12,13 +11,14 @@ const BookPage = () => {
     (state: RootState) => state.booksReducer.books
   )
 
-  const currentBook = books.find((foundBook) => foundBook.name === book)
+  const currentBook = books.find((foundBook) => foundBook.title === book)
   console.log('books', books)
   console.log('book', currentBook)
 
   const imageStyling = {
     maxWidth: '20rem',
     alignSelf: 'center',
+    boxShadow: 'rgb(0 0 0) 0px 0px 15px 1px',
   }
 
   return !currentBook ? (
@@ -29,8 +29,8 @@ const BookPage = () => {
         <Button>Home</Button>
       </Link>
       <img src={currentBook.imageUrl} alt="" style={imageStyling} />
-      <Title>{currentBook.name}</Title>
-      <Author>{currentBook.author}</Author>
+      <Title>{currentBook.title}</Title>
+      <Author>{currentBook.author.authorName}</Author>
       <Genres>
         {currentBook.genres.map((genre) => (
           <span key={uuidv4()}>{`${genre} `}</span>

@@ -16,7 +16,7 @@ const findBookById = async (bookId: string): Promise<BookDocument> => {
 }
 
 const findAllBooks = async (): Promise<BookDocument[]> => {
-  return Book.find()
+  return Book.find().sort({ _id: 1 }).populate({ path: 'author' })
 }
 
 const updateBook = async (
@@ -44,10 +44,22 @@ const deleteBook = async (bookId: string): Promise<BookDocument | null> => {
   return foundBook
 }
 
+const findBookByTitle = async (title: string): Promise<BookDocument> => {
+  const foundBook = await Book.findOne({ title: `${title}` })
+  console.log('foundBook', foundBook)
+
+  if (!foundBook) {
+    throw new NotFoundError(`Book ${title} not found`)
+  }
+
+  return foundBook
+}
+
 export default {
   createBook,
   findBookById,
   findAllBooks,
   updateBook,
   deleteBook,
+  findBookByTitle,
 }

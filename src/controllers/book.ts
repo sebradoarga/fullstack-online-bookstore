@@ -11,10 +11,10 @@ export const createBook = async (
   next: NextFunction
 ) => {
   try {
-    const { name, author, genres, description, price, imageUrl } = req.body
+    const { title, author, genres, description, price, imageUrl } = req.body
 
     const book = new Book({
-      name,
+      title,
       author,
       genres,
       description,
@@ -71,7 +71,7 @@ export const deleteBook = async (
   }
 }
 
-// GET /books/:bookId
+// GET /books/bookid/:bookId
 export const findBookById = async (
   req: Request,
   res: Response,
@@ -100,6 +100,26 @@ export const findAllBooks = async (
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
     } else {
+      next(error)
+    }
+  }
+}
+
+// GET /books/:title
+export const findBookByTitle = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    console.log('parameter title', req.params.title)
+    res.json(await BookService.findBookByTitle(req.params.title))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      console.log('weve got an error')
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      console.log('another error)')
       next(error)
     }
   }

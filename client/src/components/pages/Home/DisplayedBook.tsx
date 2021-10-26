@@ -11,14 +11,14 @@ const DisplayedBook = ({ book }: { book: Book }) => {
 
   return (
     <BookContainer>
-      <Link to={`/book/${book.name}`}>
+      <Link to={`/book/${book.title}`}>
         <img src={book.imageUrl} alt="" style={inlineStyle} />
       </Link>
-      <Link to={`/book/${book.name}`}>
-        <Title>{book.name}</Title>
+      <Link to={`/book/${book.title}`}>
+        <Title>{book.title}</Title>
       </Link>
-      <Link to={`/author/${book.author}`}>
-        <Author>{book.author}</Author>
+      <Link to={`/author/${book.author.authorName}`}>
+        <Author>{book.author && book.author.authorName}</Author>
       </Link>
       <Price>${book.price.toFixed(2)}</Price>
       {/*  */}

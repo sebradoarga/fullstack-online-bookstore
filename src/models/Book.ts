@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 import { StringNullableChain } from 'lodash'
 import mongoose, { Document } from 'mongoose'
+import { AuthorDocument } from './Author'
 
 export type BookDocument = Document & {
-  name: string
-  author: string[]
+  title: string
+  author: AuthorDocument[]
   genres: string[]
   description: string
   price: number
@@ -12,7 +13,7 @@ export type BookDocument = Document & {
 }
 
 const bookSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     index: true,
     required: true,

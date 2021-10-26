@@ -4,7 +4,7 @@ export type AuthorDocument = Document & {
   authorName: string
   authorPicture: string
   authorBio: string
-  authorBooks: any
+  authorBooks: []
 }
 
 const authorSchema = new mongoose.Schema({
