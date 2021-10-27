@@ -1,4 +1,4 @@
-import { Book } from '../../../types'
+import { Author, Book } from '../../../types'
 import styled from 'styled-components'
 import { Link, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
@@ -30,7 +30,9 @@ const BookPage = () => {
       </Link>
       <img src={currentBook.imageUrl} alt="" style={imageStyling} />
       <Title>{currentBook.title}</Title>
-      <Author>{currentBook.author.authorName}</Author>
+      {currentBook.author.map((author: Author) => (
+        <AuthorName>{author.authorName}</AuthorName>
+      ))}
       <Genres>
         {currentBook.genres.map((genre) => (
           <span key={uuidv4()}>{`${genre} `}</span>
@@ -68,7 +70,7 @@ const Title = styled.h1`
   margin-top: 2rem;
 `
 
-const Author = styled.h2`
+const AuthorName = styled.h2`
   margin-top: 1rem;
 `
 const Genres = styled.h3``

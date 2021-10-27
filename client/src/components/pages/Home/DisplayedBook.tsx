@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Book } from '../../../types'
+import { Author, Book } from '../../../types'
 import { Link } from 'react-router-dom'
 
 const DisplayedBook = ({ book }: { book: Book }) => {
@@ -9,6 +9,8 @@ const DisplayedBook = ({ book }: { book: Book }) => {
     boxShadow: '0 0 15px 1px #000000',
   }
 
+  console.log('book autor', book.author)
+
   return (
     <BookContainer>
       <Link to={`/book/${book.title}`}>
@@ -17,9 +19,11 @@ const DisplayedBook = ({ book }: { book: Book }) => {
       <Link to={`/book/${book.title}`}>
         <Title>{book.title}</Title>
       </Link>
-      <Link to={`/author/${book.author.authorName}`}>
-        <Author>{book.author && book.author.authorName}</Author>
-      </Link>
+      {book.author.map((author: Author) => (
+        <Link to={`/author/${author.authorName}`}>
+          <AuthorName>{author && author.authorName}</AuthorName>
+        </Link>
+      ))}
       <Price>${book.price.toFixed(2)}</Price>
       {/*  */}
     </BookContainer>
@@ -40,7 +44,7 @@ const Title = styled.h2`
   margin-top: 1rem;
   text-align: center;
 `
-const Author = styled.h3`
+const AuthorName = styled.h3`
   font-size: 1.8rem;
   font-weight: normal;
   margin-top: 0.5rem;

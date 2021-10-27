@@ -1,7 +1,7 @@
 import { StringMappingType } from 'typescript'
 
 export interface Book {
-  author: Author
+  author: Author[]
   description: string
   genres: string[]
   imageUrl: string

@@ -228,7 +228,7 @@ const AddBookPage = () => {
         authors.map((author) => {
           const newAuthorData: Author = {
             ...author.data,
-            authorBooks: [createdBook.data._id],
+            authorBooks: [...author.data.authorBooks, createdBook.data._id],
           }
           const addBookToAuthor = async () => {
             const updatedAuthor = await updateAuthor(
@@ -239,7 +239,20 @@ const AddBookPage = () => {
           addBookToAuthor()
         })
 
-        // const updatedAuthor = await updateAuthor(author.data._id, newAuthorData)
+        setBookData({
+          title: '',
+          genres: '',
+          description: '',
+          price: 0,
+          imageUrl: '',
+          author: [''],
+        })
+
+        setText({
+          text1: '',
+          text2: '',
+          text3: '',
+        })
       }
     }
 
