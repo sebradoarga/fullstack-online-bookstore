@@ -174,20 +174,16 @@ const AddBookPage = () => {
 
     //Find the authors' ids
     const findAuthors = async () => {
-      console.log('text1', text.text1)
       if (text.text1 !== '') {
         const firstFoundAuthor: any = await findAuthorByName(text.text1)
-        console.log('firstFoundAuthor is', firstFoundAuthor)
 
         setAuthorIds({ ...authorIds, author1: firstFoundAuthor.data._id })
         if (text.text2 !== '') {
           const secondFoundAuthor: any = await findAuthorByName(text.text2)
-          console.log('secondFoundAuthor is', secondFoundAuthor)
 
           setAuthorIds({ ...authorIds, author2: secondFoundAuthor.data._id })
           if (text.text3 !== '') {
             const thirdFoundAuthor: any = await findAuthorByName(text.text3)
-            console.log('thirdFoundAuthor is', thirdFoundAuthor)
 
             setAuthorIds({ ...authorIds, author3: thirdFoundAuthor.data._id })
           }
@@ -220,26 +216,30 @@ const AddBookPage = () => {
   }, [authorIds])
 
   useEffect(() => {
-    console.log('bookData.author', bookData.author)
-    console.log(bookData.author !== [''])
     const addBookToAuthor = async () => {
-      console.log('hello', bookData)
-
       if (allAuthors) {
-        console.log('i am in')
-        console.log('final book data', bookData)
         await dispatch(createBook(bookData))
         const createdBook: any = await findBookByTitle(bookData.title)
 
-        console.log('createdBook', createdBook)
-        const author = await findAuthorById(bookData.author)
+        const authors = await Promise.all(
+          bookData.author.map(async (author) => await findAuthorById(author))
+        )
 
-        const newAuthorData: Author = {
-          ...author.data,
-          authorBooks: [createdBook.data._id],
-        }
+        authors.map((author) => {
+          const newAuthorData: Author = {
+            ...author.data,
+            authorBooks: [createdBook.data._id],
+          }
+          const addBookToAuthor = async () => {
+            const updatedAuthor = await updateAuthor(
+              author.data._id,
+              newAuthorData
+            )
+          }
+          addBookToAuthor()
+        })
 
-        const updatedAuthor = await updateAuthor(author.data._id, newAuthorData)
+        // const updatedAuthor = await updateAuthor(author.data._id, newAuthorData)
       }
     }
 
