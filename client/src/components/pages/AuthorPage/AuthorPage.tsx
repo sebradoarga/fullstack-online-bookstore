@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { useParams } from 'react-router'
 import { findAuthorByName, findBookById } from '../../../api'
 import { useState, useEffect } from 'react'
-import { Author } from '../../../types'
+import { Author, PopulatedAuthor } from '../../../types'
+import { v4 as uuidv4 } from 'uuid'
 
 const AuthorPage = () => {
   const { author } = useParams<{ author: string }>()
@@ -15,6 +16,15 @@ const AuthorPage = () => {
     __v: 0,
     _id: '',
   })
+  const [currentPopulatedAuthor, setCurrentPopulatedAuthor] =
+    useState<PopulatedAuthor>({
+      authorName: '',
+      authorPicture: '',
+      authorBio: '',
+      authorBooks: [],
+      __v: 0,
+      _id: '',
+    })
 
   const getCurrentAuthor = async () => {
     const data = await findAuthorByName(author)
@@ -22,10 +32,17 @@ const AuthorPage = () => {
   }
 
   const getBooksByAuthor = async () => {
-    const booksByAuthor: any = await currentAuthor.authorBooks.map((book) =>
-      findBookById(book)
+    const booksByAuthor: any = await Promise.all(
+      currentAuthor.authorBooks.map(async (book) => findBookById(book))
     )
-    setCurrentAuthor({ ...currentAuthor, authorBooks: booksByAuthor })
+    setCurrentPopulatedAuthor({
+      authorName: currentAuthor.authorName,
+      authorPicture: currentAuthor.authorPicture,
+      authorBio: currentAuthor.authorBio,
+      authorBooks: booksByAuthor,
+      __v: currentAuthor.__v,
+      _id: currentAuthor._id,
+    })
   }
 
   useEffect(() => {
@@ -34,16 +51,11 @@ const AuthorPage = () => {
   }, [])
 
   useEffect(() => {
-    getBooksByAuthor()
+    if (currentAuthor.authorName !== '') {
+      getBooksByAuthor()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentAuthor.authorName])
-
-  useEffect(() => {
-    console.log('final current author', currentAuthor)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentAuthor.authorBooks])
-
-  console.log('currentAuthor', currentAuthor)
 
   const imageStyling = {
     maxWidth: '20rem',
@@ -59,7 +71,14 @@ const AuthorPage = () => {
       <h1>{author}</h1>
       <p>{currentAuthor.authorBio}</p>
       <h2>Books</h2>
-      <BooksContainer> </BooksContainer>
+      <BooksContainer>
+        {currentPopulatedAuthor.authorBooks.length > 0 &&
+          currentPopulatedAuthor.authorBooks.map((book: any) => (
+            <Link key={uuidv4()} to={`/book/${book.data.title}`}>
+              <img src={book.data.imageUrl} alt="" />
+            </Link>
+          ))}
+      </BooksContainer>
     </Container>
   )
 }
@@ -76,4 +95,11 @@ const Container = styled.div`
 const ReturnBtn = styled.p`
   font-size: 1.8rem;
 `
-const BooksContainer = styled.div``
+const BooksContainer = styled.div`
+  display: flex;
+
+  & img {
+    width: 15rem;
+    margin: 0.5rem;
+  }
+`

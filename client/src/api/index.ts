@@ -23,4 +23,5 @@ export const updateAuthor = (authorId: string, updatedAuthor: Author) =>
 export const findBookByTitle = (title: string) =>
   axios.get(`${url}/books/title/${title}`)
 
-export const findBookById = (id: string) => axios.get(`${url}/books/id/${id}`)
+export const findBookById = (id: string) =>
+  axios.get(`${url}/books/bookid/${id}`)

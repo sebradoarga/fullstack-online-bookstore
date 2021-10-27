@@ -23,3 +23,12 @@ export interface Author {
   __v: number
   _id: string
 }
+
+export interface PopulatedAuthor {
+  authorName: string
+  authorPicture: string
+  authorBio: string
+  authorBooks: Book[]
+  __v: number
+  _id: string
+}

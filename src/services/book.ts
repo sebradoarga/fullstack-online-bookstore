@@ -6,7 +6,7 @@ const createBook = async (book: BookDocument): Promise<BookDocument> => {
 }
 
 const findBookById = async (bookId: string): Promise<BookDocument> => {
-  const foundBook = await Book.findById(bookId)
+  const foundBook = await Book.findById(bookId).populate({ path: 'author' })
 
   if (!foundBook) {
     throw new NotFoundError(`Book ${bookId} not found`)
