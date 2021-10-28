@@ -5,6 +5,7 @@ import { OrderDocument } from './Order'
 export type UserDocument = Document & {
   firstName: string
   lastName: string
+  image: string
   email: string
   address: string
   orders: OrderDocument[]
@@ -19,13 +20,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+  },
   email: {
     type: String,
     required: true,
   },
   address: {
     type: String,
-    required: true,
+    // required: true,
   },
   orders: {
     type: mongoose.Schema.Types.ObjectId,

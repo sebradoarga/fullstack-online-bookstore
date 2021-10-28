@@ -31,7 +31,9 @@ const BookPage = () => {
       <img src={currentBook.imageUrl} alt="" style={imageStyling} />
       <Title>{currentBook.title}</Title>
       {currentBook.author.map((author: Author) => (
-        <AuthorName>{author.authorName}</AuthorName>
+        <Link to={`/author/${author.authorName}`}>
+          <AuthorName>{author.authorName}</AuthorName>
+        </Link>
       ))}
       <Genres>
         {currentBook.genres.map((genre) => (

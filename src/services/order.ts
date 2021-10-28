@@ -1,6 +1,6 @@
 import Order, { OrderDocument } from '../models/Order'
 import { NotFoundError } from '../helpers/apiError'
-import Book from 'src/models/Book'
+import Book from '../models/Book'
 
 const createOrder = async (order: OrderDocument): Promise<OrderDocument> => {
   return order.save()

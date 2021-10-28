@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Author, Book } from '../../../types'
 import { Link } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
 
 const DisplayedBook = ({ book }: { book: Book }) => {
   const inlineStyle = {
@@ -8,8 +9,6 @@ const DisplayedBook = ({ book }: { book: Book }) => {
     maxHeight: '25rem',
     boxShadow: '0 0 15px 1px #000000',
   }
-
-  console.log('book autor', book.author)
 
   return (
     <BookContainer>
@@ -20,7 +19,7 @@ const DisplayedBook = ({ book }: { book: Book }) => {
         <Title>{book.title}</Title>
       </Link>
       {book.author.map((author: Author) => (
-        <Link to={`/author/${author.authorName}`}>
+        <Link key={uuidv4()} to={`/author/${author.authorName}`}>
           <AuthorName>{author && author.authorName}</AuthorName>
         </Link>
       ))}

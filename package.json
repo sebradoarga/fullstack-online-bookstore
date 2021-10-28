@@ -24,11 +24,14 @@
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
     "@types/compression": "^1.7.0",
     "@types/cors": "^2.8.12",
     "@types/jsonwebtoken": "^8.3.7",
     "@types/lusca": "^1.7.0",
+    "@types/passport-jwt": "^3.0.6",
     "@types/uuid": "^8.3.1",
+    "axios": "^0.24.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -43,6 +46,8 @@
     "mongoose": "^5.11.15",
     "nodemailer": "^6.4.3",
     "passport": "^0.4.1",
+    "passport-google-id-token": "^0.4.7",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "react-autocomplete-input": "^1.0.18",
     "winston": "^3.2.1"

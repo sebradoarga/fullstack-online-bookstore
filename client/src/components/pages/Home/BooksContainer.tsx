@@ -9,8 +9,6 @@ const BooksContainer = () => {
     (state: RootState) => state.booksReducer.books
   )
 
-  console.log('books', books)
-
   return (
     <Container>
       {books.map((book: Book) => (

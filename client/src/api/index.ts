@@ -25,3 +25,6 @@ export const findBookByTitle = (title: string) =>
 
 export const findBookById = (id: string) =>
   axios.get(`${url}/books/bookid/${id}`)
+
+export const login = (tokenObj: any) =>
+  axios.post(`${url}/google/login`, tokenObj)

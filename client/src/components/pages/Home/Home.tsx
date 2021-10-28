@@ -1,10 +1,13 @@
 import BooksContainer from './BooksContainer'
-import { Link } from 'react-router-dom'
-
+import HomeNavbar from '../Navbars/HomeNavbar'
+import Hero from './Hero'
+import Carousel from './Carousel'
 const Home = () => {
   return (
     <div>
-      <Link to="/addbook">Add book</Link>
+      <HomeNavbar />
+      <Hero />
+      <Carousel />
       <BooksContainer />
     </div>
   )
