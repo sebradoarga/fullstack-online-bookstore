@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 
-import Author from '../models/Author'
+import Author, { AuthorDocument } from '../models/Author'
 import AuthorService from '../services/author'
 import { BadRequestError } from '../helpers/apiError'
 
@@ -22,6 +22,36 @@ export const createAuthor = async (
 
     await AuthorService.createAuthor(author)
     res.json(author)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+export const populateAuthors = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const providedData = req.body
+    await Promise.all(
+      providedData.map(async (givenAuthor: any) => {
+        const { authorName, authorPicture, authorBio, authorBooks } =
+          givenAuthor
+        const authorInfo = new Author({
+          authorName,
+          authorPicture,
+          authorBio,
+          authorBooks,
+        })
+        await AuthorService.createAuthor(authorInfo)
+        res.json(givenAuthor)
+      })
+    )
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

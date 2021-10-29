@@ -7,6 +7,7 @@ import {
   findAllBooks,
   updateBook,
   findBookByTitle,
+  populateBooks,
 } from '../controllers/book'
 
 const router = express.Router()
@@ -17,5 +18,6 @@ router.get('/bookid/:bookId', findBookById)
 router.put('/:bookId', updateBook)
 router.delete('/:bookId', deleteBook)
 router.post('/', createBook)
+router.post('/populate', populateBooks)
 
 export default router

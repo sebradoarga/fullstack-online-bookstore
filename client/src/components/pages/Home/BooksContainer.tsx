@@ -21,14 +21,11 @@ const BooksContainer = () => {
 export default BooksContainer
 
 const Container = styled.div`
-  width: 98%;
+  width: 80%;
   margin: auto;
   margin-top: 8rem;
-  padding: 2rem;
-  border: 2px solid black;
-  border-radius: 10px;
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
 `

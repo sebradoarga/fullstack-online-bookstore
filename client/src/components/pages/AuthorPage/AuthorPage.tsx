@@ -5,6 +5,8 @@ import { findAuthorByName, findBookById } from '../../../api'
 import { useState, useEffect } from 'react'
 import { Author, PopulatedAuthor } from '../../../types'
 import { v4 as uuidv4 } from 'uuid'
+import HomeNavbar from '../Navbars/HomeNavbar'
+import Footer from '../../Footer'
 
 const AuthorPage = () => {
   const { author } = useParams<{ author: string }>()
@@ -57,49 +59,114 @@ const AuthorPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentAuthor.authorName])
 
-  const imageStyling = {
-    maxWidth: '20rem',
-    alignSelf: 'center',
-  }
-
   return (
-    <Container>
-      <Link to="/">
-        <ReturnBtn>Go back</ReturnBtn>
-      </Link>
-      <img src={currentAuthor.authorPicture} alt="" style={imageStyling} />
-      <h1>{author}</h1>
-      <p>{currentAuthor.authorBio}</p>
-      <h2>Books</h2>
-      <BooksContainer>
-        {currentPopulatedAuthor.authorBooks.length > 0 &&
-          currentPopulatedAuthor.authorBooks.map((book: any) => (
-            <Link key={uuidv4()} to={`/book/${book.data.title}`}>
-              <img src={book.data.imageUrl} alt="" />
-            </Link>
-          ))}
-      </BooksContainer>
-    </Container>
+    <Wrapper>
+      <AllContent>
+        <HomeNavbar />
+        <Container>
+          <PageContent>
+            <Image src={currentAuthor.authorPicture} alt="" />
+            <AuthorInfo>
+              <Name>{author}</Name>
+              <Bio>
+                {currentAuthor.authorBio.split('\n').map((paragraph) => (
+                  <Paragraph key={uuidv4()}>{paragraph}</Paragraph>
+                ))}
+              </Bio>
+              <BooksHeader>Books</BooksHeader>
+              <BooksContainer>
+                {currentPopulatedAuthor.authorBooks.length > 0 &&
+                  currentPopulatedAuthor.authorBooks.map((book: any) => (
+                    <Link key={uuidv4()} to={`/book/${book.data.title}`}>
+                      <img src={book.data.imageUrl} alt="" />
+                    </Link>
+                  ))}
+              </BooksContainer>
+            </AuthorInfo>
+          </PageContent>
+        </Container>
+      </AllContent>
+      <Footer />
+    </Wrapper>
   )
 }
 
 export default AuthorPage
 
-const Container = styled.div`
-  width: 80%;
-  margin: 10rem auto;
+const Wrapper = styled.div`
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `
 
-const ReturnBtn = styled.p`
-  font-size: 1.8rem;
+const AllContent = styled.div``
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
 `
+
 const BooksContainer = styled.div`
   display: flex;
+  margin-top: 25rem;
 
   & img {
     width: 15rem;
     margin: 0.5rem;
   }
+`
+const PageContent = styled.div`
+  display: flex;
+  margin-top: 13rem;
+  align-items: flex-start
+  border: 3px solid green;
+`
+const AuthorInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 3rem;
+`
+const Image = styled.img`
+  max-width: 25rem;
+  max-height: 25rem;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  margin-top: 1.5rem;
+  box-shadow: 0px 6px 12px rgb(0 0 0 / 30%);
+`
+const Name = styled.h1`
+  font-size: 5rem;
+`
+const Bio = styled.div`
+  max-height: 30rem;
+  padding-right: 2rem;
+  overflow-y: auto;
+  margin-top: 1rem;
+
+  ::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #130912;
+    border-radius: 10px;
+  }
+`
+
+const Paragraph = styled.p`
+  margin-top: 2rem;
+  font-size: 1.5rem;
+`
+const BooksHeader = styled.h2`
+  font-size: 3rem;
+  margin-top: 2rem;
 `

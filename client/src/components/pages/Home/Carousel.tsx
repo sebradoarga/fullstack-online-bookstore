@@ -1,25 +1,36 @@
 import styled from 'styled-components'
 import carousel1 from '../../../images/carousel1.png'
+import carousel2 from '../../../images/carousel2.png'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 const Carousel = () => {
-  const imageInlineStyling = {
-    width: '100rem',
-    height: '35rem',
-    border: '4px solid #130912',
-    borderRadius: '10px',
+  let settings = {
+    dots: true,
+    infinite: true,
+    speed: 700,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
   }
 
   return (
-    <Container>
-      <img src={carousel1} alt="" style={imageInlineStyling} />
+    <Container {...settings}>
+      <Wrap>
+        <img src={carousel1} alt="" />
+      </Wrap>
+      <Wrap>
+        <img src={carousel2} alt="" />
+      </Wrap>
     </Container>
   )
 }
 
 export default Carousel
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 2rem;
+const Container = styled(Slider)`
+  width: 80%;
+  margin: 4rem auto;
 `
+const Wrap = styled.div``

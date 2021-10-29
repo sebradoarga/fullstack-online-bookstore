@@ -5,9 +5,9 @@ import { v4 as uuidv4 } from 'uuid'
 
 const DisplayedBook = ({ book }: { book: Book }) => {
   const inlineStyle = {
-    maxWidth: '18rem',
-    maxHeight: '25rem',
-    boxShadow: '0 0 15px 1px #000000',
+    width: '20rem',
+    boxShadow: '0px 6px 12px rgb(0 0 0 / 30%)',
+    borderRadius: '4px',
   }
 
   return (
@@ -15,7 +15,7 @@ const DisplayedBook = ({ book }: { book: Book }) => {
       <Link to={`/book/${book.title}`}>
         <img src={book.imageUrl} alt="" style={inlineStyle} />
       </Link>
-      <Link to={`/book/${book.title}`}>
+      {/* <Link to={`/book/${book.title}`}>
         <Title>{book.title}</Title>
       </Link>
       {book.author.map((author: Author) => (
@@ -24,7 +24,7 @@ const DisplayedBook = ({ book }: { book: Book }) => {
         </Link>
       ))}
       <Price>${book.price.toFixed(2)}</Price>
-      {/*  */}
+       */}
     </BookContainer>
   )
 }
@@ -32,23 +32,29 @@ const DisplayedBook = ({ book }: { book: Book }) => {
 export default DisplayedBook
 
 const BookContainer = styled.div`
-  margin: 2rem;
+  margin: 0 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 15%;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0px 11px 18px rgb(0 0 0 / 30%);
+    transform: scale(1.025);
+  }
 `
-const Title = styled.h2`
-  font-size: 2.2rem;
-  margin-top: 1rem;
-  text-align: center;
-`
-const AuthorName = styled.h3`
-  font-size: 1.8rem;
-  font-weight: normal;
-  margin-top: 0.5rem;
-`
-const Price = styled.p`
-  font-size: 1.5rem;
-  margin-top: 0.6rem;
-`
+// const Title = styled.h2`
+//   font-size: 2.2rem;
+//   margin-top: 1rem;
+//   text-align: center;
+// `
+// const AuthorName = styled.h3`
+//   font-size: 1.8rem;
+//   font-weight: normal;
+//   margin-top: 0.5rem;
+// `
+// const Price = styled.p`
+//   font-size: 1.5rem;
+//   margin-top: 0.6rem;
+// `

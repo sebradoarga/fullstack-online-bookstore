@@ -3,6 +3,8 @@ import { Request, Response, NextFunction } from 'express'
 import Book from '../models/Book'
 import BookService from '../services/book'
 import { BadRequestError } from '../helpers/apiError'
+import axios from 'axios'
+import { AuthorDocument } from '../models/Author'
 
 // POST /books
 export const createBook = async (
@@ -24,6 +26,56 @@ export const createBook = async (
 
     await BookService.createBook(book)
     res.json(book)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+export const populateBooks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const providedData = req.body
+    await Promise.all(
+      providedData.map(async (providedBook: any) => {
+        const { title, genres, description, price, imageUrl } = providedBook
+        const authorName = providedBook.author
+        const authorIds: string[] = []
+
+        console.log('!!!!!!!!!!!!!!!!authorName', authorName)
+        await Promise.all(
+          authorName.map(async (oneAuthor: string) => {
+            console.log('oneAuthor', oneAuthor)
+            const response = await axios.get(
+              `http://localhost:5000/api/v1/authors/name/${oneAuthor}`
+            )
+            const authorObject: AuthorDocument = response.data
+            console.log('!!!!!!!!!!!!!!!!!!!authorObject', authorObject)
+            console.log('!!!!!!!!!!!!!!!!authorObject id', authorObject._id)
+            authorIds.push(authorObject._id)
+            console.log('!!!!!!!!!!!!!!!authorIds', authorIds)
+          })
+        )
+        const author = authorIds
+        const bookInfo = new Book({
+          title,
+          author,
+          genres,
+          description,
+          price,
+          imageUrl,
+        })
+        console.log('~~~~~~!!!!!!!!!!!!bookInfo', bookInfo)
+        await BookService.createBook(bookInfo)
+        res.json(providedBook)
+      })
+    )
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
