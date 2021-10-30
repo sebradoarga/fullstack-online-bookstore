@@ -7,8 +7,18 @@ import { Author, PopulatedAuthor } from '../../../types'
 import { v4 as uuidv4 } from 'uuid'
 import HomeNavbar from '../Navbars/HomeNavbar'
 import Footer from '../../Footer'
+import CartSidebar from '../../CartSidebar'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleCart } from '../../../redux/actions/cart'
+import { RootState } from '../../../redux/reducers'
 
 const AuthorPage = () => {
+  const dispatch = useDispatch()
+
+  const isCartOpen: boolean = useSelector(
+    (state: RootState) => state.cartReducer.isCartOpen
+  )
+
   const { author } = useParams<{ author: string }>()
   const [currentAuthor, setCurrentAuthor] = useState<Author>({
     authorName: '',
@@ -49,6 +59,11 @@ const AuthorPage = () => {
 
   useEffect(() => {
     getCurrentAuthor()
+    window.scrollTo(0, 0)
+    if (isCartOpen) {
+      dispatch(toggleCart())
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -62,6 +77,7 @@ const AuthorPage = () => {
   return (
     <Wrapper>
       <AllContent>
+        <CartSidebar />
         <HomeNavbar />
         <Container>
           <PageContent>
@@ -111,11 +127,13 @@ const Container = styled.div`
 
 const BooksContainer = styled.div`
   display: flex;
-  margin-top: 25rem;
-
+  margin-top: 1rem;
+  flex-wrap: wrap;
   & img {
     width: 15rem;
-    margin: 0.5rem;
+    margin-right: 0.5rem;
+    box-shadow: 0px 6px 12px rgb(0 0 0 / 30%);
+    border-radius: 4px;
   }
 `
 const PageContent = styled.div`

@@ -2,7 +2,6 @@ import { Book } from '../../types'
 
 export const toggleCart = () => (dispatch: any) => {
   try {
-    console.log('in actions')
     dispatch({ type: 'TOGGLE_CART' })
   } catch (error: any) {
     console.log(error.message)
@@ -12,6 +11,14 @@ export const toggleCart = () => (dispatch: any) => {
 export const addBookToCart = (book: Book) => async (dispatch: any) => {
   try {
     dispatch({ type: 'ADD_BOOK_TO_CART', payload: book })
+  } catch (error: any) {
+    console.log(error.message)
+  }
+}
+
+export const removeBookFromCart = (book: Book) => async (dispatch: any) => {
+  try {
+    dispatch({ type: 'REMOVE_BOOK_FROM_CART', payload: book._id })
   } catch (error: any) {
     console.log(error.message)
   }

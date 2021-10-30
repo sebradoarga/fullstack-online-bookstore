@@ -49,7 +49,6 @@ const AddAuthorModal = ({
         break
     }
 
-    console.log('author data to submit', dataToSubmit)
     dispatch(createAuthor(dataToSubmit))
   }
 

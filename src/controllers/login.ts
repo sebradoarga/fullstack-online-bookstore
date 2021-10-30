@@ -10,12 +10,11 @@ export const login = async (
   next: NextFunction
 ) => {
   try {
-    console.log('hier bin ich')
+    console.log('in the controller')
     const userData = req.user as UserDocument
-    console.log('this is the userData', userData)
-    const token = jwt.sign(userData, JWT_SECRET, { expiresIn: '2h' })
-    console.log('this is the token', token)
-    console.log('user', userData)
+    console.log('!!!!!userData', userData)
+    const token = jwt.sign({ userData }, JWT_SECRET, { expiresIn: '2h' })
+    console.log('!!!!!token', token)
     res.json({ token: token })
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {

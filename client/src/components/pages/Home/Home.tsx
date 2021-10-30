@@ -4,10 +4,27 @@ import Hero from './Hero'
 import Carousel from './Carousel'
 import Footer from '../../Footer'
 import styled from 'styled-components'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../redux/reducers'
 import CartSidebar from '../../CartSidebar'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleCart } from '../../../redux/actions/cart'
+import { RootState } from '../../../redux/reducers'
+
 const Home = () => {
+  const dispatch = useDispatch()
+
+  const isCartOpen: boolean = useSelector(
+    (state: RootState) => state.cartReducer.isCartOpen
+  )
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+
+    if (isCartOpen) {
+      dispatch(toggleCart())
+    }
+  }, [])
+
   return (
     <div style={{ position: 'relative', minHeight: '100%' }}>
       <PageWrapper>

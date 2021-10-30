@@ -14,8 +14,6 @@ const cartReducer = (state: DefaultState = defaultState, action: any) => {
   switch (action.type) {
     case 'TOGGLE_CART':
       const newState = state.isCartOpen === false ? true : false
-      console.log('newState', newState)
-      console.log('toggled')
       return {
         ...state,
         isCartOpen: newState,
@@ -25,6 +23,14 @@ const cartReducer = (state: DefaultState = defaultState, action: any) => {
       return {
         ...state,
         cart: [...state.cart, newBook],
+      }
+    case 'REMOVE_BOOK_FROM_CART':
+      const afterState = state.cart.filter(
+        (book) => book._id !== action.payload
+      )
+      return {
+        ...state,
+        cart: afterState,
       }
     default: {
       return { ...state }

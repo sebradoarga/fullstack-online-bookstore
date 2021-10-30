@@ -17,7 +17,6 @@ const HomeNavbar = () => {
     }
     console.log('tokenObj', tokenObj)
     const result: any = await login(tokenObj)
-    console.log('result', result)
 
     localStorage.setItem('token', result.data.token)
   }

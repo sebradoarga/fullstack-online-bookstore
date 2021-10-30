@@ -48,18 +48,13 @@ export const populateBooks = async (
         const authorName = providedBook.author
         const authorIds: string[] = []
 
-        console.log('!!!!!!!!!!!!!!!!authorName', authorName)
         await Promise.all(
           authorName.map(async (oneAuthor: string) => {
-            console.log('oneAuthor', oneAuthor)
             const response = await axios.get(
               `http://localhost:5000/api/v1/authors/name/${oneAuthor}`
             )
             const authorObject: AuthorDocument = response.data
-            console.log('!!!!!!!!!!!!!!!!!!!authorObject', authorObject)
-            console.log('!!!!!!!!!!!!!!!!authorObject id', authorObject._id)
             authorIds.push(authorObject._id)
-            console.log('!!!!!!!!!!!!!!!authorIds', authorIds)
           })
         )
         const author = authorIds
@@ -71,7 +66,6 @@ export const populateBooks = async (
           price,
           imageUrl,
         })
-        console.log('~~~~~~!!!!!!!!!!!!bookInfo', bookInfo)
         await BookService.createBook(bookInfo)
         res.json(providedBook)
       })
@@ -164,14 +158,11 @@ export const findBookByTitle = async (
   next: NextFunction
 ) => {
   try {
-    console.log('parameter title', req.params.title)
     res.json(await BookService.findBookByTitle(req.params.title))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
-      console.log('weve got an error')
       next(new BadRequestError('Invalid Request', error))
     } else {
-      console.log('another error)')
       next(error)
     }
   }

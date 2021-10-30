@@ -8,18 +8,27 @@ import { RootState } from '../../../redux/reducers'
 import HomeNavbar from '../Navbars/HomeNavbar'
 import Footer from '../../Footer'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
-import { addBookToCart } from '../../../redux/actions/cart'
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket'
+import { addBookToCart, toggleCart } from '../../../redux/actions/cart'
+import CartSidebar from '../../CartSidebar'
 
 const BookPage = () => {
   const dispatch = useDispatch()
+
+  const isCartOpen: boolean = useSelector(
+    (state: RootState) => state.cartReducer.isCartOpen
+  )
+
   const { book } = useParams<{ book: string }>()
   const books: Book[] = useSelector(
     (state: RootState) => state.booksReducer.books
   )
 
+  const cart: Book[] = useSelector((state: RootState) => state.cartReducer.cart)
+
   const currentBook = books.find((foundBook) => foundBook.title === book)
-  console.log('books', books)
-  console.log('book', currentBook)
+
+  const isBookInCart = currentBook ? cart.includes(currentBook) : false
 
   const linkInlineStyling = {
     textDecoration: 'none',
@@ -27,12 +36,24 @@ const BookPage = () => {
   }
   useEffect(() => {
     window.scrollTo(0, 0)
+    if (isCartOpen) {
+      dispatch(toggleCart())
+    }
   }, [])
 
   const buyBook = () => {
     if (currentBook) {
-      dispatch(addBookToCart(currentBook))
+      if (isBookInCart) {
+        console.log('book already in cart')
+      } else {
+        dispatch(addBookToCart(currentBook))
+      }
     }
+  }
+
+  const disabledButton = {
+    background: '#b1462396',
+    cursor: 'default',
   }
 
   return !currentBook ? (
@@ -40,6 +61,7 @@ const BookPage = () => {
   ) : (
     <Wrapper>
       <PageContent>
+        <CartSidebar />
         <HomeNavbar />
         <Container>
           <Image src={currentBook.imageUrl} alt="" />
@@ -49,6 +71,7 @@ const BookPage = () => {
               <Link
                 to={`/author/${author.authorName}`}
                 style={linkInlineStyling}
+                key={uuidv4()}
               >
                 <AuthorName>{author.authorName}</AuthorName>
               </Link>
@@ -63,15 +86,30 @@ const BookPage = () => {
                 <Paragraph key={uuidv4()}>{paragraph}</Paragraph>
               ))}
             </Description>
-            <Price>${currentBook.price}</Price>
+            <Price>
+              <OldPrice>
+                ${(currentBook.price + 0.2 * currentBook.price).toFixed(2)}
+              </OldPrice>
+              <NewPrice>${currentBook.price.toFixed(2)}</NewPrice>
+            </Price>
             <Buttons>
-              <AddToCart onClick={buyBook}>
-                <AddShoppingCartIcon
-                  fontSize="large"
-                  style={{ marginRight: '1rem' }}
-                />
-                Add to cart
-              </AddToCart>
+              {isBookInCart ? (
+                <AddToCart style={disabledButton}>
+                  <ShoppingBasketIcon
+                    fontSize="large"
+                    style={{ marginRight: '1rem' }}
+                  />
+                  In Cart
+                </AddToCart>
+              ) : (
+                <AddToCart onClick={buyBook}>
+                  <AddShoppingCartIcon
+                    fontSize="large"
+                    style={{ marginRight: '1rem' }}
+                  />
+                  Add To Cart
+                </AddToCart>
+              )}
             </Buttons>
           </BookInfo>
         </Container>
@@ -138,9 +176,21 @@ const Description = styled.div`
 `
 
 const Price = styled.p`
-  font-size: 2.7rem;
   font-weight: bold;
   margin-top: 2rem;
+`
+
+const OldPrice = styled.span`
+  font-family: sans-serif;
+  font-size: 2.2rem;
+  color: #c50404;
+  text-decoration: line-through;
+`
+
+const NewPrice = styled.span`
+  font-family: sans-serif;
+  margin-left: 1.5rem;
+  font-size: 2.7rem;
 `
 
 const Paragraph = styled.p`
@@ -149,6 +199,7 @@ const Paragraph = styled.p`
 const Buttons = styled.div`
   display: flex;
   margin-top: 2rem;
+  align-items: center;
 `
 
 const AddToCart = styled.button`
