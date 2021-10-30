@@ -78,7 +78,9 @@ const BookPage = () => {
             ))}
             <Genres>
               {currentBook.genres.map((genre) => (
-                <h3 key={uuidv4()}>{`${genre} `}</h3>
+                <h3 key={uuidv4()}>
+                  <Link to={`/genres/${genre}`}>{`${genre} `}</Link>
+                </h3>
               ))}
             </Genres>
             <Description>
@@ -165,6 +167,7 @@ const Genres = styled.div`
   margin-left: 0.3rem;
   opacity: 0.7;
   letter-spacing: 0.15rem;
+  transition: all 0.3s ease;
 
   & h3 {
     margin-right: 1rem;

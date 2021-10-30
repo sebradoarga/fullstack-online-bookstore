@@ -11,6 +11,7 @@ import { getBooks } from './redux/actions/books'
 import { getAuthors } from './redux/actions/authors'
 import { fetchAuthors, fetchBooks, findBookById, updateAuthor } from './api'
 import { Author, Book } from './types'
+import GenrePage from './components/pages/GenrePage/GenrePage'
 
 function App() {
   const dispatch = useDispatch()
@@ -96,6 +97,10 @@ function App() {
 
       <Route exact path="/addbook/">
         <AddBookPage />
+      </Route>
+
+      <Route exact path="/genres/:genre">
+        <GenrePage />
       </Route>
     </Router>
   )

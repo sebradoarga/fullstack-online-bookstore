@@ -4,16 +4,10 @@ import { Link } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
 const DisplayedBook = ({ book }: { book: Book }) => {
-  const inlineStyle = {
-    width: '20rem',
-    boxShadow: '0px 6px 12px rgb(0 0 0 / 30%)',
-    borderRadius: '4px',
-  }
-
   return (
     <BookContainer>
       <Link to={`/book/${book.title}`}>
-        <img src={book.imageUrl} alt="" style={inlineStyle} />
+        <Image src={book.imageUrl} alt="" />
       </Link>
     </BookContainer>
   )
@@ -30,7 +24,14 @@ const BookContainer = styled.div`
   transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: 0px 11px 18px rgb(0 0 0 / 30%);
     transform: scale(1.025);
   }
+`
+
+const Image = styled.img`
+  width: 20rem;
+  height: 30rem;
+  object-fit: center;
+  boxshadow: 0px 6px 12px rgb(0 0 0 / 30%);
+  border-radius: 4px;
 `

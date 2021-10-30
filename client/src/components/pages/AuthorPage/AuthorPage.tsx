@@ -131,7 +131,7 @@ const BooksContainer = styled.div`
   flex-wrap: wrap;
   & img {
     width: 15rem;
-    margin-right: 0.5rem;
+    margin-right: 1rem;
     box-shadow: 0px 6px 12px rgb(0 0 0 / 30%);
     border-radius: 4px;
   }

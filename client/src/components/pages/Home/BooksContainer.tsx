@@ -3,29 +3,68 @@ import DisplayedBook from './DisplayedBook'
 import { Book } from '../../../types'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/reducers'
+import NavigateNextIcon from '@mui/icons-material/NavigateNext'
+import { Link } from 'react-router-dom'
 
-const BooksContainer = () => {
+const BooksContainer = ({ filterCriterium }: { filterCriterium: string }) => {
   const books: Book[] = useSelector(
     (state: RootState) => state.booksReducer.books
   )
 
+  const filteredBooks = books.filter((book) => {
+    if (book.genres.includes(filterCriterium)) {
+      return true
+    }
+  })
+
   return (
-    <Container>
-      {books.map((book: Book) => (
-        <DisplayedBook key={book._id} book={book} />
-      ))}
-    </Container>
+    <Wrapper>
+      <Container>
+        {filteredBooks.slice(0, 5).map((book: Book) => (
+          <DisplayedBook key={book._id} book={book} />
+        ))}
+      </Container>
+      <Link to={`/genres/${filterCriterium}`}>
+        <MoreBtn>
+          <NavigateNextIcon fontSize="large" />
+          <SeeMore>See more</SeeMore>
+        </MoreBtn>
+      </Link>
+    </Wrapper>
   )
 }
 
 export default BooksContainer
 
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 const Container = styled.div`
   width: 80%;
-  margin: auto;
-  margin-top: 8rem;
+  margin-top: 2rem;
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
   flex-wrap: wrap;
+`
+const MoreBtn = styled.button`
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin-left: 2rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`
+
+const SeeMore = styled.p`
+  text-transform: uppercase;
+  font-family: sans-serif;
+  letter-spacing: 0.2rem;
+  font-size: 1rem;
 `
