@@ -76,7 +76,11 @@ const CartSidebar = () => {
           <TotalText>Total:</TotalText>
           <TotalPrice>${getCurrentTotal()}</TotalPrice>
         </Total>
-        {cartBooks.length > 0 && <CheckoutBtn>Go to Checkout</CheckoutBtn>}
+        {cartBooks.length > 0 && (
+          <Link to="/checkout">
+            <CheckoutBtn>Go to Checkout</CheckoutBtn>
+          </Link>
+        )}
       </CartFooter>
     </Wrapper>
   )

@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login'
 import { login } from '../../../api'
 import logo from '../../../images/logo-transparent-background.png'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { useDispatch } from 'react-redux'
-import { toggleCart } from '../../../redux/actions/cart'
 
 const HomeNavbar = () => {
   const dispatch = useDispatch()
@@ -21,19 +19,8 @@ const HomeNavbar = () => {
     localStorage.setItem('token', result.data.token)
   }
 
-  const linkInlineStyling = {
-    fontSize: '2rem',
-    color: 'white',
-    textDecoration: 'none',
-    marginRight: '2.5rem',
-  }
-
   const logoStyling = {
     width: '30rem',
-  }
-
-  const cartClicked = () => {
-    dispatch(toggleCart())
   }
 
   return (
@@ -42,12 +29,6 @@ const HomeNavbar = () => {
         <img src={logo} alt="" style={logoStyling} />
       </Link>
       <Buttons>
-        {/* <Link to="/addbook" style={linkInlineStyling}>
-          Add book
-        </Link> */}
-        <CartButton onClick={cartClicked}>
-          <ShoppingCartIcon fontSize="large" sx={{ color: 'white' }} />
-        </CartButton>
         <GoogleLogin
           clientId="1082464560224-uhrnod2mojkoh61hag9tiua5qktdgekv.apps.googleusercontent.com"
           buttonText="Login"

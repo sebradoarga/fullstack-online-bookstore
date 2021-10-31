@@ -5,7 +5,7 @@ import BookService from '../services/book'
 import { BadRequestError } from '../helpers/apiError'
 import axios from 'axios'
 import { AuthorDocument } from '../models/Author'
-import { UserDocument } from 'src/models/User'
+import { UserDocument } from '../models/User'
 
 // POST /books
 export const createBook = async (
