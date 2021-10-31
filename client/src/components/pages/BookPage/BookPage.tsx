@@ -141,6 +141,7 @@ const Image = styled.img`
   width: 23rem;
   height: 35rem;
   box-shadow: rgb(0 0 0) 0px 0px 15px 1px;
+  border-radius: 4px;
 `
 
 const BookInfo = styled.div`

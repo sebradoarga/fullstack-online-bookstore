@@ -5,6 +5,7 @@ import BookService from '../services/book'
 import { BadRequestError } from '../helpers/apiError'
 import axios from 'axios'
 import { AuthorDocument } from '../models/Author'
+import { UserDocument } from 'src/models/User'
 
 // POST /books
 export const createBook = async (
@@ -12,6 +13,8 @@ export const createBook = async (
   res: Response,
   next: NextFunction
 ) => {
+  const userData = req.user as UserDocument
+  console.log('userdata', userData)
   try {
     const { title, author, genres, description, price, imageUrl } = req.body
 

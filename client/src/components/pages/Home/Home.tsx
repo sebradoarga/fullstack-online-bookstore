@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleCart } from '../../../redux/actions/cart'
 import { RootState } from '../../../redux/reducers'
 import { Link } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
 
 const Home = () => {
   const dispatch = useDispatch()
@@ -25,6 +26,19 @@ const Home = () => {
       dispatch(toggleCart())
     }
   }, [])
+
+  const allGenres = [
+    'classics',
+    'fantasy',
+    'historical fiction',
+    'horror',
+    'mystery',
+    'fiction',
+    'romance',
+    'science fiction',
+    'thriller',
+    'young adult',
+  ]
 
   return (
     <div style={{ position: 'relative', minHeight: '100%' }}>
@@ -46,18 +60,11 @@ const Home = () => {
           <BooksContainer filterCriterium="mystery" />
           <BrowseHeader>Browse by Genre</BrowseHeader>
           <Categories>
-            <Link to={`/genres/classics`}>Classics</Link>
-            <Link to={`/genres/fantasy`}>Fantasy</Link>
-            <Link to={`/genres/historical fiction`}>Historical Fiction</Link>
-            <Link to={`/genres/horror`}>Horror</Link>
-            <Link to={`/genres/mystery`}>Mystery</Link>
-            <Link to={`/genres/nonfiction`}>Nonfiction</Link>
-            <Link to={`/genres/fiction`}>Fiction</Link>
-            <Link to={`/genres/poetry`}>Poetry</Link>
-            <Link to={`/genres/romance`}>Romance</Link>
-            <Link to={`/genres/science fiction`}>Science Fiction</Link>
-            <Link to={`/genres/thriller`}>Thriller</Link>
-            <Link to={`/genres/young adult`}>Young Adult</Link>
+            {allGenres.map((genre) => (
+              <Link key={uuidv4()} to={`/genres/${genre}`}>
+                {genre}
+              </Link>
+            ))}
           </Categories>
         </PageContent>
         <Footer />
@@ -107,6 +114,7 @@ const Categories = styled.div`
   & * {
     margin-bottom: 1rem;
     transition: all 0.3s ease;
+    text-transform: capitalize;
     &:hover {
       color: #f4922e;
     }

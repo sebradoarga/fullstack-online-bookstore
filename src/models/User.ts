@@ -6,6 +6,7 @@ export type UserDocument = Document & {
   firstName: string
   lastName: string
   image: string
+  role: string
   email: string
   address: string
   orders: OrderDocument[]
@@ -21,6 +22,9 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   image: {
+    type: String,
+  },
+  role: {
     type: String,
   },
   email: {
