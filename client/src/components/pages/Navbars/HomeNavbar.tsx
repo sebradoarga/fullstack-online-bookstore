@@ -6,17 +6,23 @@ import { login } from '../../../api'
 import logo from '../../../images/logo-transparent-background.png'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleCart } from '../../../redux/actions/cart'
+import { addUserData, toggleCart } from '../../../redux/actions/cart'
 import { logInUser } from '../../../redux/actions/cart'
 import { RootState } from '../../../redux/reducers'
 
 const HomeNavbar = () => {
   const dispatch = useDispatch()
-  const [userName, setUserName] = useState('')
-  const [userImage, setUserImage] = useState('')
 
   const userLoggedIn: boolean = useSelector(
     (state: RootState) => state.cartReducer.userLoggedIn
+  )
+
+  const userName: string = useSelector(
+    (state: RootState) => state.cartReducer.userName
+  )
+
+  const userImage: string = useSelector(
+    (state: RootState) => state.cartReducer.userImage
   )
 
   const responseGoogle = async (response: any) => {
@@ -28,10 +34,12 @@ const HomeNavbar = () => {
     console.log('result', result)
 
     result &&
-      setUserName(
-        `${result.data.userData.firstName} ${result.data.userData.lastName}`
+      dispatch(
+        addUserData(
+          `${result.data.userData.firstName} ${result.data.userData.lastName}`,
+          result.data.userData.image
+        )
       )
-    result && setUserImage(result.data.userData.image)
     result && localStorage.setItem('token', result.data.token)
     dispatch(logInUser())
   }

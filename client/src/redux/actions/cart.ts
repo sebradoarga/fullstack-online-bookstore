@@ -31,3 +31,12 @@ export const logInUser = () => async (dispatch: any) => {
     console.log(error.message)
   }
 }
+
+export const addUserData =
+  (userName: string, userImage: string) => async (dispatch: any) => {
+    try {
+      dispatch({ type: 'ADD_USER_DATA', payload: [userName, userImage] })
+    } catch (error: any) {
+      console.log(error.message)
+    }
+  }

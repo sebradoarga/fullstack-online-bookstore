@@ -4,12 +4,16 @@ const defaultState = {
   isCartOpen: false,
   cart: [],
   userLoggedIn: false,
+  userName: '',
+  userImage: '',
 }
 
 interface DefaultState {
   isCartOpen: boolean
   cart: Book[]
   userLoggedIn: boolean
+  userName: string
+  userImage: string
 }
 
 const cartReducer = (state: DefaultState = defaultState, action: any) => {
@@ -38,6 +42,12 @@ const cartReducer = (state: DefaultState = defaultState, action: any) => {
       return {
         ...state,
         userLoggedIn: !state.userLoggedIn,
+      }
+    case 'ADD_USER_DATA':
+      return {
+        ...state,
+        userName: action.payload[0],
+        userImage: action.payload[1],
       }
     default: {
       return { ...state }
