@@ -1,24 +1,39 @@
-import React from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login'
 import { login } from '../../../api'
 import logo from '../../../images/logo-transparent-background.png'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toggleCart } from '../../../redux/actions/cart'
+import { logInUser } from '../../../redux/actions/cart'
+import { RootState } from '../../../redux/reducers'
 
 const HomeNavbar = () => {
   const dispatch = useDispatch()
+  const [userName, setUserName] = useState('')
+  const [userImage, setUserImage] = useState('')
+
+  const userLoggedIn: boolean = useSelector(
+    (state: RootState) => state.cartReducer.userLoggedIn
+  )
 
   const responseGoogle = async (response: any) => {
     const tokenObj = {
       id_token: response.tokenId,
     }
-    console.log('tokenObj', tokenObj)
     const result: any = await login(tokenObj)
 
-    localStorage.setItem('token', result.data.token)
+    console.log('result', result)
+
+    result &&
+      setUserName(
+        `${result.data.userData.firstName} ${result.data.userData.lastName}`
+      )
+    result && setUserImage(result.data.userData.image)
+    result && localStorage.setItem('token', result.data.token)
+    dispatch(logInUser())
   }
 
   const linkInlineStyling = {
@@ -48,13 +63,20 @@ const HomeNavbar = () => {
         <CartButton onClick={cartClicked}>
           <ShoppingCartIcon fontSize="large" sx={{ color: 'white' }} />
         </CartButton>
-        <GoogleLogin
-          clientId="1082464560224-uhrnod2mojkoh61hag9tiua5qktdgekv.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={'single_host_origin'}
-        />
+        {userLoggedIn ? (
+          <LoggedInUserPresentation>
+            <Greeting>Hello, {userName}</Greeting>
+            <Image src={userImage} />
+          </LoggedInUserPresentation>
+        ) : (
+          <GoogleLogin
+            clientId="1082464560224-uhrnod2mojkoh61hag9tiua5qktdgekv.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+          />
+        )}
       </Buttons>
     </Navbar>
   )
@@ -84,4 +106,20 @@ const CartButton = styled.button`
   border: none;
   margin-right: 2rem;
   cursor: pointer;
+`
+const LoggedInUserPresentation = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const Greeting = styled.p`
+  color: white;
+  margin-right: 2rem;
+  font-size: 1.5rem;
+`
+
+const Image = styled.img`
+  width: 5.5rem;
+  border-radius: 50%;
+  border: 2px solid white;
 `

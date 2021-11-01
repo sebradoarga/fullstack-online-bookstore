@@ -16,6 +16,16 @@ const findUserById = async (userId: string): Promise<UserDocument> => {
   return foundUser
 }
 
+const findUserByEmail = async (userEmail: string): Promise<UserDocument> => {
+  const foundUser = await User.findOne({ email: `${userEmail}` })
+
+  if (!foundUser) {
+    throw new NotFoundError(`User ${userEmail} not found`)
+  }
+
+  return foundUser
+}
+
 const findAllUsers = async (): Promise<UserDocument[]> => {
   return User.find()
 }
@@ -52,18 +62,28 @@ const findOrCreate = async (
   familyName: string
 ) => {
   const user = await User.findOne({ email: userEmail })
+  console.log('!!!!!!user is', user)
   if (!user) {
-    console.log('no user found')
+    console.log('!!!!!!here I am. the user does not exist yet')
+    console.log('userEmail', userEmail)
+    console.log('picture', picture)
+    console.log('givenName', givenName)
+    console.log('familyName', familyName)
     const findUser = async () => {
-      await axios.post('http://localhost:5000/api/v1/users', {
-        firstName: givenName,
-        lastName: familyName,
-        image: picture,
-        email: userEmail,
-      })
-      const createdUser: any = findUser()
+      console.log('!!!!!!inside findUser now')
+      const createdUser: any = await axios.post(
+        'http://localhost:5000/api/v1/users',
+        {
+          firstName: givenName,
+          lastName: familyName,
+          image: picture,
+          email: userEmail,
+        }
+      )
+      console.log('!!!!!!!!!!createdUser', createdUser)
       return createdUser
     }
+    findUser()
   } else {
     console.log('user found')
     return user
@@ -77,4 +97,5 @@ export default {
   updateUser,
   deleteUser,
   findOrCreate,
+  findUserByEmail,
 }

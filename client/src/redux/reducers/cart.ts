@@ -3,11 +3,13 @@ import { Book } from '../../types'
 const defaultState = {
   isCartOpen: false,
   cart: [],
+  userLoggedIn: false,
 }
 
 interface DefaultState {
   isCartOpen: boolean
   cart: Book[]
+  userLoggedIn: boolean
 }
 
 const cartReducer = (state: DefaultState = defaultState, action: any) => {
@@ -31,6 +33,11 @@ const cartReducer = (state: DefaultState = defaultState, action: any) => {
       return {
         ...state,
         cart: afterState,
+      }
+    case 'LOG_IN_USER':
+      return {
+        ...state,
+        userLoggedIn: !state.userLoggedIn,
       }
     default: {
       return { ...state }

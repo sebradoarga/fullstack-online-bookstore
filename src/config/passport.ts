@@ -15,7 +15,7 @@ export const googleStrategy = new GoogleTokenStrategy(
     clientId: process.env.GOOGLE_CLIENT_ID,
   },
   async (parsedToken: any, googleId: any, done: any) => {
-    console.log('parsed token', parsedToken)
+    console.log('!!!!!!!!in the strategy')
     // eslint-disable-next-line @typescript-eslint/camelcase
     const { email, name, picture, given_name, family_name } =
       parsedToken.payload
@@ -39,12 +39,7 @@ export const jwtStrategy = new JwtStrategy(
   async (payload: UserDocument, done: any) => {
     console.log('payload', payload)
     const { email } = payload
-    // const user = await UserService.findOneByEmail(email)
-    const user = {
-      firstName: 'Radu',
-      lastName: 'Oarga',
-      image: 'raduoarga95@gmail.com',
-    }
+    const user = await UserService.findUserByEmail(email)
 
     if (!user) {
       // throw notfound error

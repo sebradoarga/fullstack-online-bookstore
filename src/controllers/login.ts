@@ -10,12 +10,12 @@ export const login = async (
   next: NextFunction
 ) => {
   try {
-    console.log('in the controller')
+    console.log('!!!!!!!!!in the controller')
     const userData = req.user as UserDocument
     console.log('!!!!!userData', userData)
     const token = jwt.sign({ userData }, JWT_SECRET, { expiresIn: '2h' })
-    console.log('!!!!!token', token)
-    res.json({ token: token })
+    // res.json({ token: token })
+    res.json({ userData })
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

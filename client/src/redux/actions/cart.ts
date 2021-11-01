@@ -23,3 +23,11 @@ export const removeBookFromCart = (book: Book) => async (dispatch: any) => {
     console.log(error.message)
   }
 }
+
+export const logInUser = () => async (dispatch: any) => {
+  try {
+    dispatch({ type: 'LOG_IN_USER' })
+  } catch (error: any) {
+    console.log(error.message)
+  }
+}
