@@ -52,6 +52,10 @@ const GenrePage = () => {
     }
   }
 
+  const isLoggedIn: boolean = useSelector(
+    (state: RootState) => state.cartReducer.userLoggedIn
+  )
+
   return (
     <div>
       <Wrapper>
@@ -82,22 +86,26 @@ const GenrePage = () => {
                   <NewPrice>${book.price.toFixed(2)}</NewPrice>
                 </Price>
                 <BuyButton>
-                  {cart.includes(book) ? (
-                    <AddToCart style={disabledButton}>
-                      <ShoppingBasketIcon
-                        fontSize="large"
-                        style={{ marginRight: '1rem' }}
-                      />
-                      In Cart
-                    </AddToCart>
+                  {isLoggedIn ? (
+                    cart.includes(book) ? (
+                      <AddToCart style={disabledButton}>
+                        <ShoppingBasketIcon
+                          fontSize="large"
+                          style={{ marginRight: '1rem' }}
+                        />
+                        In Cart
+                      </AddToCart>
+                    ) : (
+                      <AddToCart onClick={() => buyBook(book)}>
+                        <AddShoppingCartIcon
+                          fontSize="large"
+                          style={{ marginRight: '1rem' }}
+                        />
+                        Add To Cart
+                      </AddToCart>
+                    )
                   ) : (
-                    <AddToCart onClick={() => buyBook(book)}>
-                      <AddShoppingCartIcon
-                        fontSize="large"
-                        style={{ marginRight: '1rem' }}
-                      />
-                      Add To Cart
-                    </AddToCart>
+                    <AddToCart style={disabledButton}>Please log in</AddToCart>
                   )}
                 </BuyButton>
               </BookContainer>

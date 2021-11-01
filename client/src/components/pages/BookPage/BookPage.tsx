@@ -19,6 +19,10 @@ const BookPage = () => {
     (state: RootState) => state.cartReducer.isCartOpen
   )
 
+  const isLoggedIn: boolean = useSelector(
+    (state: RootState) => state.cartReducer.userLoggedIn
+  )
+
   const { book } = useParams<{ book: string }>()
   const books: Book[] = useSelector(
     (state: RootState) => state.booksReducer.books
@@ -95,22 +99,26 @@ const BookPage = () => {
               <NewPrice>${currentBook.price.toFixed(2)}</NewPrice>
             </Price>
             <Buttons>
-              {isBookInCart ? (
-                <AddToCart style={disabledButton}>
-                  <ShoppingBasketIcon
-                    fontSize="large"
-                    style={{ marginRight: '1rem' }}
-                  />
-                  In Cart
-                </AddToCart>
+              {isLoggedIn ? (
+                isBookInCart ? (
+                  <AddToCart style={disabledButton}>
+                    <ShoppingBasketIcon
+                      fontSize="large"
+                      style={{ marginRight: '1rem' }}
+                    />
+                    In Cart
+                  </AddToCart>
+                ) : (
+                  <AddToCart onClick={buyBook}>
+                    <AddShoppingCartIcon
+                      fontSize="large"
+                      style={{ marginRight: '1rem' }}
+                    />
+                    Add To Cart
+                  </AddToCart>
+                )
               ) : (
-                <AddToCart onClick={buyBook}>
-                  <AddShoppingCartIcon
-                    fontSize="large"
-                    style={{ marginRight: '1rem' }}
-                  />
-                  Add To Cart
-                </AddToCart>
+                <AddToCart style={disabledButton}>Please log in</AddToCart>
               )}
             </Buttons>
           </BookInfo>
