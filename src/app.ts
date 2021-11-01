@@ -5,7 +5,6 @@ import Cors from 'cors'
 import passport from 'passport'
 
 import loginRouter from './routers/login'
-import movieRouter from './routers/movie'
 import userRouter from './routers/user'
 import bookRouter from './routers/book'
 import orderRouter from './routers/order'
@@ -34,9 +33,6 @@ passport.use(googleStrategy)
 passport.use(jwtStrategy)
 
 app.use(Cors())
-
-// Use movie router
-app.use('/api/v1/movies', movieRouter)
 
 app.use('/api/v1/google/login', loginRouter)
 
