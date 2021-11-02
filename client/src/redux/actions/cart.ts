@@ -44,3 +44,13 @@ export const addUserData =
       console.log(error.message)
     }
   }
+
+export const logout = () => async (dispatch: any) => {
+  try {
+    dispatch({
+      type: 'LOG_OUT',
+    })
+  } catch (error: any) {
+    console.log(error.message)
+  }
+}

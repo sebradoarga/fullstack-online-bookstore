@@ -6,16 +6,18 @@ import { login } from '../../../api'
 import logo from '../../../images/logo-transparent-background.png'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { useDispatch, useSelector } from 'react-redux'
-import { addUserData, toggleCart } from '../../../redux/actions/cart'
+import { addUserData, logout, toggleCart } from '../../../redux/actions/cart'
 import { logInUser } from '../../../redux/actions/cart'
 import { RootState } from '../../../redux/reducers'
 import SettingsIcon from '@mui/icons-material/Settings'
 import MenuBookIcon from '@mui/icons-material/MenuBook'
+import LogoutIcon from '@mui/icons-material/Logout'
 
 const HomeNavbar = () => {
   const dispatch = useDispatch()
 
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [logoutDropdownOpen, setLogoutDropdownOpen] = useState(false)
 
   const userLoggedIn: boolean = useSelector(
     (state: RootState) => state.cartReducer.userLoggedIn
@@ -82,6 +84,18 @@ const HomeNavbar = () => {
     setDropdownOpen(!dropdownOpen)
   }
 
+  const hideLogoutDropdown = {
+    display: 'none',
+  }
+
+  const displayLogoutDropdown = {
+    display: 'flex',
+  }
+
+  const toggleLogoutDropdown = () => {
+    setLogoutDropdownOpen(!logoutDropdownOpen)
+  }
+
   const backgroundOnOpen = {
     background: '#271325',
   }
@@ -110,10 +124,24 @@ const HomeNavbar = () => {
           <ShoppingCartIcon fontSize="large" sx={{ color: 'white' }} />
         </CartButton>
         {userLoggedIn ? (
-          <LoggedInUserPresentation>
-            <Greeting>Hello, {userName}</Greeting>
-            <Image src={userImage} />
-          </LoggedInUserPresentation>
+          <LogoutDropDown onClick={() => toggleLogoutDropdown()}>
+            <LoggedInUserPresentation
+              style={logoutDropdownOpen ? backgroundOnOpen : {}}
+            >
+              <Greeting>Hello, {userName}</Greeting>
+              <Image src={userImage} />
+            </LoggedInUserPresentation>
+
+            <LogoutBtn
+              style={
+                logoutDropdownOpen ? displayLogoutDropdown : hideLogoutDropdown
+              }
+              onClick={() => dispatch(logout())}
+            >
+              <LogoutIcon fontSize="large" />
+              <p style={{ marginLeft: '0.7rem' }}>Log out</p>
+            </LogoutBtn>
+          </LogoutDropDown>
         ) : (
           <GoogleLogin
             clientId="1082464560224-uhrnod2mojkoh61hag9tiua5qktdgekv.apps.googleusercontent.com"
@@ -152,10 +180,6 @@ const CartButton = styled.button`
   margin-right: 2rem;
   cursor: pointer;
 `
-const LoggedInUserPresentation = styled.div`
-  display: flex;
-  align-items: center;
-`
 
 const Greeting = styled.p`
   color: white;
@@ -174,6 +198,21 @@ const DropDown = styled.div`
   margin-right: 2rem;
 `
 
+const LogoutDropDown = styled.div`
+  position: relative;
+`
+
+const LoggedInUserPresentation = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  height: 10rem;
+  padding: 1.5rem;
+
+  &:hover {
+    background: #271325;
+  }
+`
 const AdminBtn = styled.button`
   display: flex;
   align-items: center;
@@ -200,6 +239,22 @@ const AddBookBtn = styled.div`
   text-align: center;
   display: flex;
   padding-bottom: 0.6rem;
+`
+const LogoutBtn = styled.button`
+  position: absolute;
+  z-index: 10000;
+  background: #271325;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  padding-bottom: 1.1rem;
 `
 
 const BtnText = styled.h2`

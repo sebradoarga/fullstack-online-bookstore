@@ -52,6 +52,14 @@ const cartReducer = (state: DefaultState = defaultState, action: any) => {
         userImage: action.payload[1],
         userEmail: action.payload[2],
       }
+    case 'LOG_OUT':
+      return {
+        ...state,
+        userName: '',
+        userImage: '',
+        userEmail: '',
+        userLoggedIn: false,
+      }
     default: {
       return { ...state }
     }
