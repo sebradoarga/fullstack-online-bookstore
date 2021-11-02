@@ -65,8 +65,8 @@ const GenrePage = () => {
           <Header>{genre}</Header>
           <Container>
             {filteredBooks.map((book: Book) => (
-              <BookContainer>
-                <Link key={book._id} to={`/book/${book.title}`}>
+              <BookContainer key={book._id}>
+                <Link to={`/book/${book.title}`}>
                   <Image
                     src={book.imageUrl}
                     alt={`Book cover for ${book.title}`}

@@ -62,13 +62,7 @@ const findOrCreate = async (
   familyName: string
 ) => {
   const user = await User.findOne({ email: userEmail })
-  console.log('!!!!!!user is', user)
   if (!user) {
-    console.log('!!!!!!here I am. the user does not exist yet')
-    console.log('userEmail', userEmail)
-    console.log('picture', picture)
-    console.log('givenName', givenName)
-    console.log('familyName', familyName)
     const findUser = async () => {
       console.log('!!!!!!inside findUser now')
       const createdUser: any = await axios.post(
@@ -80,7 +74,6 @@ const findOrCreate = async (
           email: userEmail,
         }
       )
-      console.log('!!!!!!!!!!createdUser', createdUser)
       return createdUser
     }
     findUser()

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Author, Book } from '../../../types'
+import { Author, Book, User } from '../../../types'
 import styled from 'styled-components'
 import { Link, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
@@ -11,6 +11,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket'
 import { addBookToCart, toggleCart } from '../../../redux/actions/cart'
 import CartSidebar from '../../CartSidebar'
+import { findUserById, updateUser } from '../../../api'
 
 const BookPage = () => {
   const dispatch = useDispatch()
@@ -22,6 +23,13 @@ const BookPage = () => {
   const isLoggedIn: boolean = useSelector(
     (state: RootState) => state.cartReducer.userLoggedIn
   )
+
+  const userId: string = useSelector(
+    (state: RootState) => state.cartReducer.userId
+  )
+
+  // const user: any = dispatch(findUserById(userId))
+  // console.log('user', user)
 
   const { book } = useParams<{ book: string }>()
   const books: Book[] = useSelector(
@@ -51,6 +59,15 @@ const BookPage = () => {
         console.log('book already in cart')
       } else {
         dispatch(addBookToCart(currentBook))
+        // dispatch(
+        //   updateUser(userId, {
+        //     firstName: user.firstName,
+        //     lastName: user.lastName,
+        //     image: user.image,
+        //     email: user.email,
+        //     order: [...user.order, currentBook._id],
+        //   })
+        // )
       }
     }
   }

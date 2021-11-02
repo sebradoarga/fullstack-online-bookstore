@@ -48,7 +48,8 @@ const HomeNavbar = () => {
         addUserData(
           `${result.data.userData.firstName} ${result.data.userData.lastName}`,
           result.data.userData.image,
-          result.data.userData.email
+          result.data.userData.email,
+          result.data.userData._id
         )
       )
     result && localStorage.setItem('token', result.data.token)

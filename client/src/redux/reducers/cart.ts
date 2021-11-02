@@ -7,6 +7,7 @@ const defaultState = {
   userName: '',
   userImage: '',
   userEmail: '',
+  userId: '',
 }
 
 interface DefaultState {
@@ -16,6 +17,7 @@ interface DefaultState {
   userName: string
   userImage: string
   userEmail: string
+  userId: string
 }
 
 const cartReducer = (state: DefaultState = defaultState, action: any) => {
@@ -51,6 +53,7 @@ const cartReducer = (state: DefaultState = defaultState, action: any) => {
         userName: action.payload[0],
         userImage: action.payload[1],
         userEmail: action.payload[2],
+        userId: action.payload[3],
       }
     case 'LOG_OUT':
       return {
@@ -58,6 +61,7 @@ const cartReducer = (state: DefaultState = defaultState, action: any) => {
         userName: '',
         userImage: '',
         userEmail: '',
+        userId: '',
         userLoggedIn: false,
       }
     default: {

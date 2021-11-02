@@ -32,3 +32,11 @@ export interface PopulatedAuthor {
   __v: number
   _id: string
 }
+
+export interface User {
+  firstName: string
+  lastName: string
+  image: string
+  email: string
+  order: string[]
+}

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Author } from '../types'
+import { Author, User } from '../types'
 
 const url = 'http://localhost:5000/api/v1'
 
@@ -28,3 +28,9 @@ export const findBookById = (id: string) =>
 
 export const login = (tokenObj: any) =>
   axios.post(`${url}/google/login`, tokenObj)
+
+export const updateUser = (userId: string, updatedUser: User) =>
+  axios.put(`${url}/users/${userId}`, updatedUser)
+
+export const findUserById = (userId: string) =>
+  axios.get(`${url}/users/${userId}`)

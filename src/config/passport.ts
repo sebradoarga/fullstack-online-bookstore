@@ -15,7 +15,6 @@ export const googleStrategy = new GoogleTokenStrategy(
     clientId: process.env.GOOGLE_CLIENT_ID,
   },
   async (parsedToken: any, googleId: any, done: any) => {
-    console.log('!!!!!!!!in the strategy')
     // eslint-disable-next-line @typescript-eslint/camelcase
     const { email, name, picture, given_name, family_name } =
       parsedToken.payload
