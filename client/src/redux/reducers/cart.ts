@@ -6,6 +6,7 @@ const defaultState = {
   userLoggedIn: false,
   userName: '',
   userImage: '',
+  userEmail: '',
 }
 
 interface DefaultState {
@@ -14,6 +15,7 @@ interface DefaultState {
   userLoggedIn: boolean
   userName: string
   userImage: string
+  userEmail: string
 }
 
 const cartReducer = (state: DefaultState = defaultState, action: any) => {
@@ -48,6 +50,7 @@ const cartReducer = (state: DefaultState = defaultState, action: any) => {
         ...state,
         userName: action.payload[0],
         userImage: action.payload[1],
+        userEmail: action.payload[2],
       }
     default: {
       return { ...state }

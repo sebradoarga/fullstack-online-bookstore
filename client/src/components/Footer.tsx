@@ -4,7 +4,7 @@ import logo from '../images/logo-transparent-background.png'
 const Footer = () => {
   return (
     <FooterContainer>
-      <Image src={logo} alt="" />
+      <Image src={logo} alt="The Story Store logo" />
     </FooterContainer>
   )
 }

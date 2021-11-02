@@ -13,20 +13,50 @@ import {
   findBookByTitle,
   updateAuthor,
 } from '../../../api'
+import Footer from '../../Footer'
+import CheckoutNavbar from '../Navbars/CheckoutNavbar'
 
 const AddBookPage = () => {
   // DECLARATIONS
 
   const dispatch = useDispatch()
 
+  const allGenres = [
+    'classics',
+    'fantasy',
+    'historical fiction',
+    'horror',
+    'mystery',
+    'fiction',
+    'romance',
+    'science fiction',
+    'thriller',
+    'young adult',
+  ]
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  const [activeTags, setActiveTags] = useState<string[]>([])
+
   // All authors currently saved in the API
   const authors: Author[] = useSelector(
     (state: RootState) => state.authorsReducer.authors
   )
 
-  const [bookData, setBookData] = useState({
+  interface BookData {
+    title: string
+    genres: string[]
+    description: string
+    price: number
+    imageUrl: string
+    author: string[]
+  }
+
+  const [bookData, setBookData] = useState<BookData>({
     title: '',
-    genres: '',
+    genres: [],
     description: '',
     price: 0,
     imageUrl: '',
@@ -241,7 +271,7 @@ const AddBookPage = () => {
 
         setBookData({
           title: '',
-          genres: '',
+          genres: [],
           description: '',
           price: 0,
           imageUrl: '',
@@ -273,207 +303,323 @@ const AddBookPage = () => {
     display: 'none',
   }
 
+  const selected = {
+    color: 'black',
+    fontWeight: 700,
+  }
+
   // **************************************
+
+  const addGenre = (genre: string) => {
+    setBookData({ ...bookData, genres: [...bookData.genres, genre] })
+    activeTags.includes(genre)
+      ? setActiveTags(activeTags.filter((tag) => tag !== genre))
+      : setActiveTags([...activeTags, genre])
+  }
 
   return (
     <Container>
-      <AddAuthorModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        text={text}
-        setText={setText}
-        currentAuthorBox={currentAuthorBox}
-      />
+      <CheckoutNavbar />
+      <PageContent>
+        <AddAuthorModal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          text={text}
+          setText={setText}
+          currentAuthorBox={currentAuthorBox}
+        />
+        <PageHeader>Add a new book</PageHeader>
+        <FormWrapper>
+          <form
+            autoComplete="off"
+            onSubmit={handleSubmit}
+            style={{ display: 'flex', flexDirection: 'column' }}
+          >
+            {/* --BOOK TITLE INPUT-- */}
 
-      <Link to="/">Go back</Link>
+            <Label htmlFor="title">Book Title:</Label>
+            <Input
+              type="text"
+              id="title"
+              name="title"
+              value={bookData.title}
+              onChange={(e) =>
+                setBookData({ ...bookData, title: e.target.value })
+              }
+            ></Input>
 
-      <form autoComplete="off" onSubmit={handleSubmit}>
-        {/* --BOOK TITLE INPUT-- */}
+            {/* -- AUTHOR INPUT -- */}
 
-        <Label htmlFor="title">Book Title:</Label>
-        <Input
-          type="text"
-          id="title"
-          name="title"
-          value={bookData.title}
-          onChange={(e) => setBookData({ ...bookData, title: e.target.value })}
-        ></Input>
+            {/* FIRST AUTHOR */}
 
-        {/* -- AUTHOR INPUT -- */}
+            <Label htmlFor="author">Author:</Label>
+            <Input
+              type="text"
+              id="author"
+              name="author"
+              onChange={(e) => onChangeHandler(e.target.value, 'text1')}
+              value={text.text1}
+              onBlur={() => {
+                handleBlur()
+              }}
+            ></Input>
+            {suggestions1 &&
+              (Array.isArray(suggestions1) ? (
+                suggestions1.slice(0, 3).map((suggestion) => (
+                  <Suggestion
+                    key={uuidv4()}
+                    onClick={() =>
+                      onSuggestHandler(suggestion.authorName, 'text1')
+                    }
+                  >
+                    {suggestion.authorName}
+                  </Suggestion>
+                ))
+              ) : (
+                <Suggestion onClick={() => openModal(1)}>
+                  Add new author
+                </Suggestion>
+              ))}
 
-        {/* FIRST AUTHOR */}
+            {/* SECOND AUTHOR */}
 
-        <Label htmlFor="author">Author:</Label>
-        <Input
-          type="text"
-          id="author"
-          name="author"
-          onChange={(e) => onChangeHandler(e.target.value, 'text1')}
-          value={text.text1}
-          onBlur={() => {
-            handleBlur()
-          }}
-        ></Input>
-        {suggestions1 &&
-          (Array.isArray(suggestions1) ? (
-            suggestions1.slice(0, 3).map((suggestion) => (
-              <Suggestion
-                key={uuidv4()}
-                onClick={() => onSuggestHandler(suggestion.authorName, 'text1')}
-              >
-                {suggestion.authorName}
-              </Suggestion>
-            ))
-          ) : (
-            <Suggestion onClick={() => openModal(1)}>Add new author</Suggestion>
-          ))}
+            <Input
+              type="text"
+              id="author"
+              name="author"
+              onChange={(e) => onChangeHandler(e.target.value, 'text2')}
+              style={showSecondAuthor ? showAuthorStyle : hideAuthorStyle}
+              value={text.text2}
+              onBlur={() => {
+                handleBlur()
+              }}
+            ></Input>
+            {suggestions2 &&
+              (Array.isArray(suggestions2) ? (
+                suggestions2.slice(0, 3).map((suggestion) => (
+                  <Suggestion
+                    key={uuidv4()}
+                    onClick={() =>
+                      onSuggestHandler(suggestion.authorName, 'text2')
+                    }
+                  >
+                    {suggestion.authorName}
+                  </Suggestion>
+                ))
+              ) : (
+                <Suggestion onClick={() => openModal(2)}>
+                  Add new author
+                </Suggestion>
+              ))}
 
-        {/* SECOND AUTHOR */}
+            {/* THIRD AUTHOR */}
 
-        <Input
-          type="text"
-          id="author"
-          name="author"
-          onChange={(e) => onChangeHandler(e.target.value, 'text2')}
-          style={showSecondAuthor ? showAuthorStyle : hideAuthorStyle}
-          value={text.text2}
-          onBlur={() => {
-            handleBlur()
-          }}
-        ></Input>
-        {suggestions2 &&
-          (Array.isArray(suggestions2) ? (
-            suggestions2.slice(0, 3).map((suggestion) => (
-              <Suggestion
-                key={uuidv4()}
-                onClick={() => onSuggestHandler(suggestion.authorName, 'text2')}
-              >
-                {suggestion.authorName}
-              </Suggestion>
-            ))
-          ) : (
-            <Suggestion onClick={() => openModal(2)}>Add new author</Suggestion>
-          ))}
+            <Input
+              type="text"
+              id="author"
+              name="author"
+              style={showThirdAuthor ? showAuthorStyle : hideAuthorStyle}
+              onChange={(e) => onChangeHandler(e.target.value, 'text3')}
+              value={text.text3}
+              onBlur={() => {
+                handleBlur()
+              }}
+            ></Input>
+            {suggestions3 &&
+              (Array.isArray(suggestions3) ? (
+                suggestions3.slice(0, 3).map((suggestion) => (
+                  <Suggestion
+                    key={uuidv4()}
+                    onClick={() =>
+                      onSuggestHandler(suggestion.authorName, 'text3')
+                    }
+                  >
+                    {suggestion.authorName}
+                  </Suggestion>
+                ))
+              ) : (
+                <Suggestion onClick={() => openModal(3)}>
+                  Add new author
+                </Suggestion>
+              ))}
 
-        {/* THIRD AUTHOR */}
+            <MoreAuthorsBtn
+              style={authorsNumber > 2 ? hideAuthorStyle : showAuthorStyle}
+              onClick={addAnotherAuthor}
+            >
+              + One More Author
+            </MoreAuthorsBtn>
 
-        <Input
-          type="text"
-          id="author"
-          name="author"
-          style={showThirdAuthor ? showAuthorStyle : hideAuthorStyle}
-          onChange={(e) => onChangeHandler(e.target.value, 'text3')}
-          value={text.text3}
-          onBlur={() => {
-            handleBlur()
-          }}
-        ></Input>
-        {suggestions3 &&
-          (Array.isArray(suggestions3) ? (
-            suggestions3.slice(0, 3).map((suggestion) => (
-              <Suggestion
-                key={uuidv4()}
-                onClick={() => onSuggestHandler(suggestion.authorName, 'text3')}
-              >
-                {suggestion.authorName}
-              </Suggestion>
-            ))
-          ) : (
-            <Suggestion onClick={() => openModal(3)}>Add new author</Suggestion>
-          ))}
+            {/* --GENRES INPUT-- */}
 
-        <MoreAuthorsBtn
-          style={authorsNumber > 2 ? hideAuthorStyle : showAuthorStyle}
-          onClick={addAnotherAuthor}
-        >
-          +
-        </MoreAuthorsBtn>
+            <Label htmlFor="genres">Genres:</Label>
+            <GenresContainer>
+              {allGenres.map((genre) => (
+                <Tag
+                  key={genre}
+                  onClick={() => addGenre(genre)}
+                  style={activeTags.includes(genre) ? selected : {}}
+                >
+                  {genre}
+                </Tag>
+              ))}
+            </GenresContainer>
 
-        {/* --GENRES INPUT-- */}
+            {/* --DESCRIPTION INPUT-- */}
 
-        <Label htmlFor="genres">Genres:</Label>
-        <Input
-          type="text"
-          id="genres"
-          name="genres"
-          value={bookData.genres}
-          onChange={(e) => setBookData({ ...bookData, genres: e.target.value })}
-        ></Input>
+            <Label htmlFor="description">Description:</Label>
+            <Textarea
+              id="description"
+              name="description"
+              value={bookData.description}
+              onChange={(e) =>
+                setBookData({ ...bookData, description: e.target.value })
+              }
+            ></Textarea>
 
-        {/* --DESCRIPTION INPUT-- */}
+            {/* --PRICE INPUT-- */}
 
-        <Label htmlFor="description">Description:</Label>
-        <Input
-          type="textarea"
-          id="description"
-          name="description"
-          value={bookData.description}
-          onChange={(e) =>
-            setBookData({ ...bookData, description: e.target.value })
-          }
-        ></Input>
+            <Label htmlFor="price">Price:</Label>
+            <Input
+              type="number"
+              id="price"
+              name="price"
+              value={bookData.price}
+              onChange={(e) =>
+                setBookData({ ...bookData, price: parseFloat(e.target.value) })
+              }
+            ></Input>
 
-        {/* --PRICE INPUT-- */}
+            {/* --IMAGE INPUT-- */}
 
-        <Label htmlFor="price">Price:</Label>
-        <Input
-          type="number"
-          id="price"
-          name="price"
-          value={bookData.price}
-          onChange={(e) =>
-            setBookData({ ...bookData, price: parseInt(e.target.value) })
-          }
-        ></Input>
-
-        {/* --IMAGE INPUT-- */}
-
-        <Label htmlFor="image">Image:</Label>
-        <Input
-          type="text"
-          id="image"
-          name="image"
-          value={bookData.imageUrl}
-          onChange={(e) =>
-            setBookData({ ...bookData, imageUrl: e.target.value })
-          }
-        ></Input>
-        <SubmitBtn type="submit" value="Add Book"></SubmitBtn>
-      </form>
+            <Label htmlFor="image">Image:</Label>
+            <Input
+              type="text"
+              id="image"
+              name="image"
+              value={bookData.imageUrl}
+              onChange={(e) =>
+                setBookData({ ...bookData, imageUrl: e.target.value })
+              }
+            ></Input>
+            <SubmitBtn type="submit" value="Add Book"></SubmitBtn>
+          </form>
+        </FormWrapper>
+      </PageContent>
+      <Footer />
     </Container>
   )
 }
 
 export default AddBookPage
 
+const PageContent = styled.div``
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
-  margin: 8rem auto;
+  justify-content: space-between;
+  min-height: 100vh;
 `
+
+const PageHeader = styled.h1`
+  margin-top: 13rem;
+  text-align: center;
+  font-size: 2.5rem;
+  text-transform: capitalize;
+`
+
+const FormWrapper = styled.div`
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
 const Label = styled.label`
   font-size: 1.8rem;
+  margin-top: 1.4rem;
+  display: block;
 `
 
 const Input = styled.input`
   display: block;
-  width: 16rem;
+  width: 36rem;
+  height: 3rem;
   margin-top: 0.5rem;
+  font-size: 2rem;
+  padding-left: 0.6rem;
 `
+const Textarea = styled.textarea`
+  width: 36rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  padding: 0.6rem;
+  height: 15rem;
+  font-size: 1.2rem;
+  resize: none;
+
+  ::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #130912;
+    border-radius: 10px;
+  }
+`
+
+const GenresContainer = styled.div`
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+`
+
+const Tag = styled.p`
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  color: #000000c2;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: black;
+    font-weight: bold;
+  }
+`
+
 const SubmitBtn = styled.input`
   margin-top: 2rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem 2.5rem;
+  border-radius: 15px;
+  border: none;
+  font-size: 1.5rem;
+  align-self: center;
+  color: white;
+  background: black;
+  cursor: pointer;
+  letter-spacing: 0.1rem;
 
   &:hover {
     cursor: pointer;
   }
 `
+
 const Suggestion = styled.div`
   border-right: 0.1rem solid black;
   border-left: 0.1rem solid black;
   border-bottom: 0.1rem solid black;
-  width: 16rem;
+  width: 36rem;
+  height: 3rem;
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
   transition: all 0.2s ease;
   &:hover {
     cursor: pointer;
@@ -482,9 +628,12 @@ const Suggestion = styled.div`
 `
 const MoreAuthorsBtn = styled.a`
   display: block;
-  font-size: 2rem;
+  font-size: 1.4rem;
+  margin-top: 0.8rem;
+  transition: all 0.3s ease;
 
   &:hover {
     cursor: pointer;
+    text-decoration: underline;
   }
 `

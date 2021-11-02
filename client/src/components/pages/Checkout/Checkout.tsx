@@ -93,13 +93,13 @@ const Content = styled.div`
 `
 
 const Header = styled.h1`
-  margin-top: 13rem;
+  margin-top: 15rem;
   margin-left: 5rem;
   font-size: 3rem;
   letter-spacing: 0.1rem;
 `
 const CartInsides = styled.div`
-  margin-top: 5rem;
+  margin-top: 3rem;
 `
 
 const ItemWrapper = styled.div`

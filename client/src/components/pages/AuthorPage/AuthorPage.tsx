@@ -81,7 +81,10 @@ const AuthorPage = () => {
         <HomeNavbar />
         <Container>
           <PageContent>
-            <Image src={currentAuthor.authorPicture} alt="" />
+            <Image
+              src={currentAuthor.authorPicture}
+              alt={`Picture of ${currentAuthor.authorName}`}
+            />
             <AuthorInfo>
               <Name>{author}</Name>
               <Bio>
@@ -94,7 +97,10 @@ const AuthorPage = () => {
                 {currentPopulatedAuthor.authorBooks.length > 0 &&
                   currentPopulatedAuthor.authorBooks.map((book: any) => (
                     <Link key={uuidv4()} to={`/book/${book.data.title}`}>
-                      <img src={book.data.imageUrl} alt="" />
+                      <BookCover
+                        src={book.data.imageUrl}
+                        alt={`Book cover for ${book.data.title}`}
+                      />
                     </Link>
                   ))}
               </BooksContainer>
@@ -187,4 +193,11 @@ const Paragraph = styled.p`
 const BooksHeader = styled.h2`
   font-size: 3rem;
   margin-top: 2rem;
+`
+const BookCover = styled.img`
+  width: 20rem;
+  height: 23rem;
+  object-fit: cover;
+  boxshadow: 0px 6px 12px rgb(0 0 0 / 30%);
+  border-radius: 4px;
 `

@@ -9,9 +9,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addUserData, toggleCart } from '../../../redux/actions/cart'
 import { logInUser } from '../../../redux/actions/cart'
 import { RootState } from '../../../redux/reducers'
+import SettingsIcon from '@mui/icons-material/Settings'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
 
 const HomeNavbar = () => {
   const dispatch = useDispatch()
+
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const userLoggedIn: boolean = useSelector(
     (state: RootState) => state.cartReducer.userLoggedIn
@@ -23,6 +27,10 @@ const HomeNavbar = () => {
 
   const userImage: string = useSelector(
     (state: RootState) => state.cartReducer.userImage
+  )
+
+  const userEmail: string = useSelector(
+    (state: RootState) => state.cartReducer.userEmail
   )
 
   const responseGoogle = async (response: any) => {
@@ -37,7 +45,8 @@ const HomeNavbar = () => {
       dispatch(
         addUserData(
           `${result.data.userData.firstName} ${result.data.userData.lastName}`,
-          result.data.userData.image
+          result.data.userData.image,
+          result.data.userData.email
         )
       )
     result && localStorage.setItem('token', result.data.token)
@@ -45,10 +54,12 @@ const HomeNavbar = () => {
   }
 
   const linkInlineStyling = {
-    fontSize: '2rem',
+    fontSize: '1.5rem',
     color: 'white',
     textDecoration: 'none',
-    marginRight: '2.5rem',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0.5rem 1rem',
   }
 
   const logoStyling = {
@@ -59,15 +70,42 @@ const HomeNavbar = () => {
     dispatch(toggleCart())
   }
 
+  const hideDropdown = {
+    display: 'none',
+  }
+
+  const displayDropdown = {
+    display: 'flex',
+  }
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen)
+  }
+
+  const backgroundOnOpen = {
+    background: '#271325',
+  }
+
   return (
     <Navbar>
       <Link to="/">
-        <img src={logo} alt="" style={logoStyling} />
+        <img src={logo} alt="The Story Store logo" style={logoStyling} />
       </Link>
       <Buttons>
-        {/* <Link to="/addbook" style={linkInlineStyling}>
-          Add book
-        </Link> */}
+        {userEmail === 'raduoarga95@gmail.com' && (
+          <DropDown onClick={() => toggleDropdown()}>
+            <AdminBtn style={dropdownOpen ? backgroundOnOpen : {}}>
+              <SettingsIcon fontSize="large" style={{ marginTop: '0.4rem' }} />
+              <BtnText>Admin</BtnText>
+            </AdminBtn>
+            <AddBookBtn style={dropdownOpen ? displayDropdown : hideDropdown}>
+              <Link to="/addbook" style={linkInlineStyling}>
+                <MenuBookIcon fontSize="large" />
+                <p style={{ marginLeft: '0.7rem' }}>Add book</p>
+              </Link>
+            </AddBookBtn>
+          </DropDown>
+        )}
         <CartButton onClick={cartClicked}>
           <ShoppingCartIcon fontSize="large" sx={{ color: 'white' }} />
         </CartButton>
@@ -101,7 +139,6 @@ const Navbar = styled.nav`
   padding: 2rem;
   justify-content: space-between;
   position: fixed;
-  overflow: hidden;
   z-index: 9000;
 `
 const Buttons = styled.div`
@@ -130,4 +167,42 @@ const Image = styled.img`
   width: 5.5rem;
   border-radius: 50%;
   border: 2px solid white;
+  cursor: pointer;
+`
+const DropDown = styled.div`
+  position: relative;
+  margin-right: 2rem;
+`
+
+const AdminBtn = styled.button`
+  display: flex;
+  align-items: center;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 1.5rem;
+  height: 10rem;
+  overflow: hidden;
+  width: 100%;
+
+  &:hover {
+    background: #271325;
+  }
+`
+
+const AddBookBtn = styled.div`
+  position: absolute;
+  z-index: 10000;
+  background: #271325;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  padding-bottom: 0.6rem;
+`
+
+const BtnText = styled.h2`
+  font-size: 2rem;
+  margin-left: 0.7rem;
 `

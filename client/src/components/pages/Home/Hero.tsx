@@ -8,7 +8,11 @@ const imageStyling = {
 const Hero = () => {
   return (
     <Container>
-      <img src={heroImg} alt="" style={imageStyling} />
+      <img
+        src={heroImg}
+        alt="Promotional picture for our Halloween book selection"
+        style={imageStyling}
+      />
     </Container>
   )
 }

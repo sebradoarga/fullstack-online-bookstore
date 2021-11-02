@@ -7,7 +7,7 @@ const DisplayedBook = ({ book }: { book: Book }) => {
   return (
     <BookContainer>
       <Link to={`/book/${book.title}`}>
-        <Image src={book.imageUrl} alt="" />
+        <Image src={book.imageUrl} alt={`Book cover for ${book.title}`} />
       </Link>
     </BookContainer>
   )

@@ -68,7 +68,10 @@ const BookPage = () => {
         <CartSidebar />
         <HomeNavbar />
         <Container>
-          <Image src={currentBook.imageUrl} alt="" />
+          <Image
+            src={currentBook.imageUrl}
+            alt={`Book cover for ${currentBook.title}`}
+          />
           <BookInfo>
             <Title>{currentBook.title}</Title>
             {currentBook.author.map((author: Author) => (

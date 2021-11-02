@@ -66,15 +66,21 @@ const GenrePage = () => {
           <Container>
             {filteredBooks.map((book: Book) => (
               <BookContainer>
-                <Link to={`/book/${book.title}`}>
-                  <Image src={book.imageUrl} alt="" />
+                <Link key={book._id} to={`/book/${book.title}`}>
+                  <Image
+                    src={book.imageUrl}
+                    alt={`Book cover for ${book.title}`}
+                  />
                 </Link>
                 <Link to={`/book/${book.title}`}>
                   <Title>{book.title}</Title>
                 </Link>
                 <Author>
                   {book.author.map((oneAuthor) => (
-                    <Link to={`/author/${oneAuthor.authorName}`}>
+                    <Link
+                      key={oneAuthor._id}
+                      to={`/author/${oneAuthor.authorName}`}
+                    >
                       <AuthorName>{oneAuthor.authorName}</AuthorName>
                     </Link>
                   ))}
@@ -140,6 +146,7 @@ const Container = styled.div`
   margin: auto;
   margin-top: 6rem;
   display: flex;
+  justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
 `

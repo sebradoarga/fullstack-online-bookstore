@@ -52,36 +52,44 @@ const CartSidebar = () => {
         </CloseButton>
         <HeaderText>Your cart</HeaderText>
       </CartHeader>
-      <BooksContainer>
-        {cartBooks.length > 0 &&
-          cartBooks.map((book) => (
-            <BookWrapper key={uuidv4()}>
-              <Link to={`/book/${book.title}`}>
-                <Image src={book.imageUrl} alt="" />
-              </Link>
-              <BookInfo>
-                <Link to={`/book/${book.title}`} style={linkInlineStyling}>
-                  <Title>{book.title}</Title>
+      {cartBooks.length > 0 ? (
+        <BooksContainer>
+          {cartBooks.length > 0 &&
+            cartBooks.map((book) => (
+              <BookWrapper key={uuidv4()}>
+                <Link to={`/book/${book.title}`}>
+                  <Image
+                    src={book.imageUrl}
+                    alt={`Book cover for ${book.title}`}
+                  />
                 </Link>
-                <Price>${book.price.toFixed(2)}</Price>
-                <RemoveBookBtn onClick={() => removeBook(book)}>
-                  Remove
-                </RemoveBookBtn>
-              </BookInfo>
-            </BookWrapper>
-          ))}
-      </BooksContainer>
-      <CartFooter>
-        <Total>
-          <TotalText>Total:</TotalText>
-          <TotalPrice>${getCurrentTotal()}</TotalPrice>
-        </Total>
-        {cartBooks.length > 0 && (
+                <BookInfo>
+                  <Link to={`/book/${book.title}`} style={linkInlineStyling}>
+                    <Title>{book.title}</Title>
+                  </Link>
+                  <Price>${book.price.toFixed(2)}</Price>
+                  <RemoveBookBtn onClick={() => removeBook(book)}>
+                    Remove
+                  </RemoveBookBtn>
+                </BookInfo>
+              </BookWrapper>
+            ))}
+        </BooksContainer>
+      ) : (
+        <NoBooksMessage>Your cart is empty.</NoBooksMessage>
+      )}
+      {cartBooks.length > 0 && (
+        <CartFooter>
+          <Total>
+            <TotalText>Total:</TotalText>
+            <TotalPrice>${getCurrentTotal()}</TotalPrice>
+          </Total>
+
           <Link to="/checkout">
             <CheckoutBtn>Go to Checkout</CheckoutBtn>
           </Link>
-        )}
-      </CartFooter>
+        </CartFooter>
+      )}
     </Wrapper>
   )
 }
@@ -215,4 +223,9 @@ const CheckoutBtn = styled.button`
   border: none;
   font-weight: bold;
   cursor: pointer;
+`
+const NoBooksMessage = styled.p`
+  font-size: 1.7rem;
+  text-align: center;
+  margin-top: 5rem;
 `
