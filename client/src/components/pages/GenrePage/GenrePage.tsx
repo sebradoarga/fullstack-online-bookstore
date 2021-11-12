@@ -177,6 +177,7 @@ const Title = styled.h2`
   transition: all 0.3s ease;
   margin-top: 1rem;
   text-align: center;
+  text-transform: capitalize;
   &:hover {
     color: #f4922e;
   }
@@ -189,6 +190,7 @@ const AuthorName = styled.h3`
   margin-top: 1rem;
   text-align: center;
   transition: all 0.3s ease;
+  text-transform: capitalize;
 
   &:hover {
     color: #f4922e;

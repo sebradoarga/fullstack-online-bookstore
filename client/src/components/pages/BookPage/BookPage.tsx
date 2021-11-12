@@ -12,6 +12,7 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket'
 import { addBookToCart, toggleCart } from '../../../redux/actions/cart'
 import CartSidebar from '../../CartSidebar'
 import { findUserById, updateUser } from '../../../api'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 const BookPage = () => {
   const dispatch = useDispatch()
@@ -90,6 +91,9 @@ const BookPage = () => {
             alt={`Book cover for ${currentBook.title}`}
           />
           <BookInfo>
+            <DeleteBtn>
+              <DeleteForeverIcon sx={{ color: 'red', fontSize: 30 }} />
+            </DeleteBtn>
             <Title>{currentBook.title}</Title>
             {currentBook.author.map((author: Author) => (
               <Link
@@ -174,6 +178,16 @@ const Image = styled.img`
 
 const BookInfo = styled.div`
   margin-left: 3rem;
+  display: flex;
+  flex-direction: column;
+`
+
+const DeleteBtn = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-right: 1rem;
 `
 
 const Title = styled.h1`
@@ -186,6 +200,7 @@ const AuthorName = styled.h2`
   font-size: 1.7rem;
   letter-spacing: 0.3rem;
   margin-left: 0.3rem;
+  text-transform: capitalize;
 `
 const Genres = styled.div`
   display: flex;

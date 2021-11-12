@@ -10,10 +10,24 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 const middleware = [thunk]
 
+const getLocalStorage = () => {
+  const persistedStateString = localStorage.getItem('persistedState')
+  const persistedState = persistedStateString
+    ? JSON.parse(persistedStateString)
+    : []
+
+  return persistedState
+}
+
 const store = createStore(
   reducers,
+  getLocalStorage(),
   composeWithDevTools(applyMiddleware(...middleware))
 )
+
+store.subscribe(() => {
+  localStorage.setItem('persistedState', JSON.stringify(store.getState()))
+})
 
 ReactDOM.render(
   <React.StrictMode>

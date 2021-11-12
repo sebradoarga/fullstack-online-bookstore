@@ -38,5 +38,4 @@ export interface User {
   lastName: string
   image: string
   email: string
-  order: string[]
 }

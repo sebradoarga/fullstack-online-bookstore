@@ -41,8 +41,6 @@ function App() {
 
   // useEffect(() => {
   //   if (dbAuthors.length > 0) {
-  //     console.log('in dbAuthors')
-  //     console.log('dbauthors', dbAuthors)
 
   //     getDBBooks()
   //   }
@@ -50,8 +48,6 @@ function App() {
 
   // useEffect(() => {
   //   if (dbBooks.length > 0 && dbAuthors.length > 0) {
-  //     console.log('in Dbbooks')
-  //     console.log('dbbooks', dbBooks)
 
   //     dbAuthors.map((author) => {
   //       const name = author.authorName
