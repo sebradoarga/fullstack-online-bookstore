@@ -93,6 +93,7 @@ const BookPage = () => {
           <BookInfo>
             <DeleteBtn>
               <DeleteForeverIcon sx={{ color: 'red', fontSize: 30 }} />
+              <HoverText>Permanently delete book</HoverText>
             </DeleteBtn>
             <Title>{currentBook.title}</Title>
             {currentBook.author.map((author: Author) => (
@@ -188,6 +189,26 @@ const DeleteBtn = styled.button`
   cursor: pointer;
   align-self: flex-end;
   margin-right: 1rem;
+  position: relative;
+
+  &:hover span {
+    visibility: visible;
+  }
+`
+
+const HoverText = styled.span`
+  visibility: hidden;
+  width: 18rem;
+  background-color: #000000ba;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -9rem;
 `
 
 const Title = styled.h1`
