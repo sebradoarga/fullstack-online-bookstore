@@ -14,6 +14,8 @@ import CartSidebar from '../../CartSidebar'
 import { findUserById, updateUser } from '../../../api'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import DeleteBookPopup from './DeleteBookPopup'
+import LoadingPage from '../../LoadingPage'
+import BookNotFoundPage from '../../BookNotFoundPage'
 
 const BookPage = () => {
   const dispatch = useDispatch()
@@ -89,8 +91,12 @@ const BookPage = () => {
     console.log('modalOpen', modalOpen)
   }
 
-  return !currentBook ? (
-    <div>Loading</div>
+  return !currentBook || currentBook.title !== book ? (
+    currentBook === undefined ? (
+      <BookNotFoundPage />
+    ) : (
+      <LoadingPage />
+    )
   ) : (
     <Wrapper>
       <PageContent>

@@ -102,6 +102,8 @@ const Text = styled.p`
   font-weight: bold;
   text-align: center;
   margin-top: 2rem;
+  width: 80%;
+  line-height: 3rem;
 `
 const Title = styled.span`
   color: #ec8d2c;
