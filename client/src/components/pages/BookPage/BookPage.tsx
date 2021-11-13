@@ -210,6 +210,7 @@ const BookInfo = styled.div`
   margin-left: 3rem;
   display: flex;
   flex-direction: column;
+  width: 100%;
 `
 
 const DeleteBtn = styled.button`

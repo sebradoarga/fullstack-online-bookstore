@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { deleteBook } from '../../../api'
+import { deleteBook, updateAuthor } from '../../../api'
 import { Author } from '../../../types'
 
 const DeleteBookPopup = ({
@@ -29,9 +29,19 @@ const DeleteBookPopup = ({
     modalOpen === true && setModalOpen(false)
   }
 
+  console.log('authors', authors)
+
   const deleteThisBook = async () => {
     setIsBookDeleted(true)
     closeModal()
+
+    authors.map((author) => {
+      const newBooks = author.authorBooks.filter(
+        (thisBookId) => thisBookId !== bookId
+      )
+      const newAuthor = { ...author, authorBooks: newBooks }
+      updateAuthor(author._id, newAuthor)
+    })
     deleteBook(bookId)
   }
 
