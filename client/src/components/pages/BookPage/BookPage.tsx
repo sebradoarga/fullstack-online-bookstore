@@ -91,6 +91,10 @@ const BookPage = () => {
     console.log('modalOpen', modalOpen)
   }
 
+  const userEmail: string = useSelector(
+    (state: RootState) => state.cartReducer.userEmail
+  )
+
   return !currentBook || currentBook.title !== book ? (
     currentBook === undefined ? (
       <BookNotFoundPage />
@@ -119,10 +123,12 @@ const BookPage = () => {
               alt={`Book cover for ${currentBook.title}`}
             />
             <BookInfo>
-              <DeleteBtn onClick={openModal}>
-                <DeleteForeverIcon sx={{ color: 'red', fontSize: 30 }} />
-                <HoverText>Permanently delete book</HoverText>
-              </DeleteBtn>
+              {userEmail === 'raduoarga95@gmail.com' && (
+                <DeleteBtn onClick={openModal}>
+                  <DeleteForeverIcon sx={{ color: 'red', fontSize: 30 }} />
+                  <HoverText>Permanently delete book</HoverText>
+                </DeleteBtn>
+              )}
               <Title>{currentBook.title}</Title>
               {currentBook.author.map((author: Author) => (
                 <Link
