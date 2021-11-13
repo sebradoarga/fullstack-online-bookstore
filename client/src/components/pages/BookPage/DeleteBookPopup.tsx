@@ -32,7 +32,6 @@ const DeleteBookPopup = ({
   const deleteThisBook = async () => {
     setIsBookDeleted(true)
     closeModal()
-    console.log(bookId)
     deleteBook(bookId)
   }
 

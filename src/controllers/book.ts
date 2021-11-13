@@ -109,7 +109,6 @@ export const deleteBook = async (
   next: NextFunction
 ) => {
   try {
-    console.log('************in the delete controller')
     await BookService.deleteBook(req.params.bookId)
     res.status(204).end()
   } catch (error) {

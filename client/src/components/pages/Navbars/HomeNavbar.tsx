@@ -65,10 +65,6 @@ const HomeNavbar = () => {
     padding: '0.5rem 1rem',
   }
 
-  const logoStyling = {
-    width: '30rem',
-  }
-
   const cartClicked = () => {
     dispatch(toggleCart())
   }
@@ -104,7 +100,7 @@ const HomeNavbar = () => {
   return (
     <Navbar>
       <Link to="/">
-        <img src={logo} alt="The Story Store logo" style={logoStyling} />
+        <Logo src={logo} alt="The Story Store logo" />
       </Link>
       <Buttons>
         {userEmail === 'raduoarga95@gmail.com' && (
@@ -170,6 +166,11 @@ const Navbar = styled.nav`
   position: fixed;
   z-index: 9000;
 `
+const Logo = styled.img`
+  height: 10rem;
+  object-fit: cover;
+`
+
 const Buttons = styled.div`
   display: flex;
   align-items: center;
