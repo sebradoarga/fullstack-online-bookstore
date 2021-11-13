@@ -167,8 +167,8 @@ const Navbar = styled.nav`
   z-index: 9000;
 `
 const Logo = styled.img`
-  height: 10rem;
-  object-fit: cover;
+  height: 9.5rem;
+  object-fit: contain;
 `
 
 const Buttons = styled.div`
