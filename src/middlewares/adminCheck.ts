@@ -4,12 +4,12 @@ import { UserDocument } from '../models/User'
 
 const adminCheck = (req: Request, res: Response, next: NextFunction) => {
   const user = req.user as UserDocument
-  const role = user.role
-  if (role === 'admin') {
-    next()
-  } else {
-    throw new ForbiddenError()
-  }
+  // const role = user.role
+  // if (role === 'admin') {
+  //   next()
+  // } else {
+  //   throw new ForbiddenError()
+  // }
 }
 
 export default adminCheck

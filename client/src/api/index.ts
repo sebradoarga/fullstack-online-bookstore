@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Author, User } from '../types'
+import { Author, Book, User } from '../types'
 
 const url = 'http://localhost:5000/api/v1'
 
@@ -34,3 +34,6 @@ export const updateUser = (userId: string, updatedUser: User) =>
 
 export const findUserById = (userId: string) =>
   axios.get(`${url}/users/${userId}`)
+
+export const deleteBook = (bookId: string) =>
+  axios.delete(`${url}/books/${bookId}`)

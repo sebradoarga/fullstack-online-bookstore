@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Author, Book, User } from '../../../types'
 import styled from 'styled-components'
 import { Link, useParams } from 'react-router-dom'
@@ -13,9 +13,14 @@ import { addBookToCart, toggleCart } from '../../../redux/actions/cart'
 import CartSidebar from '../../CartSidebar'
 import { findUserById, updateUser } from '../../../api'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import DeleteBookPopup from './DeleteBookPopup'
 
 const BookPage = () => {
   const dispatch = useDispatch()
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
+
+  const [isBookDeleted, setIsBookDeleted] = useState<boolean>(false)
 
   const isCartOpen: boolean = useSelector(
     (state: RootState) => state.cartReducer.isCartOpen
@@ -52,6 +57,7 @@ const BookPage = () => {
     if (isCartOpen) {
       dispatch(toggleCart())
     }
+    setIsBookDeleted(false)
   }, [])
 
   const buyBook = () => {
@@ -78,6 +84,11 @@ const BookPage = () => {
     cursor: 'default',
   }
 
+  const openModal = () => {
+    modalOpen === false && setModalOpen(true)
+    console.log('modalOpen', modalOpen)
+  }
+
   return !currentBook ? (
     <div>Loading</div>
   ) : (
@@ -85,69 +96,81 @@ const BookPage = () => {
       <PageContent>
         <CartSidebar />
         <HomeNavbar />
-        <Container>
-          <Image
-            src={currentBook.imageUrl}
-            alt={`Book cover for ${currentBook.title}`}
-          />
-          <BookInfo>
-            <DeleteBtn>
-              <DeleteForeverIcon sx={{ color: 'red', fontSize: 30 }} />
-              <HoverText>Permanently delete book</HoverText>
-            </DeleteBtn>
-            <Title>{currentBook.title}</Title>
-            {currentBook.author.map((author: Author) => (
-              <Link
-                to={`/author/${author.authorName}`}
-                style={linkInlineStyling}
-                key={uuidv4()}
-              >
-                <AuthorName>{author.authorName}</AuthorName>
-              </Link>
-            ))}
-            <Genres>
-              {currentBook.genres.map((genre) => (
-                <h3 key={uuidv4()}>
-                  <Link to={`/genres/${genre}`}>{`${genre} `}</Link>
-                </h3>
+        {isBookDeleted ? (
+          <DeletedBookMessage>The book has been deleted.</DeletedBookMessage>
+        ) : (
+          <Container>
+            <DeleteBookPopup
+              modalOpen={modalOpen}
+              setModalOpen={setModalOpen}
+              bookTitle={currentBook.title}
+              bookId={currentBook._id}
+              authors={currentBook.author}
+              setIsBookDeleted={setIsBookDeleted}
+            />
+            <Image
+              src={currentBook.imageUrl}
+              alt={`Book cover for ${currentBook.title}`}
+            />
+            <BookInfo>
+              <DeleteBtn onClick={openModal}>
+                <DeleteForeverIcon sx={{ color: 'red', fontSize: 30 }} />
+                <HoverText>Permanently delete book</HoverText>
+              </DeleteBtn>
+              <Title>{currentBook.title}</Title>
+              {currentBook.author.map((author: Author) => (
+                <Link
+                  to={`/author/${author.authorName}`}
+                  style={linkInlineStyling}
+                  key={uuidv4()}
+                >
+                  <AuthorName>{author.authorName}</AuthorName>
+                </Link>
               ))}
-            </Genres>
-            <Description>
-              {currentBook.description.split('\n').map((paragraph) => (
-                <Paragraph key={uuidv4()}>{paragraph}</Paragraph>
-              ))}
-            </Description>
-            <Price>
-              <OldPrice>
-                ${(currentBook.price + 0.2 * currentBook.price).toFixed(2)}
-              </OldPrice>
-              <NewPrice>${currentBook.price.toFixed(2)}</NewPrice>
-            </Price>
-            <Buttons>
-              {isLoggedIn ? (
-                isBookInCart ? (
-                  <AddToCart style={disabledButton}>
-                    <ShoppingBasketIcon
-                      fontSize="large"
-                      style={{ marginRight: '1rem' }}
-                    />
-                    In Cart
-                  </AddToCart>
+              <Genres>
+                {currentBook.genres.map((genre) => (
+                  <h3 key={uuidv4()}>
+                    <Link to={`/genres/${genre}`}>{`${genre} `}</Link>
+                  </h3>
+                ))}
+              </Genres>
+              <Description>
+                {currentBook.description.split('\n').map((paragraph) => (
+                  <Paragraph key={uuidv4()}>{paragraph}</Paragraph>
+                ))}
+              </Description>
+              <Price>
+                <OldPrice>
+                  ${(currentBook.price + 0.2 * currentBook.price).toFixed(2)}
+                </OldPrice>
+                <NewPrice>${currentBook.price.toFixed(2)}</NewPrice>
+              </Price>
+              <Buttons>
+                {isLoggedIn ? (
+                  isBookInCart ? (
+                    <AddToCart style={disabledButton}>
+                      <ShoppingBasketIcon
+                        fontSize="large"
+                        style={{ marginRight: '1rem' }}
+                      />
+                      In Cart
+                    </AddToCart>
+                  ) : (
+                    <AddToCart onClick={buyBook}>
+                      <AddShoppingCartIcon
+                        fontSize="large"
+                        style={{ marginRight: '1rem' }}
+                      />
+                      Add To Cart
+                    </AddToCart>
+                  )
                 ) : (
-                  <AddToCart onClick={buyBook}>
-                    <AddShoppingCartIcon
-                      fontSize="large"
-                      style={{ marginRight: '1rem' }}
-                    />
-                    Add To Cart
-                  </AddToCart>
-                )
-              ) : (
-                <AddToCart style={disabledButton}>Please log in</AddToCart>
-              )}
-            </Buttons>
-          </BookInfo>
-        </Container>
+                  <AddToCart style={disabledButton}>Please log in</AddToCart>
+                )}
+              </Buttons>
+            </BookInfo>
+          </Container>
+        )}
       </PageContent>
       <Footer />
     </Wrapper>
@@ -283,3 +306,10 @@ const AddToCart = styled.button`
   align-items: center;
 `
 const PageContent = styled.div``
+
+const DeletedBookMessage = styled.h1`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
