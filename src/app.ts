@@ -7,7 +7,6 @@ import passport from 'passport'
 import loginRouter from './routers/login'
 import userRouter from './routers/user'
 import bookRouter from './routers/book'
-import orderRouter from './routers/order'
 import authorRouter from './routers/author'
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
@@ -41,9 +40,6 @@ app.use('/api/v1/users', userRouter)
 
 // Use books router
 app.use('/api/v1/books', bookRouter)
-
-//Use orders router
-app.use('/api/v1/orders', orderRouter)
 
 //Use authors router
 app.use('/api/v1/authors', authorRouter)

@@ -5,6 +5,7 @@ export type UserDocument = Document & {
   lastName: string
   image: string
   email: string
+  order: string[]
 }
 
 const userSchema = new mongoose.Schema({
@@ -22,6 +23,9 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+  },
+  order: {
+    type: Array,
   },
 })
 

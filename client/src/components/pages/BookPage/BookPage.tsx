@@ -36,8 +36,27 @@ const BookPage = () => {
     (state: RootState) => state.cartReducer.userId
   )
 
-  // const user: any = dispatch(findUserById(userId))
-  // console.log('user', user)
+  const [dbUser, setDbUser] = useState<User>({
+    firstName: '',
+    lastName: '',
+    image: '',
+    email: '',
+    order: [],
+  })
+
+  const getUser = async () => {
+    const response: any = await findUserById(userId)
+    const data: User = await response.data
+    setDbUser(data)
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [userId])
+
+  useEffect(() => {
+    console.log('dbUser', dbUser)
+  }, [dbUser])
 
   const { book } = useParams<{ book: string }>()
   const books: Book[] = useSelector(
@@ -68,15 +87,14 @@ const BookPage = () => {
         console.log('book already in cart')
       } else {
         dispatch(addBookToCart(currentBook))
-        // dispatch(
-        //   updateUser(userId, {
-        //     firstName: user.firstName,
-        //     lastName: user.lastName,
-        //     image: user.image,
-        //     email: user.email,
-        //     order: [...user.order, currentBook._id],
-        //   })
-        // )
+
+        updateUser(userId, {
+          firstName: dbUser.firstName,
+          lastName: dbUser.lastName,
+          image: dbUser.image,
+          email: dbUser.email,
+          order: [...dbUser.order, currentBook._id],
+        })
       }
     }
   }
