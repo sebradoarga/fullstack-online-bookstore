@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Footer from '../../Footer'
@@ -7,9 +7,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../../redux/reducers'
 import { addBookToCart, toggleCart } from '../../../redux/actions/cart'
 import CartSidebar from '../../CartSidebar'
-import { Book } from '../../../types'
+import { Book, User } from '../../../types'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket'
+import { findUserById, updateUser } from '../../../api'
 
 const GenrePage = () => {
   const { genre } = useParams<{ genre: string }>()
@@ -20,6 +21,10 @@ const GenrePage = () => {
 
   const isCartOpen: boolean = useSelector(
     (state: RootState) => state.cartReducer.isCartOpen
+  )
+
+  const userId: string = useSelector(
+    (state: RootState) => state.cartReducer.userId
   )
 
   useEffect(() => {
@@ -44,11 +49,37 @@ const GenrePage = () => {
     cursor: 'default',
   }
 
+  const [dbUser, setDbUser] = useState<User>({
+    firstName: '',
+    lastName: '',
+    image: '',
+    email: '',
+    order: [],
+  })
+
+  const getUser = async () => {
+    const response: any = await findUserById(userId)
+    const data: User = await response.data
+    setDbUser(data)
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [userId])
+
   const buyBook = (book: Book) => {
     if (cart.includes(book)) {
       console.log('book already in cart')
     } else {
       dispatch(addBookToCart(book))
+
+      updateUser(userId, {
+        firstName: dbUser.firstName,
+        lastName: dbUser.lastName,
+        image: dbUser.image,
+        email: dbUser.email,
+        order: [...dbUser.order, book._id],
+      })
     }
   }
 
