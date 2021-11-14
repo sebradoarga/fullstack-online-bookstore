@@ -1,20 +1,56 @@
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { RootState } from '../redux/reducers'
 import CloseIcon from '@mui/icons-material/Close'
 import { removeBookFromCart, toggleCart } from '../redux/actions/cart'
-import { Book } from '../types'
+import { Book, User } from '../types'
 import { Link } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
+import { findBookById, findUserById } from '../api'
 
 const CartSidebar = () => {
   const dispatch = useDispatch()
+
+  // from reducer --------------------
+
   const isCartOpen: boolean = useSelector(
     (state: RootState) => state.cartReducer.isCartOpen
   )
+
+  const userId: string = useSelector(
+    (state: RootState) => state.cartReducer.userId
+  )
+
+  // -----------------------
+
+  const [dbUser, setDbUser] = useState<User>({
+    firstName: '',
+    lastName: '',
+    image: '',
+    email: '',
+    order: [],
+  })
+
   const cartBooks: Book[] = useSelector(
     (state: RootState) => state.cartReducer.cart
   )
+  const closeCart = () => {
+    dispatch(toggleCart())
+  }
+
+  const removeBook = (book: Book) => {
+    dispatch(removeBookFromCart(book))
+  }
+
+  const getCurrentTotal = () => {
+    let totalPrice = 0
+    cartBooks.length > 0 &&
+      cartBooks.map((book) => {
+        totalPrice = totalPrice + book.price
+      })
+    return totalPrice.toFixed(2)
+  }
 
   const displayStyling = {
     display: 'block',
@@ -24,24 +60,8 @@ const CartSidebar = () => {
     display: 'none',
   }
 
-  const closeCart = () => {
-    dispatch(toggleCart())
-  }
-
   const linkInlineStyling = {
     textDecoration: 'none',
-  }
-
-  const removeBook = (book: Book) => {
-    dispatch(removeBookFromCart(book))
-  }
-
-  const getCurrentTotal = () => {
-    let totalPrice = 0
-    cartBooks.map((book) => {
-      totalPrice = totalPrice + book.price
-    })
-    return totalPrice.toFixed(2)
   }
 
   return (

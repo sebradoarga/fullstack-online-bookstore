@@ -29,8 +29,6 @@ const DeleteBookPopup = ({
     modalOpen === true && setModalOpen(false)
   }
 
-  console.log('authors', authors)
-
   const deleteThisBook = async () => {
     setIsBookDeleted(true)
     closeModal()
@@ -47,7 +45,6 @@ const DeleteBookPopup = ({
 
   let authorNames: string[] = []
   authors.map((author) => authorNames.push(author.authorName))
-  console.log('authorNames', authorNames)
 
   return (
     <Modal style={modalOpen ? showModal : {}}>

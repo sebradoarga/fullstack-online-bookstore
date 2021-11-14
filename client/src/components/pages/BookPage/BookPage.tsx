@@ -54,10 +54,6 @@ const BookPage = () => {
     getUser()
   }, [userId])
 
-  useEffect(() => {
-    console.log('dbUser', dbUser)
-  }, [dbUser])
-
   const { book } = useParams<{ book: string }>()
   const books: Book[] = useSelector(
     (state: RootState) => state.booksReducer.books
@@ -287,6 +283,7 @@ const Genres = styled.div`
   opacity: 0.7;
   letter-spacing: 0.15rem;
   transition: all 0.3s ease;
+  text-align: center;
 
   & h3 {
     margin-right: 1rem;

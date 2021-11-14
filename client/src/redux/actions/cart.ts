@@ -24,9 +24,9 @@ export const removeBookFromCart = (book: Book) => async (dispatch: any) => {
   }
 }
 
-export const logInUser = () => async (dispatch: any) => {
+export const logInUser = (order: Book[]) => async (dispatch: any) => {
   try {
-    dispatch({ type: 'LOG_IN_USER' })
+    dispatch({ type: 'LOG_IN_USER', payload: order })
   } catch (error: any) {
     console.log(error.message)
   }

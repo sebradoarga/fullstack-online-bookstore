@@ -46,6 +46,7 @@ const cartReducer = (state: DefaultState = defaultState, action: any) => {
       return {
         ...state,
         userLoggedIn: !state.userLoggedIn,
+        cart: action.payload,
       }
     case 'ADD_USER_DATA':
       return {
