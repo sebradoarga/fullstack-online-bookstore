@@ -43,6 +43,7 @@ const CartSidebar = () => {
     const response: any = await findUserById(userId)
     const data: User = await response.data
     setDbUser(data)
+    console.log('user is now', data)
   }
 
   useEffect(() => {
@@ -56,13 +57,21 @@ const CartSidebar = () => {
       (orderBook: string) => orderBook !== book._id
     )
 
-    updateUser(userId, {
-      firstName: dbUser.firstName,
-      lastName: dbUser.lastName,
-      image: dbUser.image,
-      email: dbUser.email,
-      order: newOrder,
-    })
+    console.log('newOrder is now', newOrder)
+    console.log('updating user')
+
+    const update = async () => {
+      await updateUser(userId, {
+        firstName: dbUser.firstName,
+        lastName: dbUser.lastName,
+        image: dbUser.image,
+        email: dbUser.email,
+        order: newOrder,
+      })
+      getUser()
+    }
+
+    update()
   }
 
   const getCurrentTotal = () => {

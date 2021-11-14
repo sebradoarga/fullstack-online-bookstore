@@ -61,6 +61,7 @@ const GenrePage = () => {
     const response: any = await findUserById(userId)
     const data: User = await response.data
     setDbUser(data)
+    console.log('after adding book, user is now', data)
   }
 
   useEffect(() => {
@@ -73,13 +74,18 @@ const GenrePage = () => {
     } else {
       dispatch(addBookToCart(book))
 
-      updateUser(userId, {
-        firstName: dbUser.firstName,
-        lastName: dbUser.lastName,
-        image: dbUser.image,
-        email: dbUser.email,
-        order: [...dbUser.order, book._id],
-      })
+      const update = async () => {
+        await updateUser(userId, {
+          firstName: dbUser.firstName,
+          lastName: dbUser.lastName,
+          image: dbUser.image,
+          email: dbUser.email,
+          order: [...dbUser.order, book._id],
+        })
+        getUser()
+      }
+
+      update()
     }
   }
 
