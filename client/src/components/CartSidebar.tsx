@@ -7,7 +7,7 @@ import { removeBookFromCart, toggleCart } from '../redux/actions/cart'
 import { Book, User } from '../types'
 import { Link } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import { findBookById, findUserById } from '../api'
+import { findBookById, findUserById, updateUser } from '../api'
 
 const CartSidebar = () => {
   const dispatch = useDispatch()
@@ -39,8 +39,30 @@ const CartSidebar = () => {
     dispatch(toggleCart())
   }
 
+  const getUser = async () => {
+    const response: any = await findUserById(userId)
+    const data: User = await response.data
+    setDbUser(data)
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [userId])
+
   const removeBook = (book: Book) => {
     dispatch(removeBookFromCart(book))
+
+    const newOrder: string[] = dbUser.order.filter(
+      (orderBook: string) => orderBook !== book._id
+    )
+
+    updateUser(userId, {
+      firstName: dbUser.firstName,
+      lastName: dbUser.lastName,
+      image: dbUser.image,
+      email: dbUser.email,
+      order: newOrder,
+    })
   }
 
   const getCurrentTotal = () => {
