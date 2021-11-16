@@ -64,6 +64,7 @@ const cartReducer = (state: DefaultState = defaultState, action: any) => {
         userEmail: '',
         userId: '',
         userLoggedIn: false,
+        cart: [],
       }
     default: {
       return { ...state }

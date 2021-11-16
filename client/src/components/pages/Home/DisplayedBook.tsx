@@ -1,7 +1,6 @@
 import styled from 'styled-components'
-import { Author, Book } from '../../../types'
+import { Book } from '../../../types'
 import { Link } from 'react-router-dom'
-import { v4 as uuidv4 } from 'uuid'
 
 const DisplayedBook = ({ book }: { book: Book }) => {
   return (

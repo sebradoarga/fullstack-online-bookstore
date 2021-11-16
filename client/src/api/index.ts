@@ -3,10 +3,23 @@ import { Author, Book, User } from '../types'
 
 const url = 'http://localhost:5000/api/v1'
 
+// Books
+
 export const fetchBooks = () => axios.get(`${url}/books`)
 export const createBook = (newBook: any) => axios.post(`${url}/books`, newBook)
 
 export const fetchAuthors = () => axios.get(`${url}/authors`)
+
+export const findBookByTitle = (title: string) =>
+  axios.get(`${url}/books/title/${title}`)
+
+export const findBookById = (id: string) =>
+  axios.get(`${url}/books/bookid/${id}`)
+
+export const deleteBook = (bookId: string) =>
+  axios.delete(`${url}/books/${bookId}`)
+
+// Authors
 
 export const createAuthor = (newAuthor: any) =>
   axios.post(`${url}/authors`, newAuthor)
@@ -20,11 +33,7 @@ export const findAuthorById: any = (authorId: string) =>
 export const updateAuthor = (authorId: string, updatedAuthor: Author) =>
   axios.put(`${url}/authors/${authorId}`, updatedAuthor)
 
-export const findBookByTitle = (title: string) =>
-  axios.get(`${url}/books/title/${title}`)
-
-export const findBookById = (id: string) =>
-  axios.get(`${url}/books/bookid/${id}`)
+// Users
 
 export const login = (tokenObj: any) =>
   axios.post(`${url}/google/login`, tokenObj)
@@ -34,6 +43,3 @@ export const updateUser = (userId: string, updatedUser: User) =>
 
 export const findUserById = (userId: string) =>
   axios.get(`${url}/users/${userId}`)
-
-export const deleteBook = (bookId: string) =>
-  axios.delete(`${url}/books/${bookId}`)

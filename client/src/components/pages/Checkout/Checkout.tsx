@@ -1,13 +1,14 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Footer from '../../Footer'
 import CheckoutNavbar from '../Navbars/CheckoutNavbar'
 import { useSelector, useDispatch } from 'react-redux'
-import { Book } from '../../../types'
+import { Book, User } from '../../../types'
 import { RootState } from '../../../redux/reducers'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { Link } from 'react-router-dom'
-import { removeBookFromCart } from '../../../redux/actions/cart'
+import { removeBookFromCart, toggleCart } from '../../../redux/actions/cart'
+import { findUserById, updateUser } from '../../../api'
 
 const Checkout = () => {
   const dispatch = useDispatch()
@@ -26,8 +27,55 @@ const Checkout = () => {
     return totalPrice.toFixed(2)
   }
 
+  const userId: string = useSelector(
+    (state: RootState) => state.cartReducer.userId
+  )
+
+  const [dbUser, setDbUser] = useState<User>({
+    firstName: '',
+    lastName: '',
+    image: '',
+    email: '',
+    order: [],
+  })
+
+  const closeCart = () => {
+    dispatch(toggleCart())
+  }
+
+  const getUser = async () => {
+    const response: any = await findUserById(userId)
+    const data: User = await response.data
+    setDbUser(data)
+    console.log('user is now', data)
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [userId])
+
   const removeBook = (book: Book) => {
     dispatch(removeBookFromCart(book))
+
+    const newOrder: string[] = dbUser.order.filter(
+      (orderBook: string) => orderBook !== book._id
+    )
+
+    console.log('newOrder is now', newOrder)
+    console.log('updating user')
+
+    const update = async () => {
+      await updateUser(userId, {
+        firstName: dbUser.firstName,
+        lastName: dbUser.lastName,
+        image: dbUser.image,
+        email: dbUser.email,
+        order: newOrder,
+      })
+      getUser()
+    }
+
+    update()
   }
 
   return (

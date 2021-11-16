@@ -9,7 +9,7 @@ const BookNotFoundPage = () => {
       <PageContent>
         <HomeNavbar />
         <Message>
-          <Text>Sorry, we couldn't find that book.</Text>
+          <Text>Oops, there's nothing here.</Text>
         </Message>
       </PageContent>
       <Footer />

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { deleteBook, updateAuthor } from '../../../api'
+import { getBooks } from '../../../redux/actions/books'
 import { Author } from '../../../types'
 
 const DeleteBookPopup = ({
@@ -10,14 +11,12 @@ const DeleteBookPopup = ({
   bookTitle,
   bookId,
   authors,
-  setIsBookDeleted,
 }: {
   modalOpen: boolean
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   bookTitle: string
   bookId: string
   authors: Author[]
-  setIsBookDeleted: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const dispatch = useDispatch()
 
@@ -30,7 +29,6 @@ const DeleteBookPopup = ({
   }
 
   const deleteThisBook = async () => {
-    setIsBookDeleted(true)
     closeModal()
 
     authors.map((author) => {
@@ -40,7 +38,8 @@ const DeleteBookPopup = ({
       const newAuthor = { ...author, authorBooks: newBooks }
       updateAuthor(author._id, newAuthor)
     })
-    deleteBook(bookId)
+    await deleteBook(bookId)
+    dispatch(getBooks())
   }
 
   let authorNames: string[] = []

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { createBook } from '../../../redux/actions/books'
+import { createBook, getBooks } from '../../../redux/actions/books'
 import { Author } from '../../../types'
 import { RootState } from '../../../redux/reducers'
 import { v4 as uuidv4 } from 'uuid'
@@ -288,6 +288,7 @@ const AddBookPage = () => {
 
     if (bookData.author[0] !== '') {
       addBookToAuthor()
+      dispatch(getBooks())
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
