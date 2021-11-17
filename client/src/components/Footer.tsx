@@ -19,7 +19,7 @@ const FooterContainer = styled.footer`
   overflow: hidden;
   height: 6rem;
   padding: 0 3rem;
-  margin-top: 1rem;
+  margin-top: 3rem;
 
   @media ${device.laptop} {
     margin-top: 6rem;

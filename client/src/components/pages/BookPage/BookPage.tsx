@@ -16,6 +16,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import DeleteBookPopup from './DeleteBookPopup'
 import LoadingPage from '../../LoadingPage'
 import BookNotFoundPage from '../../BookNotFoundPage'
+import { device } from '../../../device'
 
 const BookPage = () => {
   const dispatch = useDispatch()
@@ -208,7 +209,15 @@ const Container = styled.div`
   width: 80%;
   margin: auto;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-top: 15rem;
+  position: relative;
+
+  @media ${device.laptop} {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 `
 
 const Image = styled.img`
@@ -219,10 +228,15 @@ const Image = styled.img`
 `
 
 const BookInfo = styled.div`
+  margin-top: 3rem;
   margin-left: 3rem;
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  @media ${device.laptop} {
+    margin-top: 0;
+  }
 `
 
 const DeleteBtn = styled.button`
@@ -276,9 +290,15 @@ const Genres = styled.div`
   letter-spacing: 0.15rem;
   transition: all 0.3s ease;
   text-align: center;
+  max-width: 25rem;
+  flex-wrap: wrap;
 
   & h3 {
     margin-right: 1rem;
+  }
+
+  @media ${device.laptop} {
+    max-width: 60rem;
   }
 `
 
