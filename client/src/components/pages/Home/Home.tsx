@@ -122,7 +122,7 @@ const Categories = styled.div`
   margin-top: 4rem;
   font-size: 1.3rem;
   max-width: 25rem;
-  margin-left: 3rem;
+  padding-left: 3rem;
   & * {
     margin-bottom: 1rem;
     transition: all 0.3s ease;

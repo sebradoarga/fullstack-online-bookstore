@@ -227,12 +227,14 @@ const Navbar = styled.nav`
   z-index: 9000;
 `
 const Logo = styled.img`
-  height: 4rem;
+  height: 9.5rem;
   object-fit: contain;
 
-  @media ${device.laptop} {
-    height: 9.5rem;
-  }
+    max-width: 65%;
+
+  @media ${device.tablet} {
+    max-width: 100%;
+
 `
 
 const Buttons = styled.div`
@@ -251,6 +253,11 @@ const Greeting = styled.p`
   color: white;
   margin-right: 2rem;
   font-size: 1.5rem;
+  display: none;
+
+  @media ${device.tablet} {
+    display: block;
+  }
 `
 
 const Image = styled.img`

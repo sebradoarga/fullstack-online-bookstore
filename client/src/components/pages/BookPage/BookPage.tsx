@@ -73,6 +73,8 @@ const BookPage = () => {
     if (isCartOpen) {
       dispatch(toggleCart())
     }
+    console.log('cart', cart)
+    console.log('current book', currentBook)
   }, [])
 
   const buyBook = () => {
