@@ -149,8 +149,8 @@ export default CartSidebar
 
 const Wrapper = styled.div`
   width: 27rem;
+  min-height: 100vh;
   background: white;
-  height: 100%;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -158,6 +158,7 @@ const Wrapper = styled.div`
   z-index: 10000;
   border-left: 7px solid #130912;
 `
+
 const CartHeader = styled.div`
   display: flex;
   align-items: center;
@@ -181,7 +182,7 @@ const CloseButton = styled.button`
 const BooksContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 60%;
+  max-height: 60vh;
   margin-top: 30%;
   overflow-y: auto;
   margin-right: 0.5rem;
@@ -245,7 +246,9 @@ const CartFooter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 5rem;
+  width: 100%;
+  position: absolute;
+  bottom: 1rem;
 `
 const Total = styled.div`
   margin-left: 1.5rem;

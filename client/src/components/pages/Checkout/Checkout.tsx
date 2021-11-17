@@ -9,6 +9,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { Link } from 'react-router-dom'
 import { removeBookFromCart, toggleCart } from '../../../redux/actions/cart'
 import { findUserById, updateUser } from '../../../api'
+import { device } from '../../../device'
 
 const Checkout = () => {
   const dispatch = useDispatch()
@@ -153,9 +154,18 @@ const CartInsides = styled.div`
 const ItemWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 2rem 10rem;
+  margin: 2rem;
   border-top: 1px solid #e1e1e3;
   padding-top: 3rem;
+  flex-direction: column;
+
+  @media ${device.mobileL} {
+    flex-direction: row;
+  }
+
+  @media ${device.laptop} {
+    margin: 2rem 10rem;
+  }
 `
 
 const Item = styled.div`
@@ -212,13 +222,22 @@ const RemoveBtn = styled.button`
 
 const RightSide = styled.div`
   display: flex;
+  align-self: flex-end;
+
+  @media ${device.mobileL} {
+    align-self: flex-start;
+  }
 `
 const Total = styled.div`
   display: flex;
   align-items: center;
   align-self: flex-end;
   justify-content: flex-end;
-  margin-right: 12rem;
+  margin-right: 5rem;
+
+  @media ${device.laptop} {
+    margin-right: 12rem;
+  }
 `
 
 const TotalText = styled.h3`
@@ -235,7 +254,7 @@ const TotalPrice = styled.p`
 `
 const CheckoutBtn = styled.button`
   align-self: flex-end;
-  margin-right: 11rem;
+  margin-right: 4rem;
   margin-top: 2rem;
   padding: 1rem 2.5rem;
   border-radius: 15px;
@@ -245,4 +264,8 @@ const CheckoutBtn = styled.button`
   background: #b14623;
   cursor: pointer;
   letter-spacing: 0.1rem;
+
+  @media ${device.laptop} {
+    margin-right: 11rem;
+  }
 `

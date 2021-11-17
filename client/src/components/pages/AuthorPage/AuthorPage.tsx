@@ -137,10 +137,15 @@ const BooksContainer = styled.div`
   margin-top: 1rem;
   flex-wrap: wrap;
   & img {
-    width: 15rem;
+    width: 13rem;
+    height: 20rem;
     margin-right: 1rem;
     box-shadow: 0px 6px 12px rgb(0 0 0 / 30%);
     border-radius: 4px;
+
+    @media ${device.laptop} {
+      width: 15rem;
+    }
   }
 `
 const PageContent = styled.div`
@@ -206,9 +211,12 @@ const BooksHeader = styled.h2`
   margin-top: 2rem;
 `
 const BookCover = styled.img`
-  width: 20rem;
-  height: 23rem;
   object-fit: cover;
   boxshadow: 0px 6px 12px rgb(0 0 0 / 30%);
   border-radius: 4px;
+  margin-top: 2rem;
+
+  @media ${device.laptop} {
+    margin-top: 0;
+  }
 `
