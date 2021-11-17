@@ -16,7 +16,7 @@ const DisplayedBook = ({ book }: { book: Book }) => {
 export default DisplayedBook
 
 const BookContainer = styled.div`
-  margin: 0 1.3rem;
+  margin: 0 1.2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,17 +27,26 @@ const BookContainer = styled.div`
     transform: scale(1.025);
   }
 
+  @media ${device.mobileL} {
+    margin: 0 1.3rem;
+  }
+
   @media ${device.laptop} {
     margin: 0 2rem;
   }
 `
 
 const Image = styled.img`
-  width: 7rem;
-  height: 12rem;
+  width: 6rem;
+  height: 9rem;
   object-fit: center;
   boxshadow: 0px 6px 12px rgb(0 0 0 / 30%);
   border-radius: 4px;
+
+  @media ${device.mobileL} {
+    width: 7rem;
+    height: 12rem;
+  }
 
   @media ${device.laptop} {
     width: 20rem;

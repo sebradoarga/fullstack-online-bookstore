@@ -85,7 +85,7 @@ min-height: 100vh`
 const PageContent = styled.div``
 
 const CategoryName = styled.div`
-  margin-top: 8rem;
+  margin-top: 3rem;
   margin-left: 1rem;
   font-size: 2.5rem;
   text-transform: uppercase;
@@ -98,15 +98,17 @@ const CategoryName = styled.div`
 
   @media ${device.laptop} {
     margin-left: 8.5rem;
+    margin-top: 8rem;
   }
 `
 const BrowseHeader = styled.h2`
-  margin-top: 8rem;
+  margin-top: 3rem;
   margin-left: 2rem;
   font-size: 2rem;
 
   @media ${device.laptop} {
     margin-left: 8rem;
+    margin-top: 8rem;
   }
 `
 
@@ -119,20 +121,25 @@ const Categories = styled.div`
   flex-wrap: wrap;
   margin-top: 4rem;
   margin-left: 2rem;
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   & * {
     margin-bottom: 1rem;
     transition: all 0.3s ease;
     text-transform: capitalize;
     text-align: center;
-    width: 60%;
+    width: 80%;
 
     &:hover {
       color: #f4922e;
+    }
+
+    @media ${device.laptop} {
+      width: 20%;
     }
   }
 
   @media ${device.laptop} {
     margin-left: 15rem;
+    font-size: 1.8rem;
   }
 `

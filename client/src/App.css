@@ -19,3 +19,8 @@ a {
   text-decoration: none;
   color: black;
 }
+
+.slick-prev,
+.slick-next {
+  display: none !important;
+}
