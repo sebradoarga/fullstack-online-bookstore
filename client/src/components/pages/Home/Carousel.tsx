@@ -4,6 +4,7 @@ import carousel2 from '../../../images/carousel2.png'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { device } from '../../../device'
 
 const Carousel = () => {
   let settings = {
@@ -33,7 +34,11 @@ const Carousel = () => {
 export default Carousel
 
 const Container = styled(Slider)`
-  width: 80%;
+  width: 95%;
   margin: 4rem auto;
+
+  @media ${device.laptop} {
+    width: 80%;
+  }
 `
 const Wrap = styled.div``

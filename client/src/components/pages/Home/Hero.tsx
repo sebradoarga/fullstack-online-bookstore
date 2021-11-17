@@ -1,17 +1,13 @@
 import styled from 'styled-components'
+import { device } from '../../../device'
 import heroImg from '../../../images/hero.png'
-
-const imageStyling = {
-  width: '90%',
-}
 
 const Hero = () => {
   return (
     <Container>
-      <img
+      <Image
         src={heroImg}
         alt="Promotional picture for our Halloween book selection"
-        style={imageStyling}
       />
     </Container>
   )
@@ -20,9 +16,23 @@ const Hero = () => {
 export default Hero
 
 const Container = styled.div`
-  height: 65rem;
+  height: 35rem;
   display: flex;
   justify-content: center;
   padding-top: 6rem;
   background: #130912;
+  width: 100%;
+
+  @media ${device.laptop} {
+    height: 65rem;
+  }
+`
+const Image = styled.img`
+  width: 100%;
+  object-fit: contain;
+
+  @media ${device.laptop} {
+    width: 90%
+    object-fit: cover;
+  }
 `

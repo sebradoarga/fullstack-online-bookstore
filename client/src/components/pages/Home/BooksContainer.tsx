@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/reducers'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import { Link } from 'react-router-dom'
+import { device } from '../../../device'
 
 const BooksContainer = ({ filterCriterium }: { filterCriterium: string }) => {
   const books: Book[] = useSelector(
@@ -38,8 +39,13 @@ export default BooksContainer
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media ${device.laptop} {
+    flex-direction: row;
+  }
 `
 
 const Container = styled.div`
@@ -48,7 +54,7 @@ const Container = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
-  flex-wrap: wrap;
+  flex-wrap: no-wrap;
 `
 const MoreBtn = styled.button`
   cursor: pointer;
@@ -56,9 +62,17 @@ const MoreBtn = styled.button`
   border: none;
   margin-left: 2rem;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  @media ${device.laptop} {
+    flex-direction: column;
+    margin-top: 0;
   }
 `
 

@@ -11,6 +11,7 @@ import { toggleCart } from '../../../redux/actions/cart'
 import { RootState } from '../../../redux/reducers'
 import { Link } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
+import { device } from '../../../device'
 
 const Home = () => {
   const dispatch = useDispatch()
@@ -85,7 +86,7 @@ const PageContent = styled.div``
 
 const CategoryName = styled.div`
   margin-top: 8rem;
-  margin-left: 8.5rem;
+  margin-left: 1rem;
   font-size: 2.5rem;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
@@ -94,11 +95,19 @@ const CategoryName = styled.div`
   width: 20rem;
   padding-left: 0.5rem;
   font-weight: bold;
+
+  @media ${device.laptop} {
+    margin-left: 8.5rem;
+  }
 `
 const BrowseHeader = styled.h2`
   margin-top: 8rem;
-  margin-left: 8rem;
+  margin-left: 2rem;
   font-size: 2rem;
+
+  @media ${device.laptop} {
+    margin-left: 8rem;
+  }
 `
 
 const Categories = styled.div`
@@ -109,14 +118,21 @@ const Categories = styled.div`
   height: 15rem;
   flex-wrap: wrap;
   margin-top: 4rem;
-  margin-left: 15rem;
+  margin-left: 2rem;
   font-size: 1.8rem;
   & * {
     margin-bottom: 1rem;
     transition: all 0.3s ease;
     text-transform: capitalize;
+    text-align: center;
+    width: 60%;
+
     &:hover {
       color: #f4922e;
     }
+  }
+
+  @media ${device.laptop} {
+    margin-left: 15rem;
   }
 `

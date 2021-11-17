@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Book } from '../../../types'
 import { Link } from 'react-router-dom'
+import { device } from '../../../device'
 
 const DisplayedBook = ({ book }: { book: Book }) => {
   return (
@@ -15,7 +16,7 @@ const DisplayedBook = ({ book }: { book: Book }) => {
 export default DisplayedBook
 
 const BookContainer = styled.div`
-  margin: 0 2rem;
+  margin: 0 1.3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,12 +26,21 @@ const BookContainer = styled.div`
   &:hover {
     transform: scale(1.025);
   }
+
+  @media ${device.laptop} {
+    margin: 0 2rem;
+  }
 `
 
 const Image = styled.img`
-  width: 20rem;
-  height: 30rem;
+  width: 7rem;
+  height: 12rem;
   object-fit: center;
   boxshadow: 0px 6px 12px rgb(0 0 0 / 30%);
   border-radius: 4px;
+
+  @media ${device.laptop} {
+    width: 20rem;
+    height: 30rem;
+  }
 `

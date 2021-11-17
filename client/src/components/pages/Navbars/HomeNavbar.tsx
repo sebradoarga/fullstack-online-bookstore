@@ -13,6 +13,7 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import MenuBookIcon from '@mui/icons-material/MenuBook'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { Book, User } from '../../../types'
+import { device } from '../../../device'
 
 const HomeNavbar = () => {
   const dispatch = useDispatch()
@@ -226,8 +227,12 @@ const Navbar = styled.nav`
   z-index: 9000;
 `
 const Logo = styled.img`
-  height: 9.5rem;
+  height: 4rem;
   object-fit: contain;
+
+  @media ${device.laptop} {
+    height: 9.5rem;
+  }
 `
 
 const Buttons = styled.div`
@@ -319,6 +324,10 @@ const LogoutBtn = styled.button`
 `
 
 const BtnText = styled.h2`
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-left: 0.7rem;
+
+  @media ${device.laptop} {
+    font-size: 2rem;
+  }
 `
