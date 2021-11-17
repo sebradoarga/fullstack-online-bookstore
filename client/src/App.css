@@ -24,3 +24,7 @@ a {
 .slick-next {
   display: none !important;
 }
+
+ul {
+  list-style: none;
+}
