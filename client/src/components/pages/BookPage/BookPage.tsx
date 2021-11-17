@@ -248,9 +248,14 @@ const DeleteBtn = styled.button`
   align-self: flex-end;
   margin-right: 1rem;
   position: relative;
+  display: none;
 
   &:hover span {
     visibility: visible;
+  }
+
+  @media ${device.laptop} {
+    display: block;
   }
 `
 
