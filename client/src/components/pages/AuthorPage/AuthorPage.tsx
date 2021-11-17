@@ -11,6 +11,7 @@ import CartSidebar from '../../CartSidebar'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleCart } from '../../../redux/actions/cart'
 import { RootState } from '../../../redux/reducers'
+import { device } from '../../../device'
 
 const AuthorPage = () => {
   const dispatch = useDispatch()
@@ -145,19 +146,29 @@ const BooksContainer = styled.div`
 const PageContent = styled.div`
   display: flex;
   margin-top: 13rem;
-  align-items: flex-start
-  border: 3px solid green;
+  align-items: center;
+  flex-direction: column;
+
+  @media ${device.laptop} {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 `
 const AuthorInfo = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 3rem;
+  margin-top: 3rem;
+
+  @media ${device.laptop} {
+    margin-top: 0;
+  }
 `
 const Image = styled.img`
   max-width: 25rem;
   max-height: 25rem;
   object-fit: cover;
-  object-position: center;
+  object-position: top;
   border-radius: 10px;
   margin-top: 1.5rem;
   box-shadow: 0px 6px 12px rgb(0 0 0 / 30%);
