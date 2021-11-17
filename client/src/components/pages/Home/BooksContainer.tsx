@@ -42,9 +42,24 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  max-width: 32rem;
+  margin: 0 auto;
+
+  @media ${device.mobileL} {
+    max-width: 42rem;
+  }
+
+  @media ${device.mobileXL} {
+    max-width: 61.5rem;
+  }
+
+  @media ${device.tablet} {
+    max-width: 86rem;
+  }
 
   @media ${device.laptop} {
     flex-direction: row;
+    max-width: 140rem;
   }
 `
 

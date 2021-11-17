@@ -48,6 +48,16 @@ const Image = styled.img`
     height: 12rem;
   }
 
+  @media ${device.mobileXL} {
+    width: 9rem;
+    height: 14rem;
+  }
+
+  @media ${device.tablet} {
+    width: 11rem;
+    height: 18rem;
+  }
+
   @media ${device.laptop} {
     width: 20rem;
     height: 30rem;

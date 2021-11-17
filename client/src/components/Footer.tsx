@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { device } from '../device'
 import logo from '../images/logo-transparent-background.png'
 
 const Footer = () => {
@@ -18,7 +19,11 @@ const FooterContainer = styled.footer`
   overflow: hidden;
   height: 6rem;
   padding: 0 3rem;
-  margin-top: 6rem;
+  margin-top: 1rem;
+
+  @media ${device.laptop} {
+    margin-top: 6rem;
+  }
 `
 const Image = styled.img`
   width: 20rem;

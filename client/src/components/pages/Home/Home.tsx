@@ -116,30 +116,30 @@ const Categories = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 50%;
+  width: 100%;
   height: 15rem;
   flex-wrap: wrap;
   margin-top: 4rem;
-  margin-left: 2rem;
   font-size: 1.3rem;
+  max-width: 25rem;
+  margin-left: 3rem;
   & * {
     margin-bottom: 1rem;
     transition: all 0.3s ease;
     text-transform: capitalize;
-    text-align: center;
-    width: 80%;
 
     &:hover {
       color: #f4922e;
     }
+  }
 
-    @media ${device.laptop} {
-      width: 20%;
-    }
+  @media ${device.mobileL} {
+    max-width: 40rem;
   }
 
   @media ${device.laptop} {
     margin-left: 15rem;
     font-size: 1.8rem;
+    max-width: 60rem;
   }
 `

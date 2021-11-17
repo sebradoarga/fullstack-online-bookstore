@@ -35,10 +35,11 @@ export default Carousel
 
 const Container = styled(Slider)`
   width: 95%;
-  margin: 4rem auto;
+  margin: 2rem auto;
 
   @media ${device.laptop} {
     width: 80%;
+    margin: 4rem auto;
   }
 `
 const Wrap = styled.div``
