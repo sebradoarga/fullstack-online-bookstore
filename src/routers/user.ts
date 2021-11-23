@@ -2,6 +2,7 @@ import express from 'express'
 
 import {
   createUser,
+  createLocalUser,
   findUserById,
   deleteUser,
   findAllUsers,
@@ -14,6 +15,7 @@ router.get('/', findAllUsers)
 router.get('/:userId', findUserById)
 router.put('/:userId', updateUser)
 router.delete('/:userId', deleteUser)
-router.post('/', createUser)
+router.post('/googleSignUp', createUser)
+router.post('/localAuth', createLocalUser)
 
 export default router

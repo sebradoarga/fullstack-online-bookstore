@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 import User from '../models/User'
 import UserService from '../services/user'
 import { BadRequestError } from '../helpers/apiError'
+import bcrypt from 'bcryptjs'
 
 export const createUser = async (
   req: Request,
@@ -10,14 +11,41 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const { firstName, lastName, email, address, image, order } = req.body
+    const { firstName, lastName, email, order } = req.body
 
     const user = new User({
       firstName,
       lastName,
       email,
-      address,
-      image,
+      order,
+    })
+
+    await UserService.createUser(user)
+    res.json(user)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+export const createLocalUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { firstName, lastName, email, password, order } = req.body
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    const user = new User({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
       order,
     })
 

@@ -57,7 +57,6 @@ const deleteUser = async (userId: string): Promise<UserDocument | null> => {
 
 const findOrCreate = async (
   userEmail: string,
-  picture: string,
   givenName: string,
   familyName: string
 ) => {
@@ -70,7 +69,6 @@ const findOrCreate = async (
         {
           firstName: givenName,
           lastName: familyName,
-          image: picture,
           email: userEmail,
         }
       )

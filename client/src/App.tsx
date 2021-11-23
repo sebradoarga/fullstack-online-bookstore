@@ -13,6 +13,8 @@ import { fetchAuthors, fetchBooks, findBookById, updateAuthor } from './api'
 import { Author, Book } from './types'
 import GenrePage from './components/pages/GenrePage/GenrePage'
 import Checkout from './components/pages/Checkout/Checkout'
+import Login from './components/pages/Login/Login'
+import Signup from './components/pages/Signup/Signup'
 
 function App() {
   const dispatch = useDispatch()
@@ -102,6 +104,14 @@ function App() {
 
       <Route exact path="/checkout">
         <Checkout />
+      </Route>
+
+      <Route exact path="/login">
+        <Login />
+      </Route>
+
+      <Route exact path="/signup">
+        <Signup />
       </Route>
     </Router>
   )

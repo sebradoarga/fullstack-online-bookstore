@@ -177,6 +177,9 @@ const HomeNavbar = () => {
             </AddBookBtn>
           </DropDown>
         )}
+        <Link to="/login">
+          <LoginBtn>Log In</LoginBtn>
+        </Link>
         <CartButton onClick={cartClicked}>
           <ShoppingCartIcon fontSize="large" sx={{ color: 'white' }} />
         </CartButton>
@@ -240,6 +243,14 @@ const Logo = styled.img`
 const Buttons = styled.div`
   display: flex;
   align-items: center;
+`
+
+const LoginBtn = styled.button`
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-right: 2rem;
 `
 
 const CartButton = styled.button`

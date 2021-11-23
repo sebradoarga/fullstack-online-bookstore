@@ -5,6 +5,8 @@ export type UserDocument = Document & {
   lastName: string
   image: string
   email: string
+  password: string
+  isAdmin: boolean
   order: string[]
 }
 
@@ -17,11 +19,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image: {
-    type: String,
-  },
   email: {
     type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
     required: true,
   },
   order: {

@@ -4,11 +4,43 @@ import passportLocal from 'passport-local'
 import GoogleTokenStrategy from 'passport-google-id-token'
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
 import UserService from '../services/user'
-
 import { Request, Response, NextFunction } from 'express'
-import { UserDocument } from '../models/User'
+import User, { UserDocument } from '../models/User'
+import bcrypt from 'bcryptjs'
 
-// const LocalStrategy = passportLocal.Strategy
+const LocalStrategy = passportLocal.Strategy
+
+export const localStrategy = new LocalStrategy(
+  (username: string, password: string, done) => {
+    User.findOne({ username: username }, (err: any, user: UserDocument) => {
+      if (err) throw err
+      if (!user) return done(null, false)
+      bcrypt.compare(password, user.password, (err, result: boolean) => {
+        if (err) throw err
+        if (result === true) {
+          return done(null, user)
+        } else {
+          return done(null, false)
+        }
+      })
+    })
+  }
+)
+
+passport.serializeUser((user: UserDocument, cb) => {
+  cb(null, user._id)
+})
+
+passport.deserializeUser((id: string, cb) => {
+  User.findOne({ _id: id }, (err, user: UserDocument) => {
+    const userInformation: UserDocument = {
+      username: user.username,
+      isAdmin: user.isAdmin,
+      id: user._id,
+    }
+    cb(err, userInformation)
+  })
+})
 
 export const googleStrategy = new GoogleTokenStrategy(
   {
@@ -18,13 +50,7 @@ export const googleStrategy = new GoogleTokenStrategy(
     // eslint-disable-next-line @typescript-eslint/camelcase
     const { email, name, picture, given_name, family_name } =
       parsedToken.payload
-    // const user = { email: 'raduoarga95@gmail.com', name: 'Radu Oarga' }
-    const user = await UserService.findOrCreate(
-      email,
-      picture,
-      given_name,
-      family_name
-    )
+    const user = await UserService.findOrCreate(email, given_name, family_name)
 
     done(null, user)
   }
