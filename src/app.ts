@@ -12,7 +12,7 @@ import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
 import compression from 'compression'
 
-import { googleStrategy, jwtStrategy } from './config/passport'
+import { localStrategy, googleStrategy, jwtStrategy } from './config/passport'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -28,6 +28,7 @@ app.use(lusca.xssProtection(true))
 app.use(passport.initialize())
 
 // passport strategies
+passport.use(localStrategy)
 passport.use(googleStrategy)
 passport.use(jwtStrategy)
 

@@ -11,8 +11,8 @@ import bcrypt from 'bcryptjs'
 const LocalStrategy = passportLocal.Strategy
 
 export const localStrategy = new LocalStrategy(
-  (username: string, password: string, done) => {
-    User.findOne({ username: username }, (err: any, user: UserDocument) => {
+  (email: string, password: string, done) => {
+    User.findOne({ email: email }, (err: any, user: UserDocument) => {
       if (err) throw err
       if (!user) return done(null, false)
       bcrypt.compare(password, user.password, (err, result: boolean) => {
@@ -51,7 +51,6 @@ export const googleStrategy = new GoogleTokenStrategy(
     const { email, name, picture, given_name, family_name } =
       parsedToken.payload
     const user = await UserService.findOrCreate(email, given_name, family_name)
-
     done(null, user)
   }
 )

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+import LoginNavbar from '../Navbars/LoginNavbar'
+import Footer from '../../Footer'
 
 const Signup = () => {
   const handleSubmit = () => {}
@@ -20,71 +22,85 @@ const Signup = () => {
 
   return (
     <Container>
-      <PageHeader>Sign Up</PageHeader>
-      <FormWrapper>
-        <form
-          autoComplete="off"
-          onSubmit={handleSubmit}
-          style={{ display: 'flex', flexDirection: 'column' }}
-        >
-          <Label htmlFor="firstName">First Name:</Label>
-          <Input
-            type="text"
-            id="firstName"
-            name="firstName"
-            value={signupData.firstName}
-            onChange={(e) =>
-              setSignupData({ ...signupData, firstName: e.target.value })
-            }
-          ></Input>
-          <Label htmlFor="lastName">Last Name:</Label>
-          <Input
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={signupData.lastName}
-            onChange={(e) =>
-              setSignupData({ ...signupData, lastName: e.target.value })
-            }
-          ></Input>
-          <Label htmlFor="email">Email:</Label>
-          <Input
-            type="text"
-            id="email"
-            name="email"
-            value={signupData.email}
-            onChange={(e) =>
-              setSignupData({ ...signupData, email: e.target.value })
-            }
-          ></Input>
-          <Label htmlFor="password">Password:</Label>
-          <Input
-            type="text"
-            id="password"
-            name="password"
-            value={signupData.password}
-            onChange={(e) =>
-              setSignupData({ ...signupData, password: e.target.value })
-            }
-          ></Input>
-          <SubmitBtn type="submit" value="Log In"></SubmitBtn>
-        </form>
-      </FormWrapper>
+      <PageContent>
+        <LoginNavbar />
+
+        <PageHeader>Sign Up</PageHeader>
+        <FormWrapper>
+          <form
+            autoComplete="off"
+            onSubmit={handleSubmit}
+            style={{ display: 'flex', flexDirection: 'column' }}
+          >
+            <Label htmlFor="firstName">First Name:</Label>
+            <Input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={signupData.firstName}
+              onChange={(e) =>
+                setSignupData({ ...signupData, firstName: e.target.value })
+              }
+            ></Input>
+            <Label htmlFor="lastName">Last Name:</Label>
+            <Input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={signupData.lastName}
+              onChange={(e) =>
+                setSignupData({ ...signupData, lastName: e.target.value })
+              }
+            ></Input>
+            <Label htmlFor="email">Email:</Label>
+            <Input
+              type="text"
+              id="email"
+              name="email"
+              value={signupData.email}
+              onChange={(e) =>
+                setSignupData({ ...signupData, email: e.target.value })
+              }
+            ></Input>
+            <Label htmlFor="password">Password:</Label>
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              value={signupData.password}
+              onChange={(e) =>
+                setSignupData({ ...signupData, password: e.target.value })
+              }
+            ></Input>
+            <SubmitBtn type="submit" value="Log In"></SubmitBtn>
+          </form>
+        </FormWrapper>
+      </PageContent>
+      <Footer />
     </Container>
   )
 }
 
 export default Signup
 
-const Container = styled.div``
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+`
+const PageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 
 const PageHeader = styled.h1`
-  margin-top: 3rem;
+  margin-top: 20rem;
   text-align: center;
   font-size: 2.5rem;
   text-transform: capitalize;
 `
-
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -116,6 +132,7 @@ const SubmitBtn = styled.input`
   background: black;
   cursor: pointer;
   letter-spacing: 0.1rem;
+  margin-bottom: 5rem;
 
   &:hover {
     cursor: pointer;
