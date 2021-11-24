@@ -24,6 +24,7 @@ app.use(apiContentType)
 // Use common 3rd-party middlewares
 app.use(compression())
 app.use(express.json())
+app.use(Cors())
 app.use(lusca.xframe('SAMEORIGIN'))
 app.use(lusca.xssProtection(true))
 app.use(passport.initialize())
@@ -31,8 +32,6 @@ app.use(passport.initialize())
 // passport strategies
 passport.use(googleStrategy)
 passport.use(jwtStrategy)
-
-app.use(Cors())
 
 app.use('/api/v1/google/login', loginRouter)
 

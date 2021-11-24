@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { deleteBook, updateAuthor } from '../../../api'

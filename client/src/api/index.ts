@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Author, Book, User } from '../types'
+import { Author, LoginDataInterface, SignupDataInterface, User } from '../types'
 
 const url = 'http://localhost:5000/api/v1'
 
@@ -43,3 +43,9 @@ export const updateUser = (userId: string, updatedUser: User) =>
 
 export const findUserById = (userId: string) =>
   axios.get(`${url}/users/${userId}`)
+
+export const signup = (formData: SignupDataInterface) =>
+  axios.post(`${url}/login/signup`, formData)
+
+export const localLogin = (formData: LoginDataInterface) =>
+  axios.post(`${url}/login/login`, formData)

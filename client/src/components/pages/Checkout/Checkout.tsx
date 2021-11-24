@@ -7,7 +7,7 @@ import { Book, User } from '../../../types'
 import { RootState } from '../../../redux/reducers'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { Link } from 'react-router-dom'
-import { removeBookFromCart, toggleCart } from '../../../redux/actions/cart'
+import { removeBookFromCart } from '../../../redux/actions/cart'
 import { findUserById, updateUser } from '../../../api'
 import { device } from '../../../device'
 
@@ -40,10 +40,6 @@ const Checkout = () => {
     order: [],
   })
 
-  const closeCart = () => {
-    dispatch(toggleCart())
-  }
-
   const getUser = async () => {
     const response: any = await findUserById(userId)
     const data: User = await response.data
@@ -53,6 +49,7 @@ const Checkout = () => {
 
   useEffect(() => {
     getUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId])
 
   const removeBook = (book: Book) => {

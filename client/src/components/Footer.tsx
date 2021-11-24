@@ -9,7 +9,6 @@ const Footer = () => {
   return (
     <FooterContainer>
       <FirstFooter>
-        {' '}
         <LeftSide>
           <Image src={logo} alt="The Story Store logo" />
           <FollowSection>
@@ -122,8 +121,6 @@ const PageLink = styled.a`
   font-size: 1.5rem;
   cursor: pointer;
 `
-
-const Bottom = styled.div``
 
 const Image = styled.img`
   width: 20rem;

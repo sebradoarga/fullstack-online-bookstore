@@ -40,3 +40,16 @@ export interface User {
   email: string
   order: string[]
 }
+
+export interface SignupDataInterface {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  repeatPassword: string
+}
+
+export interface LoginDataInterface {
+  email: string
+  password: string
+}

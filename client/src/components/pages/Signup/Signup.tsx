@@ -2,9 +2,15 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import LoginNavbar from '../Navbars/LoginNavbar'
 import Footer from '../../Footer'
+import { signup } from '../../../api'
 
 const Signup = () => {
-  const handleSubmit = () => {}
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
+    console.log('signupData', signupData)
+    const signupResult = await signup(signupData)
+    console.log('signupResult', signupResult)
+  }
 
   interface SignupData {
     firstName: string
@@ -35,7 +41,7 @@ const Signup = () => {
         <FormWrapper>
           <form
             autoComplete="off"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => handleSubmit(e)}
             style={{ display: 'flex', flexDirection: 'column' }}
           >
             <Label htmlFor="firstName">First Name:</Label>

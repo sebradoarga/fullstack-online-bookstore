@@ -46,6 +46,7 @@ export const signup = async (
   const { firstName, lastName, email, password, repeatPassword } = req.body
 
   try {
+    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$hello')
     const existingUser = await User.findOne({ email })
 
     if (existingUser)
@@ -68,6 +69,8 @@ export const signup = async (
       JWT_SECRET,
       { expiresIn: '1h' }
     )
+
+    res.status(201).json({ result, token })
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong.' })
   }

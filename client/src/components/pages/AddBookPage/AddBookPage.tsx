@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { createBook, getBooks } from '../../../redux/actions/books'
 import { Author } from '../../../types'

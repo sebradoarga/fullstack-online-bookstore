@@ -26,6 +26,8 @@ const Home = () => {
     if (isCartOpen) {
       dispatch(toggleCart())
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const allGenres = [

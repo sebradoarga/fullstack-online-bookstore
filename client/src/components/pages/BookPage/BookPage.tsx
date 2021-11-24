@@ -51,6 +51,8 @@ const BookPage = () => {
 
   useEffect(() => {
     getUser()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId])
 
   const { book } = useParams<{ book: string }>()
@@ -75,6 +77,8 @@ const BookPage = () => {
     }
     console.log('cart', cart)
     console.log('current book', currentBook)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const buyBook = () => {
@@ -353,10 +357,3 @@ const AddToCart = styled.button`
   align-items: center;
 `
 const PageContent = styled.div``
-
-const DeletedBookMessage = styled.h1`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`

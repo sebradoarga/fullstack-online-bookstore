@@ -1,19 +1,10 @@
 import express from 'express'
 import { signin, signup } from '../controllers/localLogin'
-import passport from 'passport'
 
 const router = express.Router()
 
-router.post(
-  '/login',
-  passport.authenticate('local', { session: false }),
-  signin
-)
+router.post('/login', signin)
 
-router.post(
-  '/signup',
-  passport.authenticate('local', { session: false }),
-  signup
-)
+router.post('/signup', signup)
 
 export default router

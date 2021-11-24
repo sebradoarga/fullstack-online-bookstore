@@ -32,6 +32,8 @@ const GenrePage = () => {
     if (isCartOpen) {
       dispatch(toggleCart())
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const books: Book[] = useSelector(
@@ -66,6 +68,7 @@ const GenrePage = () => {
 
   useEffect(() => {
     getUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId])
 
   const buyBook = (book: Book) => {

@@ -19,12 +19,12 @@ const Carousel = () => {
   return (
     <Container {...settings}>
       <Wrap>
-        <img src={carousel1} alt="A promotional picture of our new releases" />
+        <img src={carousel1} alt="Our new releases" />
       </Wrap>
       <Wrap>
         <img
           src={carousel2}
-          alt="Promotional picture for 'To sleep in a sea of stars' by Christopher Paolini"
+          alt="'To sleep in a sea of stars' by Christopher Paolini Promo"
         />
       </Wrap>
     </Container>

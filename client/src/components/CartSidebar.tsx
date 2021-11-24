@@ -7,7 +7,7 @@ import { removeBookFromCart, toggleCart } from '../redux/actions/cart'
 import { Book, User } from '../types'
 import { Link } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import { findBookById, findUserById, updateUser } from '../api'
+import { findUserById, updateUser } from '../api'
 
 const CartSidebar = () => {
   const dispatch = useDispatch()
@@ -48,6 +48,7 @@ const CartSidebar = () => {
 
   useEffect(() => {
     getUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId])
 
   const removeBook = (book: Book) => {

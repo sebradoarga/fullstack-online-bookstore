@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link, useHistory } from 'react-router-dom'
-import axios, { AxiosResponse } from 'axios'
 import LoginNavbar from '../Navbars/LoginNavbar'
 import Footer from '../../Footer'
 import { GoogleLogin } from 'react-google-login'
-import { findBookById, findUserById, login } from '../../../api'
+import { findBookById, findUserById, localLogin, login } from '../../../api'
 import { useDispatch } from 'react-redux'
 import { addUserData, logInUser } from '../../../redux/actions/cart'
 import { Book, User } from '../../../types'
@@ -22,6 +21,11 @@ const Login = () => {
     image: '',
     email: '',
     order: [],
+  })
+
+  const [loginData, setLoginData] = useState<LoginData>({
+    email: '',
+    password: '',
   })
 
   const [cartBooks, setCartBooks] = useState<Book[]>([])
@@ -43,6 +47,8 @@ const Login = () => {
 
       getInitialBooks()
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbUser])
 
   const getBook = async (bookId: string) => {
@@ -67,6 +73,8 @@ const Login = () => {
       dispatch(logInUser(cartBooks))
       history.push('/')
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartBooks])
 
   const responseGoogle = async (response: any) => {
@@ -95,26 +103,10 @@ const Login = () => {
     password: string
   }
 
-  const [loginData, setLoginData] = useState<LoginData>({
-    email: '',
-    password: '',
-  })
-
-  const handleSubmit = () => {
-    axios
-      .post('http://localhost:5000/api/v1/localAuth', loginData, {
-        withCredentials: true,
-      })
-      .then(
-        (res: AxiosResponse) => {
-          if (res.data === 'success') {
-            window.location.href = '/'
-          }
-        },
-        () => {
-          console.log('Failure')
-        }
-      )
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
+    const signinResult = await localLogin(loginData)
+    console.log('signinResult', signinResult)
   }
 
   return (
@@ -125,7 +117,7 @@ const Login = () => {
         <FormWrapper>
           <form
             autoComplete="off"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => handleSubmit(e)}
             style={{ display: 'flex', flexDirection: 'column' }}
           >
             <Label htmlFor="email">Email:</Label>

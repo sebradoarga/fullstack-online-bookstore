@@ -1,14 +1,12 @@
-import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login'
 import { login } from '../../../api'
 import logo from '../../../images/logo-transparent-background.png'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/reducers'
 
 const HomeNavbar = () => {
-  const dispatch = useDispatch()
   const userLoggedIn: boolean = useSelector(
     (state: RootState) => state.cartReducer.userLoggedIn
   )
@@ -79,12 +77,6 @@ const Buttons = styled.div`
   align-items: center;
 `
 
-const CartButton = styled.button`
-  background: none;
-  border: none;
-  margin-right: 2rem;
-  cursor: pointer;
-`
 const LoggedInUserPresentation = styled.div`
   display: flex;
   align-items: center;
