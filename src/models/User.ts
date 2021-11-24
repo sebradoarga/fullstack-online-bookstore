@@ -3,7 +3,6 @@ import mongoose, { Document } from 'mongoose'
 export type UserDocument = Document & {
   firstName: string
   lastName: string
-  image: string
   email: string
   password: string
   isAdmin: boolean

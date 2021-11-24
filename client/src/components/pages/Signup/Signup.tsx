@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import LoginNavbar from '../Navbars/LoginNavbar'
 import Footer from '../../Footer'
@@ -11,6 +11,7 @@ const Signup = () => {
     lastName: string
     email: string
     password: string
+    repeatPassword: string
   }
 
   const [signupData, setSignupData] = useState<SignupData>({
@@ -18,7 +19,12 @@ const Signup = () => {
     lastName: '',
     email: '',
     password: '',
+    repeatPassword: '',
   })
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <Container>
@@ -72,7 +78,17 @@ const Signup = () => {
                 setSignupData({ ...signupData, password: e.target.value })
               }
             ></Input>
-            <SubmitBtn type="submit" value="Log In"></SubmitBtn>
+            <Label htmlFor="repeatPassword">Repeat Password:</Label>
+            <Input
+              type="password"
+              id="repeatPassword"
+              name="repeatPassword"
+              value={signupData.repeatPassword}
+              onChange={(e) =>
+                setSignupData({ ...signupData, repeatPassword: e.target.value })
+              }
+            ></Input>
+            <SubmitBtn type="submit" value="Sign Up"></SubmitBtn>
           </form>
         </FormWrapper>
       </PageContent>
@@ -93,13 +109,17 @@ const PageContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 5rem;
 `
 
 const PageHeader = styled.h1`
-  margin-top: 20rem;
+  margin-top: 15rem;
   text-align: center;
   font-size: 2.5rem;
   text-transform: capitalize;
+  text-transform: capitalize;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
 `
 const FormWrapper = styled.div`
   display: flex;
@@ -132,7 +152,6 @@ const SubmitBtn = styled.input`
   background: black;
   cursor: pointer;
   letter-spacing: 0.1rem;
-  margin-bottom: 5rem;
 
   &:hover {
     cursor: pointer;

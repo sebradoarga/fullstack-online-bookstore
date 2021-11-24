@@ -1,11 +1,95 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import axios, { AxiosResponse } from 'axios'
 import LoginNavbar from '../Navbars/LoginNavbar'
 import Footer from '../../Footer'
+import { GoogleLogin } from 'react-google-login'
+import { findBookById, findUserById, login } from '../../../api'
+import { useDispatch } from 'react-redux'
+import { addUserData, logInUser } from '../../../redux/actions/cart'
+import { Book, User } from '../../../types'
 
 const Login = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+
+  const [justLoggedIn, setJustLoggedIn] = useState<boolean>(false)
+
+  const [dbUser, setDbUser] = useState<User>({
+    firstName: '',
+    lastName: '',
+    image: '',
+    email: '',
+    order: [],
+  })
+
+  const [cartBooks, setCartBooks] = useState<Book[]>([])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    setJustLoggedIn(false)
+  }, [])
+
+  const getUser = async (userId: string) => {
+    const response: any = await findUserById(userId)
+    const data: User = await response.data
+    setDbUser(data)
+  }
+
+  useEffect(() => {
+    if (dbUser && dbUser.firstName !== '' && dbUser.order) {
+      setJustLoggedIn(true)
+
+      getInitialBooks()
+    }
+  }, [dbUser])
+
+  const getBook = async (bookId: string) => {
+    const response: any = await findBookById(bookId)
+    const data = await response.data
+    return data
+  }
+
+  // function to get all the objects of the books that are already in the db order
+  const getInitialBooks = async () => {
+    const promises = dbUser.order.map(async (bookId) => {
+      const retrievedBook = await getBook(bookId)
+      return retrievedBook
+    })
+
+    const retrievedBooks = await Promise.all(promises)
+    setCartBooks(retrievedBooks)
+  }
+
+  useEffect(() => {
+    if (justLoggedIn) {
+      dispatch(logInUser(cartBooks))
+      history.push('/')
+    }
+  }, [cartBooks])
+
+  const responseGoogle = async (response: any) => {
+    const tokenObj = {
+      id_token: response.tokenId,
+    }
+    const result: any = await login(tokenObj)
+
+    result &&
+      dispatch(
+        addUserData(
+          `${result.data.userData.firstName} ${result.data.userData.lastName}`,
+          result.data.userData.image,
+          result.data.userData.email,
+          result.data.userData._id
+        )
+      )
+
+    getUser(result.data.userData._id)
+
+    result && localStorage.setItem('token', result.data.token)
+  }
+
   interface LoginData {
     email: string
     password: string
@@ -36,7 +120,6 @@ const Login = () => {
   return (
     <Container>
       <PageContent>
-        {' '}
         <LoginNavbar />
         <PageHeader>Log In</PageHeader>
         <FormWrapper>
@@ -72,6 +155,18 @@ const Login = () => {
         <Link to="/signup">
           <SignupBtn>Sign Up</SignupBtn>
         </Link>
+        <GoogleContainer>
+          <GoogleText>Log in with Google</GoogleText>
+          <GoogleLoginWrapper>
+            <GoogleLogin
+              clientId="1082464560224-uhrnod2mojkoh61hag9tiua5qktdgekv.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+            />
+          </GoogleLoginWrapper>
+        </GoogleContainer>
       </PageContent>
       <Footer />
     </Container>
@@ -90,13 +185,16 @@ const PageContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 5rem;
 `
 
 const PageHeader = styled.h1`
-  margin-top: 20rem;
+  margin-top: 15rem;
   text-align: center;
   font-size: 2.5rem;
   text-transform: capitalize;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
 `
 
 const FormWrapper = styled.div`
@@ -149,9 +247,24 @@ const SignupBtn = styled.button`
   background: black;
   cursor: pointer;
   letter-spacing: 0.1rem;
-  margin-bottom: 5rem;
 
   &:hover {
     cursor: pointer;
   }
+`
+const GoogleContainer = styled.div`
+  margin-top: 3rem;
+  border: 1px solid #130912;
+  padding: 2rem;
+  border-radius: 5px;
+`
+
+const GoogleText = styled.h3`
+  font-size: 1.8rem;
+  letter-spacing: 0.2rem;
+`
+const GoogleLoginWrapper = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
 `

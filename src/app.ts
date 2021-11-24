@@ -5,6 +5,7 @@ import Cors from 'cors'
 import passport from 'passport'
 
 import loginRouter from './routers/login'
+import localLoginRouter from './routers/localLogin'
 import userRouter from './routers/user'
 import bookRouter from './routers/book'
 import authorRouter from './routers/author'
@@ -12,7 +13,7 @@ import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
 import compression from 'compression'
 
-import { localStrategy, googleStrategy, jwtStrategy } from './config/passport'
+import { googleStrategy, jwtStrategy } from './config/passport'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -28,13 +29,14 @@ app.use(lusca.xssProtection(true))
 app.use(passport.initialize())
 
 // passport strategies
-passport.use(localStrategy)
 passport.use(googleStrategy)
 passport.use(jwtStrategy)
 
 app.use(Cors())
 
 app.use('/api/v1/google/login', loginRouter)
+
+app.use('/api/v1/login', localLoginRouter)
 
 // Use users router
 app.use('/api/v1/users', userRouter)

@@ -118,7 +118,7 @@ const CartSidebar = () => {
                   <Link to={`/book/${book.title}`} style={linkInlineStyling}>
                     <Title>{book.title}</Title>
                   </Link>
-                  <Price>${book.price.toFixed(2)}</Price>
+                  <Price>${book.price && book.price.toFixed(2)}</Price>
                   <RemoveBookBtn onClick={() => removeBook(book)}>
                     Remove
                   </RemoveBookBtn>

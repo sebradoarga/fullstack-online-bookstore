@@ -10,9 +10,7 @@ export const login = async (
   next: NextFunction
 ) => {
   try {
-    console.log('!!!!!!!!!in the controller')
     const userData = req.user as UserDocument
-    console.log('!!!!!userData', userData)
     const token = jwt.sign({ userData }, JWT_SECRET, { expiresIn: '2h' })
     // res.json({ token: token })
     res.json({ userData })

@@ -1,5 +1,6 @@
 import express from 'express'
 import passport from 'passport'
+import auth from '../middlewares/auth'
 
 import {
   createBook,
@@ -19,13 +20,8 @@ router.get('/', findAllBooks)
 router.get('/title/:title', findBookByTitle)
 router.get('/bookid/:bookId', findBookById)
 router.put('/:bookId', updateBook)
-router.delete('/:bookId', deleteBook)
-router.post(
-  '/',
-  passport.authenticate('jwt', { session: false }),
-  adminCheck,
-  createBook
-)
+router.delete('/:bookId', auth, adminCheck, deleteBook)
+router.post('/', auth, adminCheck, createBook)
 router.post('/', createBook)
 router.post('/populate', populateBooks)
 

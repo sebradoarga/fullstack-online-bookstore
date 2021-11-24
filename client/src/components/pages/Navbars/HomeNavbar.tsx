@@ -1,18 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { GoogleLogin } from 'react-google-login'
-import { findBookById, findUserById, login } from '../../../api'
 import logo from '../../../images/logo-transparent-background.png'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { useDispatch, useSelector } from 'react-redux'
-import { addUserData, logout, toggleCart } from '../../../redux/actions/cart'
-import { logInUser } from '../../../redux/actions/cart'
+import { logout, toggleCart } from '../../../redux/actions/cart'
 import { RootState } from '../../../redux/reducers'
 import SettingsIcon from '@mui/icons-material/Settings'
 import MenuBookIcon from '@mui/icons-material/MenuBook'
 import LogoutIcon from '@mui/icons-material/Logout'
-import { Book, User } from '../../../types'
 import { device } from '../../../device'
 
 const HomeNavbar = () => {
@@ -20,7 +16,6 @@ const HomeNavbar = () => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [logoutDropdownOpen, setLogoutDropdownOpen] = useState(false)
-  const [justLoggedIn, setJustLoggedIn] = useState(false)
 
   const userLoggedIn: boolean = useSelector(
     (state: RootState) => state.cartReducer.userLoggedIn
@@ -37,84 +32,6 @@ const HomeNavbar = () => {
   const userEmail: string = useSelector(
     (state: RootState) => state.cartReducer.userEmail
   )
-
-  const [dbUser, setDbUser] = useState<User>({
-    firstName: '',
-    lastName: '',
-    image: '',
-    email: '',
-    order: [],
-  })
-
-  const [cartBooks, setCartBooks] = useState<Book[]>([])
-
-  useEffect(() => {
-    setJustLoggedIn(false)
-  }, [])
-
-  // then, when you have a user, get the books in their order
-  useEffect(() => {
-    if (dbUser && dbUser.firstName !== '' && dbUser.order) {
-      getInitialBooks()
-    }
-  }, [dbUser])
-
-  // function to get user object
-  const getUser = async (userId: string) => {
-    const response: any = await findUserById(userId)
-    const data: User = await response.data
-    setDbUser(data)
-  }
-
-  // function to get book object
-  const getBook = async (bookId: string) => {
-    const response: any = await findBookById(bookId)
-    const data = await response.data
-    return data
-  }
-
-  // function to get all the objects of the books that are already in the db order
-  const getInitialBooks = async () => {
-    const promises = dbUser.order.map(async (bookId) => {
-      const retrievedBook = await getBook(bookId)
-      return retrievedBook
-    })
-
-    const retrievedBooks = await Promise.all(promises)
-    setCartBooks(retrievedBooks)
-  }
-
-  useEffect(() => {
-    if (justLoggedIn) {
-      console.log('cartBooks changed and now is', cartBooks)
-      dispatch(logInUser(cartBooks))
-    }
-  }, [cartBooks])
-
-  const responseGoogle = async (response: any) => {
-    const tokenObj = {
-      id_token: response.tokenId,
-    }
-    const result: any = await login(tokenObj)
-
-    console.log('login result is', result)
-    console.log('the userId that Im passing is', result.data.userData._id)
-
-    result && setJustLoggedIn(true)
-    result && getUser(result.data.userData._id)
-
-    result &&
-      dispatch(
-        addUserData(
-          `${result.data.userData.firstName} ${result.data.userData.lastName}`,
-          result.data.userData.image,
-          result.data.userData.email,
-          result.data.userData._id
-        )
-      )
-
-    result && localStorage.setItem('token', result.data.token)
-  }
 
   const linkInlineStyling = {
     fontSize: '1.5rem',
@@ -177,9 +94,6 @@ const HomeNavbar = () => {
             </AddBookBtn>
           </DropDown>
         )}
-        <Link to="/login">
-          <LoginBtn>Log In</LoginBtn>
-        </Link>
         <CartButton onClick={cartClicked}>
           <ShoppingCartIcon fontSize="large" sx={{ color: 'white' }} />
         </CartButton>
@@ -203,13 +117,9 @@ const HomeNavbar = () => {
             </LogoutBtn>
           </LogoutDropDown>
         ) : (
-          <GoogleLogin
-            clientId="1082464560224-uhrnod2mojkoh61hag9tiua5qktdgekv.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={'single_host_origin'}
-          />
+          <Link to="/login">
+            <LoginBtn>Log In</LoginBtn>
+          </Link>
         )}
       </Buttons>
     </Navbar>

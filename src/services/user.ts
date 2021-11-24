@@ -63,7 +63,6 @@ const findOrCreate = async (
   const user = await User.findOne({ email: userEmail })
   if (!user) {
     const findUser = async () => {
-      console.log('!!!!!!inside findUser now')
       const createdUser: any = await axios.post(
         'http://localhost:5000/api/v1/users',
         {

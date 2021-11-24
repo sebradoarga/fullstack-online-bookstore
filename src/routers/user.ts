@@ -16,6 +16,6 @@ router.get('/:userId', findUserById)
 router.put('/:userId', updateUser)
 router.delete('/:userId', deleteUser)
 router.post('/googleSignUp', createUser)
-router.post('/localAuth', createLocalUser)
+router.post('/localLogin', createLocalUser)
 
 export default router

@@ -8,40 +8,6 @@ import { Request, Response, NextFunction } from 'express'
 import User, { UserDocument } from '../models/User'
 import bcrypt from 'bcryptjs'
 
-const LocalStrategy = passportLocal.Strategy
-
-export const localStrategy = new LocalStrategy(
-  (email: string, password: string, done) => {
-    User.findOne({ email: email }, (err: any, user: UserDocument) => {
-      if (err) throw err
-      if (!user) return done(null, false)
-      bcrypt.compare(password, user.password, (err, result: boolean) => {
-        if (err) throw err
-        if (result === true) {
-          return done(null, user)
-        } else {
-          return done(null, false)
-        }
-      })
-    })
-  }
-)
-
-passport.serializeUser((user: UserDocument, cb) => {
-  cb(null, user._id)
-})
-
-passport.deserializeUser((id: string, cb) => {
-  User.findOne({ _id: id }, (err, user: UserDocument) => {
-    const userInformation: UserDocument = {
-      username: user.username,
-      isAdmin: user.isAdmin,
-      id: user._id,
-    }
-    cb(err, userInformation)
-  })
-})
-
 export const googleStrategy = new GoogleTokenStrategy(
   {
     clientId: process.env.GOOGLE_CLIENT_ID,
@@ -61,7 +27,6 @@ export const jwtStrategy = new JwtStrategy(
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   },
   async (payload: UserDocument, done: any) => {
-    console.log('payload', payload)
     const { email } = payload
     const user = await UserService.findUserByEmail(email)
 
