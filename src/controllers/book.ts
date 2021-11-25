@@ -13,10 +13,10 @@ export const createBook = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userData = req.user as UserDocument
-  console.log('userdata', userData)
+  console.log('req.body.newBook', req.body.newBook)
   try {
-    const { title, author, genres, description, price, imageUrl } = req.body
+    const { title, author, genres, description, price, imageUrl } =
+      req.body.newBook
 
     const book = new Book({
       title,
@@ -27,6 +27,8 @@ export const createBook = async (
       imageUrl,
     })
 
+    console.log('in the controller')
+    console.log('req.body.newBook', req.body.newBook)
     await BookService.createBook(book)
     res.json(book)
   } catch (error) {
@@ -109,6 +111,7 @@ export const deleteBook = async (
   next: NextFunction
 ) => {
   try {
+    console.log('deleting book')
     await BookService.deleteBook(req.params.bookId)
     res.status(204).end()
   } catch (error) {

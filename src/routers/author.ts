@@ -1,6 +1,5 @@
 import express from 'express'
 import adminCheck from '../middlewares/adminCheck'
-import auth from '../middlewares/auth'
 
 import {
   createAuthor,

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { createBook, getBooks } from '../../../redux/actions/books'
-import { Author } from '../../../types'
+import { Author, User } from '../../../types'
 import { RootState } from '../../../redux/reducers'
 import { v4 as uuidv4 } from 'uuid'
 import AddAuthorModal from './AddAuthorModal'
@@ -10,6 +10,7 @@ import {
   findAuthorById,
   findAuthorByName,
   findBookByTitle,
+  findUserById,
   updateAuthor,
 } from '../../../api'
 import Footer from '../../Footer'
@@ -32,6 +33,29 @@ const AddBookPage = () => {
     'thriller',
     'young adult',
   ]
+
+  const userId: string = useSelector(
+    (state: RootState) => state.cartReducer.userId
+  )
+
+  const [dbUser, setDbUser] = useState<User>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    order: [],
+  })
+
+  const getUser = async () => {
+    const response: any = await findUserById(userId)
+    const data: User = await response.data
+    setDbUser(data)
+  }
+
+  useEffect(() => {
+    getUser()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -139,7 +163,13 @@ const AddBookPage = () => {
   }
 
   //When choosing suggestion
-  const onSuggestHandler = (textValue: string, textPosition: string) => {
+  const onSuggestHandler = (
+    e: any,
+    textValue: string,
+    textPosition: string
+  ) => {
+    e.persist()
+    console.log('click')
     switch (textPosition) {
       case 'text1':
         setText({ ...text, text1: textValue })
@@ -247,7 +277,8 @@ const AddBookPage = () => {
   useEffect(() => {
     const addBookToAuthor = async () => {
       if (allAuthors) {
-        await dispatch(createBook(bookData))
+        console.log('bookData is', bookData)
+        await dispatch(createBook(bookData, dbUser))
         const createdBook: any = await findBookByTitle(bookData.title)
 
         const authors = await Promise.all(
@@ -327,6 +358,7 @@ const AddBookPage = () => {
           text={text}
           setText={setText}
           currentAuthorBox={currentAuthorBox}
+          dbUser={dbUser}
         />
         <PageHeader>Add a new book</PageHeader>
         <FormWrapper>
@@ -368,8 +400,8 @@ const AddBookPage = () => {
                 suggestions1.slice(0, 3).map((suggestion) => (
                   <Suggestion
                     key={uuidv4()}
-                    onClick={() =>
-                      onSuggestHandler(suggestion.authorName, 'text1')
+                    onClick={(e) =>
+                      onSuggestHandler(e, suggestion.authorName, 'text1')
                     }
                   >
                     {suggestion.authorName}
@@ -399,8 +431,8 @@ const AddBookPage = () => {
                 suggestions2.slice(0, 3).map((suggestion) => (
                   <Suggestion
                     key={uuidv4()}
-                    onClick={() =>
-                      onSuggestHandler(suggestion.authorName, 'text2')
+                    onClick={(e) =>
+                      onSuggestHandler(e, suggestion.authorName, 'text2')
                     }
                   >
                     {suggestion.authorName}
@@ -430,8 +462,8 @@ const AddBookPage = () => {
                 suggestions3.slice(0, 3).map((suggestion) => (
                   <Suggestion
                     key={uuidv4()}
-                    onClick={() =>
-                      onSuggestHandler(suggestion.authorName, 'text3')
+                    onClick={(e) =>
+                      onSuggestHandler(e, suggestion.authorName, 'text3')
                     }
                   >
                     {suggestion.authorName}

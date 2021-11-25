@@ -78,7 +78,7 @@ export default DeleteBookPopup
 const Modal = styled.div`
   position: absolute;
   height: 40%;
-  width: 40%;
+  width: 50%;
   background: #000000f0;
   border-radius: 10px;
   top: 50%;

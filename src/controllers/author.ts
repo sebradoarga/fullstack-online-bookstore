@@ -11,7 +11,8 @@ export const createAuthor = async (
   next: NextFunction
 ) => {
   try {
-    const { authorName, authorPicture, authorBio, authorBooks } = req.body
+    const { authorName, authorPicture, authorBio, authorBooks } =
+      req.body.newAuthor
 
     const author = new Author({
       authorName,

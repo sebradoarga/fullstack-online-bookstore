@@ -10,12 +10,14 @@ const AddAuthorModal = ({
   text,
   setText,
   currentAuthorBox,
+  dbUser,
 }: {
   showModal: string
   setShowModal: any
   text: any
   setText: any
   currentAuthorBox: number
+  dbUser: any
 }) => {
   const dispatch = useDispatch()
 
@@ -50,7 +52,7 @@ const AddAuthorModal = ({
         break
     }
 
-    dispatch(createAuthor(dataToSubmit))
+    dispatch(createAuthor(dataToSubmit, dbUser))
   }
 
   const containerLineStyle = {

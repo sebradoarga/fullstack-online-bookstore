@@ -10,11 +10,12 @@ export const getAuthors = () => async (dispatch: any) => {
   }
 }
 
-export const createAuthor = (author: any) => async (dispatch: any) => {
-  try {
-    const { data } = await api.createAuthor(author)
-    dispatch({ type: 'CREATE_AUTHOR', payload: data })
-  } catch (error: any) {
-    console.log(error.message)
+export const createAuthor =
+  (author: any, user: any) => async (dispatch: any) => {
+    try {
+      const { data } = await api.createAuthor(author, user)
+      dispatch({ type: 'CREATE_AUTHOR', payload: data })
+    } catch (error: any) {
+      console.log(error.message)
+    }
   }
-}

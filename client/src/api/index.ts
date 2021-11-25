@@ -6,7 +6,12 @@ const url = 'http://localhost:5000/api/v1'
 // Books
 
 export const fetchBooks = () => axios.get(`${url}/books`)
-export const createBook = (newBook: any) => axios.post(`${url}/books`, newBook)
+
+export const createBook = (newBook: any, user: any) =>
+  axios.post(`${url}/books`, {
+    newBook: newBook,
+    data: { user: user },
+  })
 
 export const fetchAuthors = () => axios.get(`${url}/authors`)
 
@@ -23,8 +28,11 @@ export const deleteBook = (bookId: string, user: any) =>
 
 // Authors
 
-export const createAuthor = (newAuthor: any) =>
-  axios.post(`${url}/authors`, newAuthor)
+export const createAuthor = (newAuthor: any, user: any) =>
+  axios.post(`${url}/authors`, {
+    newAuthor: newAuthor,
+    data: { user: user },
+  })
 
 export const findAuthorByName: any = (authorName: string) =>
   axios.get(`${url}/authors/name/${authorName}`)
