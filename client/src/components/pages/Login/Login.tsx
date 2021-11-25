@@ -88,7 +88,8 @@ const Login = () => {
         addUserData(
           `${result.data.userData.firstName} ${result.data.userData.lastName}`,
           result.data.userData.email,
-          result.data.userData._id
+          result.data.userData._id,
+          result.data.userData.isAdmin
         )
       )
 
@@ -106,12 +107,15 @@ const Login = () => {
     e.preventDefault()
     const signinResult: AxiosResponse<any> = await localLogin(loginData)
 
+    console.log('this is signingResult.data.result', signinResult.data.result)
+
     signinResult &&
       dispatch(
         addUserData(
           `${signinResult.data.result.firstName} ${signinResult.data.result.lastName}`,
           signinResult.data.result.email,
-          signinResult.data.result.id
+          signinResult.data.result.id,
+          signinResult.data.result.isAdmin
         )
       )
 

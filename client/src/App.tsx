@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import './App.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Home from './components/pages/Home/Home'
 import BookPage from './components/pages/BookPage/BookPage'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
@@ -13,9 +13,14 @@ import GenrePage from './components/pages/GenrePage/GenrePage'
 import Checkout from './components/pages/Checkout/Checkout'
 import Login from './components/pages/Login/Login'
 import Signup from './components/pages/Signup/Signup'
+import { RootState } from './redux/reducers'
 
 function App() {
   const dispatch = useDispatch()
+
+  const isAdmin: boolean = useSelector(
+    (state: RootState) => state.cartReducer.isAdmin
+  )
 
   useEffect(() => {
     dispatch(getBooks())
@@ -78,39 +83,71 @@ function App() {
 
   return (
     <Router>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-      </Switch>
+      {isAdmin ? (
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
 
-      <Route exact path="/book/:book">
-        <BookPage />{' '}
-      </Route>
+          <Route exact path="/book/:book">
+            <BookPage />
+          </Route>
 
-      <Route exact path="/author/:author">
-        <AuthorPage />
-      </Route>
+          <Route exact path="/author/:author">
+            <AuthorPage />
+          </Route>
 
-      <Route exact path="/addbook/">
-        <AddBookPage />
-      </Route>
+          <Route exact path="/addbook/">
+            <AddBookPage />
+          </Route>
 
-      <Route exact path="/genres/:genre">
-        <GenrePage />
-      </Route>
+          <Route exact path="/genres/:genre">
+            <GenrePage />
+          </Route>
 
-      <Route exact path="/checkout">
-        <Checkout />
-      </Route>
+          <Route exact path="/checkout">
+            <Checkout />
+          </Route>
 
-      <Route exact path="/login">
-        <Login />
-      </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
 
-      <Route exact path="/signup">
-        <Signup />
-      </Route>
+          <Route exact path="/signup">
+            <Signup />
+          </Route>
+        </Switch>
+      ) : (
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+
+          <Route exact path="/book/:book">
+            <BookPage />
+          </Route>
+
+          <Route exact path="/author/:author">
+            <AuthorPage />
+          </Route>
+
+          <Route exact path="/genres/:genre">
+            <GenrePage />
+          </Route>
+
+          <Route exact path="/checkout">
+            <Checkout />
+          </Route>
+
+          <Route exact path="/login">
+            <Login />
+          </Route>
+
+          <Route exact path="/signup">
+            <Signup />
+          </Route>
+        </Switch>
+      )}
     </Router>
   )
 }

@@ -33,12 +33,12 @@ export const logInUser = (order: Book[]) => async (dispatch: any) => {
 }
 
 export const addUserData =
-  (userName: string, userEmail: string, userId: string) =>
+  (userName: string, userEmail: string, userId: string, isAdmin: boolean) =>
   async (dispatch: any) => {
     try {
       dispatch({
         type: 'ADD_USER_DATA',
-        payload: [userName, userEmail, userId],
+        payload: [userName, userEmail, userId, isAdmin],
       })
     } catch (error: any) {
       console.log(error.message)

@@ -39,6 +39,7 @@ export const signin = async (
         email: existingUser.email,
         id: existingUser._id,
         order: existingUser.order,
+        isAdmin: existingUser.isAdmin,
       },
       token,
     })
@@ -55,7 +56,6 @@ export const signup = async (
   const { firstName, lastName, email, password, repeatPassword } = req.body
 
   try {
-    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$hello')
     const existingUser = await User.findOne({ email })
 
     if (existingUser)
@@ -86,6 +86,7 @@ export const signup = async (
         email: result.email,
         id: result._id,
         order: result.order,
+        isAdmin: result.isAdmin,
       },
       token,
     })
