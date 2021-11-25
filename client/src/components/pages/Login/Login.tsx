@@ -8,6 +8,7 @@ import { findBookById, findUserById, localLogin, login } from '../../../api'
 import { useDispatch } from 'react-redux'
 import { addUserData, logInUser } from '../../../redux/actions/cart'
 import { Book, User } from '../../../types'
+import { AxiosResponse } from 'axios'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -18,7 +19,6 @@ const Login = () => {
   const [dbUser, setDbUser] = useState<User>({
     firstName: '',
     lastName: '',
-    image: '',
     email: '',
     order: [],
   })
@@ -37,6 +37,7 @@ const Login = () => {
 
   const getUser = async (userId: string) => {
     const response: any = await findUserById(userId)
+    console.log('finduserbyid response', response)
     const data: User = await response.data
     setDbUser(data)
   }
@@ -78,16 +79,28 @@ const Login = () => {
   }, [cartBooks])
 
   const responseGoogle = async (response: any) => {
+    console.log(
+      'this is the token we get as a response from google',
+      response.tokenId
+    )
     const tokenObj = {
       id_token: response.tokenId,
     }
+    console.log(
+      'i put the token in an object, and Ill use this token to make a login post request from /google/login',
+      tokenObj
+    )
     const result: any = await login(tokenObj)
+
+    console.log(
+      'this is the result of the post request at /google/login',
+      result
+    )
 
     result &&
       dispatch(
         addUserData(
           `${result.data.userData.firstName} ${result.data.userData.lastName}`,
-          result.data.userData.image,
           result.data.userData.email,
           result.data.userData._id
         )
@@ -95,7 +108,7 @@ const Login = () => {
 
     getUser(result.data.userData._id)
 
-    result && localStorage.setItem('token', result.data.token)
+    result && localStorage.setItem('token', response.tokenId)
   }
 
   interface LoginData {
@@ -105,8 +118,27 @@ const Login = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    const signinResult = await localLogin(loginData)
+    console.log('sending this login data to /localLogin/login', loginData)
+    const signinResult: AxiosResponse<any> = await localLogin(loginData)
     console.log('signinResult', signinResult)
+
+    signinResult &&
+      dispatch(
+        addUserData(
+          `${signinResult.data.result.firstName} ${signinResult.data.result.lastName}`,
+          signinResult.data.result.email,
+          signinResult.data.result.id
+        )
+      )
+
+    setDbUser({
+      firstName: signinResult.data.result.firstName,
+      lastName: signinResult.data.result.lastName,
+      email: signinResult.data.result.email,
+      order: signinResult.data.result.order,
+    })
+
+    signinResult && localStorage.setItem('token', signinResult.data.token)
   }
 
   return (

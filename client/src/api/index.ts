@@ -45,7 +45,7 @@ export const findUserById = (userId: string) =>
   axios.get(`${url}/users/${userId}`)
 
 export const signup = (formData: SignupDataInterface) =>
-  axios.post(`${url}/login/signup`, formData)
+  axios.post(`${url}/localLogin/signup`, formData)
 
 export const localLogin = (formData: LoginDataInterface) =>
-  axios.post(`${url}/login/login`, formData)
+  axios.post(`${url}/localLogin/login`, formData)

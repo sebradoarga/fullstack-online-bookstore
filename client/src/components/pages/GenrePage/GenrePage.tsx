@@ -54,16 +54,17 @@ const GenrePage = () => {
   const [dbUser, setDbUser] = useState<User>({
     firstName: '',
     lastName: '',
-    image: '',
     email: '',
     order: [],
   })
 
   const getUser = async () => {
-    const response: any = await findUserById(userId)
-    const data: User = await response.data
-    setDbUser(data)
-    console.log('after adding book, user is now', data)
+    if (userId != '') {
+      const response: any = await findUserById(userId)
+      const data: User = await response.data
+      setDbUser(data)
+      console.log('after adding book, user is now', data)
+    }
   }
 
   useEffect(() => {
@@ -81,7 +82,6 @@ const GenrePage = () => {
         await updateUser(userId, {
           firstName: dbUser.firstName,
           lastName: dbUser.lastName,
-          image: dbUser.image,
           email: dbUser.email,
           order: [...dbUser.order, book._id],
         })

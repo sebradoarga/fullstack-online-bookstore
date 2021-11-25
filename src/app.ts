@@ -13,7 +13,7 @@ import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
 import compression from 'compression'
 
-import { googleStrategy, jwtStrategy } from './config/passport'
+import { googleStrategy } from './config/passport'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -31,11 +31,11 @@ app.use(passport.initialize())
 
 // passport strategies
 passport.use(googleStrategy)
-passport.use(jwtStrategy)
+// passport.use(jwtStrategy)
 
 app.use('/api/v1/google/login', loginRouter)
 
-app.use('/api/v1/login', localLoginRouter)
+app.use('/api/v1/localLogin', localLoginRouter)
 
 // Use users router
 app.use('/api/v1/users', userRouter)

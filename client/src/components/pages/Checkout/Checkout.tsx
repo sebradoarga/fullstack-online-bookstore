@@ -35,7 +35,6 @@ const Checkout = () => {
   const [dbUser, setDbUser] = useState<User>({
     firstName: '',
     lastName: '',
-    image: '',
     email: '',
     order: [],
   })
@@ -44,7 +43,7 @@ const Checkout = () => {
     const response: any = await findUserById(userId)
     const data: User = await response.data
     setDbUser(data)
-    console.log('user is now', data)
+    console.log('user is now -checkout', data)
   }
 
   useEffect(() => {
@@ -66,7 +65,6 @@ const Checkout = () => {
       await updateUser(userId, {
         firstName: dbUser.firstName,
         lastName: dbUser.lastName,
-        image: dbUser.image,
         email: dbUser.email,
         order: newOrder,
       })

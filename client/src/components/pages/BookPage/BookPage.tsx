@@ -38,7 +38,6 @@ const BookPage = () => {
   const [dbUser, setDbUser] = useState<User>({
     firstName: '',
     lastName: '',
-    image: '',
     email: '',
     order: [],
   })
@@ -91,7 +90,6 @@ const BookPage = () => {
         updateUser(userId, {
           firstName: dbUser.firstName,
           lastName: dbUser.lastName,
-          image: dbUser.image,
           email: dbUser.email,
           order: [...dbUser.order, currentBook._id],
         })

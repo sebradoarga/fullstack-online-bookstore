@@ -5,7 +5,6 @@ const defaultState = {
   cart: [],
   userLoggedIn: false,
   userName: '',
-  userImage: '',
   userEmail: '',
   userId: '',
 }
@@ -15,7 +14,6 @@ interface DefaultState {
   cart: Book[]
   userLoggedIn: boolean
   userName: string
-  userImage: string
   userEmail: string
   userId: string
 }
@@ -52,15 +50,13 @@ const cartReducer = (state: DefaultState = defaultState, action: any) => {
       return {
         ...state,
         userName: action.payload[0],
-        userImage: action.payload[1],
-        userEmail: action.payload[2],
-        userId: action.payload[3],
+        userEmail: action.payload[1],
+        userId: action.payload[2],
       }
     case 'LOG_OUT':
       return {
         ...state,
         userName: '',
-        userImage: '',
         userEmail: '',
         userId: '',
         userLoggedIn: false,

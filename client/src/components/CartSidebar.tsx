@@ -27,7 +27,6 @@ const CartSidebar = () => {
   const [dbUser, setDbUser] = useState<User>({
     firstName: '',
     lastName: '',
-    image: '',
     email: '',
     order: [],
   })
@@ -41,9 +40,15 @@ const CartSidebar = () => {
 
   const getUser = async () => {
     const response: any = await findUserById(userId)
-    const data: User = await response.data
-    setDbUser(data)
-    console.log('user is now', data)
+    const data: any = await response.data
+    data.length === 1
+      ? setDbUser(data)
+      : setDbUser({
+          firstName: '',
+          lastName: '',
+          email: '',
+          order: [],
+        })
   }
 
   useEffect(() => {
@@ -58,14 +63,10 @@ const CartSidebar = () => {
       (orderBook: string) => orderBook !== book._id
     )
 
-    console.log('newOrder is now', newOrder)
-    console.log('updating user')
-
     const update = async () => {
       await updateUser(userId, {
         firstName: dbUser.firstName,
         lastName: dbUser.lastName,
-        image: dbUser.image,
         email: dbUser.email,
         order: newOrder,
       })

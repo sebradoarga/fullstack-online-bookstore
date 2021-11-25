@@ -3,13 +3,17 @@ import styled from 'styled-components'
 import LoginNavbar from '../Navbars/LoginNavbar'
 import Footer from '../../Footer'
 import { signup } from '../../../api'
+import { useHistory } from 'react-router-dom'
 
 const Signup = () => {
+  const history = useHistory()
+
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     console.log('signupData', signupData)
     const signupResult = await signup(signupData)
     console.log('signupResult', signupResult)
+    history.push('/login')
   }
 
   interface SignupData {

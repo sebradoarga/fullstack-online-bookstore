@@ -15,10 +15,6 @@ const HomeNavbar = () => {
     (state: RootState) => state.cartReducer.userName
   )
 
-  const userImage: string = useSelector(
-    (state: RootState) => state.cartReducer.userImage
-  )
-
   const responseGoogle = async (response: any) => {
     const tokenObj = {
       id_token: response.tokenId,
@@ -41,8 +37,7 @@ const HomeNavbar = () => {
       <Buttons>
         {userLoggedIn ? (
           <LoggedInUserPresentation>
-            <Greeting>Hello, {userName}</Greeting>
-            <Image src={userImage} />
+            <Greeting>{userName}</Greeting>
           </LoggedInUserPresentation>
         ) : (
           <GoogleLogin
@@ -86,10 +81,4 @@ const Greeting = styled.p`
   color: white;
   margin-right: 2rem;
   font-size: 1.5rem;
-`
-
-const Image = styled.img`
-  width: 5.5rem;
-  border-radius: 50%;
-  border: 2px solid white;
 `

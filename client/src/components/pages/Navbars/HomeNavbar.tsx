@@ -25,10 +25,6 @@ const HomeNavbar = () => {
     (state: RootState) => state.cartReducer.userName
   )
 
-  const userImage: string = useSelector(
-    (state: RootState) => state.cartReducer.userImage
-  )
-
   const userEmail: string = useSelector(
     (state: RootState) => state.cartReducer.userEmail
   )
@@ -102,8 +98,7 @@ const HomeNavbar = () => {
             <LoggedInUserPresentation
               style={logoutDropdownOpen ? backgroundOnOpen : {}}
             >
-              <Greeting>Hello, {userName}</Greeting>
-              <Image src={userImage} />
+              <Greeting>{userName}</Greeting>
             </LoggedInUserPresentation>
 
             <LogoutBtn
@@ -172,20 +167,8 @@ const CartButton = styled.button`
 
 const Greeting = styled.p`
   color: white;
-  margin-right: 2rem;
   font-size: 1.5rem;
-  display: none;
-
-  @media ${device.tablet} {
-    display: block;
-  }
-`
-
-const Image = styled.img`
-  width: 5.5rem;
-  border-radius: 50%;
-  border: 2px solid white;
-  cursor: pointer;
+  text-align: center;
 `
 const DropDown = styled.div`
   position: relative;
