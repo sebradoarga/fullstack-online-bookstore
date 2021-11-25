@@ -16,8 +16,10 @@ export const findBookByTitle = (title: string) =>
 export const findBookById = (id: string) =>
   axios.get(`${url}/books/bookid/${id}`)
 
-export const deleteBook = (bookId: string) =>
-  axios.delete(`${url}/books/${bookId}`)
+export const deleteBook = (bookId: string, user: any) =>
+  axios.delete(`${url}/books/${bookId}`, {
+    data: { user: user },
+  })
 
 // Authors
 

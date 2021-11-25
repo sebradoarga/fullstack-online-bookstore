@@ -74,8 +74,6 @@ const BookPage = () => {
     if (isCartOpen) {
       dispatch(toggleCart())
     }
-    console.log('cart', cart)
-    console.log('current book', currentBook)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -104,7 +102,6 @@ const BookPage = () => {
 
   const openModal = () => {
     modalOpen === false && setModalOpen(true)
-    console.log('modalOpen', modalOpen)
   }
 
   const userEmail: string = useSelector(
@@ -129,6 +126,7 @@ const BookPage = () => {
             bookTitle={currentBook.title}
             bookId={currentBook._id}
             authors={currentBook.author}
+            dbUser={dbUser}
           />
           <Image
             src={currentBook.imageUrl}

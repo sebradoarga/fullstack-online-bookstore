@@ -15,16 +15,6 @@ const HomeNavbar = () => {
     (state: RootState) => state.cartReducer.userName
   )
 
-  const responseGoogle = async (response: any) => {
-    const tokenObj = {
-      id_token: response.tokenId,
-    }
-    console.log('tokenObj', tokenObj)
-    const result: any = await login(tokenObj)
-
-    localStorage.setItem('token', result.data.token)
-  }
-
   const logoStyling = {
     width: '30rem',
   }
@@ -40,13 +30,9 @@ const HomeNavbar = () => {
             <Greeting>{userName}</Greeting>
           </LoggedInUserPresentation>
         ) : (
-          <GoogleLogin
-            clientId="1082464560224-uhrnod2mojkoh61hag9tiua5qktdgekv.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={'single_host_origin'}
-          />
+          <Link to="/login">
+            <LoginBtn>Log In</LoginBtn>
+          </Link>
         )}
       </Buttons>
     </Navbar>
@@ -81,4 +67,11 @@ const Greeting = styled.p`
   color: white;
   margin-right: 2rem;
   font-size: 1.5rem;
+`
+const LoginBtn = styled.button`
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-right: 2rem;
 `

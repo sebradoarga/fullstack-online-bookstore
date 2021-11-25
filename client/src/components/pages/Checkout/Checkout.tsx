@@ -40,10 +40,11 @@ const Checkout = () => {
   })
 
   const getUser = async () => {
-    const response: any = await findUserById(userId)
-    const data: User = await response.data
-    setDbUser(data)
-    console.log('user is now -checkout', data)
+    if (userId !== '') {
+      const response: any = await findUserById(userId)
+      const data: User = await response.data
+      setDbUser(data)
+    }
   }
 
   useEffect(() => {
@@ -57,9 +58,6 @@ const Checkout = () => {
     const newOrder: string[] = dbUser.order.filter(
       (orderBook: string) => orderBook !== book._id
     )
-
-    console.log('newOrder is now', newOrder)
-    console.log('updating user')
 
     const update = async () => {
       await updateUser(userId, {

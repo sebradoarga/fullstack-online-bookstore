@@ -37,7 +37,6 @@ const Login = () => {
 
   const getUser = async (userId: string) => {
     const response: any = await findUserById(userId)
-    console.log('finduserbyid response', response)
     const data: User = await response.data
     setDbUser(data)
   }
@@ -79,23 +78,10 @@ const Login = () => {
   }, [cartBooks])
 
   const responseGoogle = async (response: any) => {
-    console.log(
-      'this is the token we get as a response from google',
-      response.tokenId
-    )
     const tokenObj = {
       id_token: response.tokenId,
     }
-    console.log(
-      'i put the token in an object, and Ill use this token to make a login post request from /google/login',
-      tokenObj
-    )
     const result: any = await login(tokenObj)
-
-    console.log(
-      'this is the result of the post request at /google/login',
-      result
-    )
 
     result &&
       dispatch(
@@ -118,9 +104,7 @@ const Login = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    console.log('sending this login data to /localLogin/login', loginData)
     const signinResult: AxiosResponse<any> = await localLogin(loginData)
-    console.log('signinResult', signinResult)
 
     signinResult &&
       dispatch(

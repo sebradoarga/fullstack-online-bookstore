@@ -63,7 +63,6 @@ const GenrePage = () => {
       const response: any = await findUserById(userId)
       const data: User = await response.data
       setDbUser(data)
-      console.log('after adding book, user is now', data)
     }
   }
 

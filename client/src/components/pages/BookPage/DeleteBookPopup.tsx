@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { deleteBook, updateAuthor } from '../../../api'
 import { getBooks } from '../../../redux/actions/books'
-import { Author } from '../../../types'
+import { Author, User } from '../../../types'
 
 const DeleteBookPopup = ({
   modalOpen,
@@ -10,12 +10,14 @@ const DeleteBookPopup = ({
   bookTitle,
   bookId,
   authors,
+  dbUser,
 }: {
   modalOpen: boolean
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   bookTitle: string
   bookId: string
   authors: Author[]
+  dbUser: User
 }) => {
   const dispatch = useDispatch()
 
@@ -37,7 +39,8 @@ const DeleteBookPopup = ({
       const newAuthor = { ...author, authorBooks: newBooks }
       updateAuthor(author._id, newAuthor)
     })
-    await deleteBook(bookId)
+    console.log('this is the user Im passing', dbUser)
+    await deleteBook(bookId, dbUser)
     dispatch(getBooks())
   }
 

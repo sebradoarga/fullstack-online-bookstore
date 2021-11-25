@@ -3,7 +3,7 @@ import { ForbiddenError } from '../helpers/apiError'
 import { UserDocument } from '../models/User'
 
 const adminCheck = (req: Request, res: Response, next: NextFunction) => {
-  const user = req.user as UserDocument
+  const { user } = req.body
   if (user.isAdmin) {
     next()
   } else {
