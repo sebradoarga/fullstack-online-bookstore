@@ -29,6 +29,10 @@ const HomeNavbar = () => {
     (state: RootState) => state.cartReducer.userEmail
   )
 
+  const isAdmin: boolean = useSelector(
+    (state: RootState) => state.cartReducer.isAdmin
+  )
+
   const linkInlineStyling = {
     fontSize: '1.5rem',
     color: 'white',
@@ -76,7 +80,7 @@ const HomeNavbar = () => {
         <Logo src={logo} alt="The Story Store logo" />
       </Link>
       <Buttons>
-        {userEmail === 'raduoarga95@gmail.com' && (
+        {isAdmin && (
           <DropDown onClick={() => toggleDropdown()}>
             <AdminBtn style={dropdownOpen ? backgroundOnOpen : {}}>
               <SettingsIcon fontSize="large" style={{ marginTop: '0.4rem' }} />

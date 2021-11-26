@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import { useDispatch, useSelector } from 'react-redux'
 import Home from './components/pages/Home/Home'
@@ -14,6 +14,8 @@ import Checkout from './components/pages/Checkout/Checkout'
 import Login from './components/pages/Login/Login'
 import Signup from './components/pages/Signup/Signup'
 import { RootState } from './redux/reducers'
+import { Author, Book } from './types'
+import { fetchAuthors, fetchBooks, updateAuthor } from './api'
 
 function App() {
   const dispatch = useDispatch()
@@ -28,6 +30,7 @@ function App() {
   }, [dispatch])
 
   //Update database authors with book ids
+  // ONLY MEANT TO BE USED AFTER POPULATING THE WEBSITE WITH THE INITIAL BOOKS
 
   // const [dbAuthors, setDBAuthors] = useState<Author[]>([])
   // const [dbBooks, setDBBooks] = useState<Book[]>([])
@@ -46,14 +49,12 @@ function App() {
 
   // useEffect(() => {
   //   if (dbAuthors.length > 0) {
-
   //     getDBBooks()
   //   }
   // }, [dbAuthors])
 
   // useEffect(() => {
   //   if (dbBooks.length > 0 && dbAuthors.length > 0) {
-
   //     dbAuthors.map((author) => {
   //       const name = author.authorName
   //       const filteredBooks = dbBooks.filter(

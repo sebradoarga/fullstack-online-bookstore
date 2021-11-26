@@ -31,6 +31,10 @@ const BookPage = () => {
     (state: RootState) => state.cartReducer.userLoggedIn
   )
 
+  const isAdmin: boolean = useSelector(
+    (state: RootState) => state.cartReducer.isAdmin
+  )
+
   const userId: string = useSelector(
     (state: RootState) => state.cartReducer.userId
   )
@@ -133,7 +137,7 @@ const BookPage = () => {
             alt={`Book cover for ${currentBook.title}`}
           />
           <BookInfo>
-            {userEmail === 'raduoarga95@gmail.com' && (
+            {isAdmin && (
               <DeleteBtn onClick={openModal}>
                 <DeleteForeverIcon sx={{ color: 'red', fontSize: 30 }} />
                 <HoverText>Permanently delete book</HoverText>
