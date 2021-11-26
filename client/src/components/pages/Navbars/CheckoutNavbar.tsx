@@ -5,6 +5,7 @@ import { login } from '../../../api'
 import logo from '../../../images/logo-transparent-background.png'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/reducers'
+import { device } from '../../../device'
 
 const HomeNavbar = () => {
   const userLoggedIn: boolean = useSelector(
@@ -22,7 +23,7 @@ const HomeNavbar = () => {
   return (
     <Navbar>
       <Link to="/">
-        <img src={logo} alt="The Story Store logo" style={logoStyling} />
+        <Logo src={logo} alt="The Story Store logo" style={logoStyling} />
       </Link>
       <Buttons>
         {userLoggedIn ? (
@@ -53,6 +54,16 @@ const Navbar = styled.nav`
   overflow: hidden;
   z-index: 9000;
 `
+const Logo = styled.img`
+  height: 9.5rem;
+  object-fit: contain;
+
+    max-width: 65%;
+
+  @media ${device.tablet} {
+    max-width: 100%;
+`
+
 const Buttons = styled.div`
   display: flex;
   align-items: center;
