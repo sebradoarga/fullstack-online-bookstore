@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { device } from '../../../device'
-import heroImg from '../../../images/hero.png'
+import heroImg from '../../../images/hero-transparent.png'
 
 const Hero = () => {
   return (
