@@ -46,6 +46,8 @@ In addition, **administrators** can
 
 <p align="center"><img src="./client/public/admin-preview.png" alt="image preview of country trivia" align="center"><p>
 
+<p align="center"><img src="./client/public/mobile-preview.png" alt="image preview of country trivia" align="center"><p>
+
 ### Links
 
 - Live Site URL: [The Story Store](to be added)
