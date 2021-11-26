@@ -8,6 +8,7 @@ This was my submission for our Full-Stack assignment in the _Integrify Internati
 
 - [Overview](#overview)
   - [The assignment](#the-assignment)
+  - [Features](#features)
   - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
