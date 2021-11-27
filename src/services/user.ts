@@ -71,6 +71,11 @@ const findOrCreate = async (
           email: userEmail,
         }
       )
+      await findOrCreate(
+        createdUser.email,
+        createdUser.givenName,
+        createdUser.familyName
+      )
       return createdUser
     }
     findUser()
