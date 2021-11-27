@@ -12,7 +12,6 @@ export const getBooks = () => async (dispatch: any) => {
 
 export const createBook = (book: any, user: any) => async (dispatch: any) => {
   try {
-    console.log('creating book', user)
     const { data } = await api.createBook(book, user)
     dispatch({ type: 'CREATE_BOOK', payload: data })
   } catch (error: any) {

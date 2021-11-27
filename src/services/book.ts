@@ -46,7 +46,6 @@ const deleteBook = async (bookId: string): Promise<BookDocument | null> => {
 
 const findBookByTitle = async (title: string): Promise<BookDocument> => {
   const foundBook = await Book.findOne({ title: `${title}` })
-  console.log('foundBook', foundBook)
 
   if (!foundBook) {
     throw new NotFoundError(`Book ${title} not found`)

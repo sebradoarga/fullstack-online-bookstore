@@ -3,7 +3,6 @@ import { NotFoundError } from '../helpers/apiError'
 import axios from 'axios'
 
 const createUser = async (user: UserDocument): Promise<UserDocument> => {
-  console.log('$$CREATING USER')
   return user.save()
 }
 
@@ -61,11 +60,8 @@ const findOrCreate = async (
   givenName: string,
   familyName: string
 ) => {
-  console.log('~~~~~IM IN THE FIND OR CREATE SERVICE~~~~~~')
   const user = await User.findOne({ email: userEmail })
-  console.log('USER IS', user)
   if (!user) {
-    console.log('~~~~~~~USER WASNT FOUND~~~~~~')
     const findUser = async () => {
       const createdUser: any = await axios.post(
         'http://localhost:5000/api/v1/users/googleSignup',

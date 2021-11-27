@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { GoogleLogin } from 'react-google-login'
-import { login } from '../../../api'
 import logo from '../../../images/logo-transparent-background.png'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/reducers'

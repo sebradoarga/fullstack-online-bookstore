@@ -13,7 +13,6 @@ export const createBook = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log('req.body.newBook', req.body.newBook)
   try {
     const { title, author, genres, description, price, imageUrl } =
       req.body.newBook
@@ -27,8 +26,6 @@ export const createBook = async (
       imageUrl,
     })
 
-    console.log('in the controller')
-    console.log('req.body.newBook', req.body.newBook)
     await BookService.createBook(book)
     res.json(book)
   } catch (error) {
@@ -111,7 +108,6 @@ export const deleteBook = async (
   next: NextFunction
 ) => {
   try {
-    console.log('deleting book')
     await BookService.deleteBook(req.params.bookId)
     res.status(204).end()
   } catch (error) {

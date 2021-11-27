@@ -10,9 +10,7 @@ const Signup = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    console.log('signupData', signupData)
     const signupResult = await signup(signupData)
-    console.log('signupResult', signupResult)
     history.push('/login')
   }
 

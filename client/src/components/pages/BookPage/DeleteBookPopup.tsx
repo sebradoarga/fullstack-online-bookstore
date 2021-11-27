@@ -39,7 +39,6 @@ const DeleteBookPopup = ({
       const newAuthor = { ...author, authorBooks: newBooks }
       updateAuthor(author._id, newAuthor)
     })
-    console.log('this is the user Im passing', dbUser)
     await deleteBook(bookId, dbUser)
     dispatch(getBooks())
   }

@@ -3,9 +3,6 @@ import { ForbiddenError } from '../helpers/apiError'
 import { UserDocument } from '../models/User'
 
 const adminCheck = (req: Request, res: Response, next: NextFunction) => {
-  console.log('!!! IN THE ADMIN CHECK')
-  console.log('USSSSEEEERRRR', req.body)
-
   let user
   if (req.body.data) {
     user = req.body.data.user
@@ -13,7 +10,6 @@ const adminCheck = (req: Request, res: Response, next: NextFunction) => {
     user = req.body.user
   }
 
-  console.log('USSSSEEEERRRR', req.body.data)
   if (user.isAdmin) {
     next()
   } else {

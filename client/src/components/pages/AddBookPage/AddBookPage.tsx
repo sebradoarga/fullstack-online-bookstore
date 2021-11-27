@@ -169,7 +169,6 @@ const AddBookPage = () => {
     textPosition: string
   ) => {
     e.persist()
-    console.log('click')
     switch (textPosition) {
       case 'text1':
         setText({ ...text, text1: textValue })
@@ -277,7 +276,6 @@ const AddBookPage = () => {
   useEffect(() => {
     const addBookToAuthor = async () => {
       if (allAuthors) {
-        console.log('bookData is', bookData)
         await dispatch(createBook(bookData, dbUser))
         const createdBook: any = await findBookByTitle(bookData.title)
 

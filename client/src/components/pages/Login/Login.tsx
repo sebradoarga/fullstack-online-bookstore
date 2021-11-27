@@ -15,6 +15,7 @@ const Login = () => {
   const history = useHistory()
 
   const [justLoggedIn, setJustLoggedIn] = useState<boolean>(false)
+  const [loginError, setLoginError] = useState<boolean>(false)
 
   const [dbUser, setDbUser] = useState<User>({
     firstName: '',
@@ -104,29 +105,33 @@ const Login = () => {
   }
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault()
-    const signinResult: AxiosResponse<any> = await localLogin(loginData)
+    try {
+      e.preventDefault()
+      const signinResult: AxiosResponse<any> = await localLogin(loginData)
 
-    console.log('this is signingResult.data.result', signinResult.data.result)
+      setLoginError(false)
 
-    signinResult &&
-      dispatch(
-        addUserData(
-          `${signinResult.data.result.firstName} ${signinResult.data.result.lastName}`,
-          signinResult.data.result.email,
-          signinResult.data.result.id,
-          signinResult.data.result.isAdmin
+      signinResult &&
+        dispatch(
+          addUserData(
+            `${signinResult.data.result.firstName} ${signinResult.data.result.lastName}`,
+            signinResult.data.result.email,
+            signinResult.data.result.id,
+            signinResult.data.result.isAdmin
+          )
         )
-      )
 
-    setDbUser({
-      firstName: signinResult.data.result.firstName,
-      lastName: signinResult.data.result.lastName,
-      email: signinResult.data.result.email,
-      order: signinResult.data.result.order,
-    })
+      setDbUser({
+        firstName: signinResult.data.result.firstName,
+        lastName: signinResult.data.result.lastName,
+        email: signinResult.data.result.email,
+        order: signinResult.data.result.order,
+      })
 
-    signinResult && localStorage.setItem('token', signinResult.data.token)
+      signinResult && localStorage.setItem('token', signinResult.data.token)
+    } catch (err: any) {
+      setLoginError(true)
+    }
   }
 
   return (
@@ -134,6 +139,9 @@ const Login = () => {
       <PageContent>
         <LoginNavbar />
         <PageHeader>Log In</PageHeader>
+        <ErrorMessage style={loginError ? { display: 'block' } : {}}>
+          Login unsuccessful. Incorrect email or password.
+        </ErrorMessage>
         <FormWrapper>
           <form
             autoComplete="off"
@@ -207,6 +215,15 @@ const PageHeader = styled.h1`
   text-transform: capitalize;
   text-transform: uppercase;
   letter-spacing: 0.2rem;
+`
+
+const ErrorMessage = styled.p`
+  margin-top: 2rem;
+  font-size: 1.8rem;
+  color: red;
+  border: 0.2rem solid red;
+  padding: 0.5rem 1rem;
+  display: none;
 `
 
 const FormWrapper = styled.div`

@@ -64,7 +64,6 @@ function App() {
   //       )
   //       let idArray: any = []
   //       filteredBooks.map((book) => idArray.push(book._id))
-  //       console.log('bookId', idArray)
   //       const newAuthor: Author = {
   //         ...author,
   //         authorBooks: idArray,
