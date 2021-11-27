@@ -71,7 +71,7 @@ const findOrCreate = async (
           email: userEmail,
         }
       )
-      const newUser = await User.findOne({ email: userEmail })
+      const newUser = await User.findOne({ email: createdUser.data.email })
       return newUser
     }
     findUser()
