@@ -21,6 +21,6 @@ router.get('/bookid/:bookId', findBookById)
 router.put('/:bookId', updateBook)
 router.delete('/:bookId', adminCheck, deleteBook)
 router.post('/', adminCheck, createBook)
-router.post('/populate', populateBooks)
+// router.post('/populate', populateBooks)
 
 export default router

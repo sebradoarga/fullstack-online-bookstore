@@ -32,54 +32,54 @@ function App() {
   //Update database authors with book ids
   // ONLY MEANT TO BE USED AFTER POPULATING THE WEBSITE WITH THE INITIAL BOOKS
 
-  const [dbAuthors, setDBAuthors] = useState<Author[]>([])
-  const [dbBooks, setDBBooks] = useState<Book[]>([])
+  // const [dbAuthors, setDBAuthors] = useState<Author[]>([])
+  // const [dbBooks, setDBBooks] = useState<Book[]>([])
 
-  const getDBAuthors = async () => {
-    const authorsResponse: any = await dispatch(fetchAuthors)
-    const authors = authorsResponse.data
-    setDBAuthors(authors)
-  }
+  // const getDBAuthors = async () => {
+  //   const authorsResponse: any = await dispatch(fetchAuthors)
+  //   const authors = authorsResponse.data
+  //   setDBAuthors(authors)
+  // }
 
-  const getDBBooks = async () => {
-    const booksResponse: any = await dispatch(fetchBooks)
-    const books = booksResponse.data
-    setDBBooks(books)
-  }
+  // const getDBBooks = async () => {
+  //   const booksResponse: any = await dispatch(fetchBooks)
+  //   const books = booksResponse.data
+  //   setDBBooks(books)
+  // }
 
-  useEffect(() => {
-    if (dbAuthors.length > 0) {
-      getDBBooks()
-    }
-  }, [dbAuthors])
+  // useEffect(() => {
+  //   if (dbAuthors.length > 0) {
+  //     getDBBooks()
+  //   }
+  // }, [dbAuthors])
 
-  useEffect(() => {
-    if (dbBooks.length > 0 && dbAuthors.length > 0) {
-      dbAuthors.map((author) => {
-        const name = author.authorName
-        const filteredBooks = dbBooks.filter(
-          (book) =>
-            book.author.filter((bookAuthor) => bookAuthor.authorName === name)
-              .length > 0
-        )
-        let idArray: any = []
-        filteredBooks.map((book) => idArray.push(book._id))
-        const newAuthor: Author = {
-          ...author,
-          authorBooks: idArray,
-        }
-        const addBooksToAuthor = async () => {
-          const updatedAuthor = await updateAuthor(author._id, newAuthor)
-        }
+  // useEffect(() => {
+  //   if (dbBooks.length > 0 && dbAuthors.length > 0) {
+  //     dbAuthors.map((author) => {
+  //       const name = author.authorName
+  //       const filteredBooks = dbBooks.filter(
+  //         (book) =>
+  //           book.author.filter((bookAuthor) => bookAuthor.authorName === name)
+  //             .length > 0
+  //       )
+  //       let idArray: any = []
+  //       filteredBooks.map((book) => idArray.push(book._id))
+  //       const newAuthor: Author = {
+  //         ...author,
+  //         authorBooks: idArray,
+  //       }
+  //       const addBooksToAuthor = async () => {
+  //         const updatedAuthor = await updateAuthor(author._id, newAuthor)
+  //       }
 
-        addBooksToAuthor()
-      })
-    }
-  }, [dbBooks])
+  //       addBooksToAuthor()
+  //     })
+  //   }
+  // }, [dbBooks])
 
-  useEffect(() => {
-    getDBAuthors()
-  }, [])
+  // useEffect(() => {
+  //   getDBAuthors()
+  // }, [])
 
   return (
     <Router>
