@@ -10,6 +10,7 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import MenuBookIcon from '@mui/icons-material/MenuBook'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { device } from '../../../device'
+import { Book } from '../../../types'
 
 const HomeNavbar = () => {
   const dispatch = useDispatch()
@@ -25,13 +26,11 @@ const HomeNavbar = () => {
     (state: RootState) => state.cartReducer.userName
   )
 
-  const userEmail: string = useSelector(
-    (state: RootState) => state.cartReducer.userEmail
-  )
-
   const isAdmin: boolean = useSelector(
     (state: RootState) => state.cartReducer.isAdmin
   )
+
+  const cart: Book[] = useSelector((state: RootState) => state.cartReducer.cart)
 
   const linkInlineStyling = {
     fontSize: '1.5rem',
@@ -96,6 +95,11 @@ const HomeNavbar = () => {
         )}
         <CartButton onClick={cartClicked}>
           <ShoppingCartIcon fontSize="large" sx={{ color: 'white' }} />
+          <CartContent
+            style={cart.length < 1 ? { display: 'none' } : { display: 'block' }}
+          >
+            {cart.length > 0 && cart.length}
+          </CartContent>
         </CartButton>
         {userLoggedIn ? (
           <LogoutDropDown onClick={() => toggleLogoutDropdown()}>
@@ -167,6 +171,25 @@ const CartButton = styled.button`
   border: none;
   margin-right: 2rem;
   cursor: pointer;
+  position: relative;
+`
+const CartContent = styled.p`
+  background: #e6892b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-bottom: 0.2rem;
+  padding-right: 0.1rem;
+  border: none;
+  color: white;
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  left: 1rem;
 `
 
 const Greeting = styled.p`
