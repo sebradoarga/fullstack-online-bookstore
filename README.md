@@ -51,7 +51,7 @@ In addition, **administrators** can
 
 ### Links
 
-- Live Site URL: [The Story Store](to be added)
+- Live Site URL: [The Story Store](https://thestorystore.netlify.app/)
 
 ## My process
 
