@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Author, LoginDataInterface, SignupDataInterface, User } from '../types'
 
-const url = 'http://localhost:5000/api/v1'
+const url = 'https://story-store-fullstack.herokuapp.com/api/v1/'
 
 // Books
 

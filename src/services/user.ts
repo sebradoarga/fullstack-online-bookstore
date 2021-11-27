@@ -64,7 +64,7 @@ const findOrCreate = async (
   if (!user) {
     const findUser = async () => {
       const createdUser: any = await axios.post(
-        'http://localhost:5000/api/v1/users/googleSignup',
+        'https://story-store-fullstack.herokuapp.com/api/v1/users/googleSignup',
         {
           firstName: givenName,
           lastName: familyName,

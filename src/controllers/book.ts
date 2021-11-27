@@ -53,7 +53,7 @@ export const populateBooks = async (
         await Promise.all(
           authorName.map(async (oneAuthor: string) => {
             const response = await axios.get(
-              `http://localhost:5000/api/v1/authors/name/${oneAuthor}`
+              `https://story-store-fullstack.herokuapp.com/api/v1/authors/name/${oneAuthor}`
             )
             const authorObject: AuthorDocument = response.data
             authorIds.push(authorObject._id)
