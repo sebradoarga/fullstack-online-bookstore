@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import logo from '../../../images/logo-transparent-background.png'
+import { device } from '../../../device'
 
 const LoginNavbar = () => {
   const logoStyling = {
@@ -11,7 +12,7 @@ const LoginNavbar = () => {
   return (
     <Navbar>
       <Link to="/">
-        <img src={logo} alt="The Story Store logo" style={logoStyling} />
+        <Logo src={logo} alt="The Story Store logo" style={logoStyling} />
       </Link>
     </Navbar>
   )
@@ -30,4 +31,12 @@ const Navbar = styled.nav`
   position: fixed;
   overflow: hidden;
   z-index: 9000;
+`
+const Logo = styled.img`
+  height: 9.5rem;
+  object-fit: contain;
+  max-width: 65%;
+
+  @media ${device.tablet} {
+    max-width: 100%;
 `
