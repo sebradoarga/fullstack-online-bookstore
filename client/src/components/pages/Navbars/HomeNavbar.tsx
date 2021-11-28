@@ -194,8 +194,12 @@ const CartContent = styled.p`
 
 const Greeting = styled.p`
   color: white;
-  font-size: 1.5rem;
+  font-size: 1rem;
   text-align: center;
+
+  @media ${device.tablet} {
+    font-size: 1.5rem;
+  }
 `
 const DropDown = styled.div`
   position: relative;

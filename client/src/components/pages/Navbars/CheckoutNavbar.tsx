@@ -75,7 +75,12 @@ const LoggedInUserPresentation = styled.div`
 const Greeting = styled.p`
   color: white;
   margin-right: 2rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
+  text-align: center;
+
+  @media ${device.tablet} {
+    font-size: 1.5rem;
+  }
 `
 const LoginBtn = styled.button`
   background: none;
