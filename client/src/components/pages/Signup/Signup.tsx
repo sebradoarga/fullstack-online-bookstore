@@ -7,11 +7,18 @@ import { useHistory } from 'react-router-dom'
 
 const Signup = () => {
   const history = useHistory()
+  const [loginError, setLoginError] = useState<boolean>(false)
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault()
-    const signupResult = await signup(signupData)
-    history.push('/login')
+    try {
+      e.preventDefault()
+      setLoginError(false)
+
+      const signupResult = await signup(signupData)
+      history.push('/login')
+    } catch (err: any) {
+      setLoginError(true)
+    }
   }
 
   interface SignupData {
@@ -40,6 +47,10 @@ const Signup = () => {
         <LoginNavbar />
 
         <PageHeader>Sign Up</PageHeader>
+        <ErrorMessage style={loginError ? { display: 'block' } : {}}>
+          Unsuccessful registration. Please try again.
+        </ErrorMessage>
+
         <FormWrapper>
           <form
             autoComplete="off"
@@ -129,6 +140,16 @@ const PageHeader = styled.h1`
   text-transform: uppercase;
   letter-spacing: 0.2rem;
 `
+
+const ErrorMessage = styled.p`
+  margin-top: 2rem;
+  font-size: 1.8rem;
+  color: red;
+  border: 0.2rem solid red;
+  padding: 0.5rem 1rem;
+  display: none;
+`
+
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
