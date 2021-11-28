@@ -123,8 +123,12 @@ const PageLink = styled.a`
 `
 
 const Image = styled.img`
-  width: 20rem;
+  width: 15rem;
   object-fit: cover;
+
+  @media ${device.tablet} {
+    width: 20rem;
+  }
 `
 const Copyright = styled.p``
 
