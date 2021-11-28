@@ -116,7 +116,7 @@ const HomeNavbar = () => {
               onClick={() => dispatch(logout())}
             >
               <LogoutIcon fontSize="large" />
-              <p style={{ marginLeft: '0.7rem' }}>Log out</p>
+              <LogoutText>Log out</LogoutText>
             </LogoutBtn>
           </LogoutDropDown>
         ) : (
@@ -263,6 +263,15 @@ const LogoutBtn = styled.button`
   font-size: 1.5rem;
   padding: 0.5rem 1rem;
   padding-bottom: 1.1rem;
+`
+
+const LogoutText = styled.p`
+  margin-left: 0.7rem;
+  font-size: 1rem;
+
+  @media ${device.tablet} {
+    font-size: 1.5rem;
+  }
 `
 
 const BtnText = styled.h2`
