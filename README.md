@@ -15,9 +15,7 @@ This was my submission for our Full-Stack assignment in the _Integrify Internati
   - [Styled with](#styled-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
 
 ## Overview
 
