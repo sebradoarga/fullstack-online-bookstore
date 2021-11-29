@@ -23,11 +23,7 @@ This was my submission for our Full-Stack assignment in the _Integrify Internati
 
 ### The assignment
 
-For this project, we were required to create a database for either an online library or an ecommerce website. Being a fan of books, I decided to mix the options and create an online book store. In order to accomplish this, I had to create all the routes, models, controllers for my future books, authors, and users.
-
-Of course, the second part of the assignment supposed building the front-end around my newly coded database.
-
-I created a database with MongoDB and built a responsive online book store around it. The website allows users to register and log in, browse novels, display book and author information, and add products to cart. Administrators can add new books and authors to the database through the website, as well as delete books.
+For this project, we were required to create a database for either an online library or an ecommerce website. Being a fan of books, I decided to mix the options and create an online book store. In order to accomplish this, I had to create all the routes, models, and controllers for my future books, authors, and users. The second part of the assignment supposed building the front-end around my newly coded database.
 
 ### Features
 
