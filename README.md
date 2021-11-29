@@ -23,7 +23,7 @@ This was my submission for our Full-Stack assignment in the _Integrify Internati
 
 ### The assignment
 
-For this project, we were required to create a database for either an online library or an ecommerce website. Being a fan of books, I decided to mix the options and create an online book store. In order to accomplish this, I had to create all the routes, models, and controllers for my future books, authors, and users. The second part of the assignment supposed building the front-end around my newly coded database.
+For this project, we were required to create a database for either an online library or an ecommerce website. Being a fan of books, I decided to mix the options and create an online book store. In order to accomplish this, I had to create all the routes, models, and controllers for my future books, authors, and users. The second part of the assignment supposed building the front-end and connecting it to my newly-coded database.
 
 ### Features
 
