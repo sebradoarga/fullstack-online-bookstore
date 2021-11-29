@@ -81,6 +81,6 @@ Here are some features I still plan to implement:
 
 ## Author
 
-<!-- - Website - [Sebastian-Radu Oarga](to be added) -->
+- Website - [Sebastian-Radu Oarga](http://www.sebastianraduoarga.com)
 
 - LinkedIn - [Sebastian-Radu Oarga](https://www.linkedin.com/in/sebastianoarga/)
