@@ -2,7 +2,7 @@
 
 This was my submission for our Full-Stack assignment in the _Integrify International Academy Full-Stack Program_. For this project, I both created the database and built an online book store around it.
 
-<p align="center"><img src="./client/public/project-preview.png" alt="image preview of country trivia" align="center"><p>
+<p align="center"><img src="./client/public/project-preview.png" align="center"><p>
 
 ## Table of contents
 
@@ -39,11 +39,11 @@ In addition, **administrators** can
 - add books and authors to the database through the interface
 - delete books
 
-<p align="center"><img src="./client/public/auth-preview.png" alt="image preview of country trivia" align="center"><p>
+<p align="center"><img src="./client/public/auth-preview.png" align="center"><p>
 
-<p align="center"><img src="./client/public/admin-preview.png" alt="image preview of country trivia" align="center"><p>
+<p align="center"><img src="./client/public/admin-preview.png" align="center"><p>
 
-<p align="center"><img src="./client/public/mobile-preview.png" alt="image preview of country trivia" align="center"><p>
+<p align="center"><img src="./client/public/mobile-preview.png" align="center"><p>
 
 ### Links
 
