@@ -2,7 +2,7 @@
 
 This was my submission for our Full-Stack assignment in the _Integrify International Academy Full-Stack Program_. For this project, I both created the database and built an online book store around it.
 
-<p align="center"><img src="./client/public/project-preview.png" alt="image preview of country trivia" align="center"><p>
+<p align="center"><img src="./client/public/project-preview.png" align="center"><p>
 
 ## Table of contents
 
@@ -15,19 +15,13 @@ This was my submission for our Full-Stack assignment in the _Integrify Internati
   - [Styled with](#styled-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
 
 ## Overview
 
 ### The assignment
 
-For this project, we were required to create a database for either an online library or an ecommerce website. Being a fan of books, I decided to mix the options and create an online book store. In order to accomplish this, I had to create all the routes, models, controllers for my future books, authors, and users.
-
-Of course, the second part of the assignment supposed building the front-end around my newly coded database.
-
-I created a database with MongoDB and built a responsive online book store around it. The website allows users to register and log in, browse novels, display book and author information, and add products to cart. Administrators can add new books and authors to the database through the website, as well as delete books.
+For this project, we were required to create a database for either an online library or an ecommerce website. Being a fan of books, I decided to mix the options and create an online book store. In order to accomplish this, I had to create all the routes, models, and controllers for my future books, authors, and users. The second part of the assignment supposed building the front-end and connecting it to my newly-coded database.
 
 ### Features
 
@@ -43,11 +37,11 @@ In addition, **administrators** can
 - add books and authors to the database through the interface
 - delete books
 
-<p align="center"><img src="./client/public/auth-preview.png" alt="image preview of country trivia" align="center"><p>
+<p align="center"><img src="./client/public/auth-preview.png" align="center"><p>
 
-<p align="center"><img src="./client/public/admin-preview.png" alt="image preview of country trivia" align="center"><p>
+<p align="center"><img src="./client/public/admin-preview.png" align="center"><p>
 
-<p align="center"><img src="./client/public/mobile-preview.png" alt="image preview of country trivia" align="center"><p>
+<p align="center"><img src="./client/public/mobile-preview.png" align="center"><p>
 
 ### Links
 
@@ -87,6 +81,6 @@ Here are some features I still plan to implement:
 
 ## Author
 
-<!-- - Website - [Sebastian-Radu Oarga](to be added) -->
+- Website - [Sebastian-Radu Oarga](http://www.sebastianraduoarga.com)
 
 - LinkedIn - [Sebastian-Radu Oarga](https://www.linkedin.com/in/sebastianoarga/)
